@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <header>
+            <h1>Name of enterprise</h1>
+            <h2>J'ai deux amis ...</h2>
+            <div id="search">
+                
+            </div>
+            <div id="connexion">
+                <p>partie visible</p>
+                <div id="form_connexion">
+                    <p>partie caché</p>
+                </div>
+            </div>
+            <div id="language">
+                <p>Choix de la langue</p>
+            </div>
+        </header>
+        
+        <nav>
+            <p>Là le menu</p>
+        </nav>
+        
+        <div id="content" class="center_content">
+            <ui:insert name="content">Ici la partie perso des pages</ui:insert>
+        </div>
+        
+        <footer>
+            <p>Et enfin, le footer</p>
+        </footer>
+
+    </h:body>
+
+</html>
