@@ -4,11 +4,17 @@ header {
     color: white;
     padding: 5px;
     width: 100%;
+    clear:both;
+    position: relative;
 }
 #connexion {
-    float:right;
     width: 170px;
     margin-right: 10px;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+    height: 45px;
+    
 }
 
 #showConnexionBox {
@@ -16,7 +22,7 @@ header {
     display: block;
     padding: 10px;
     width: 100%;
-    height: 100%;
+    height: 25px;
     text-align: center;
     color: black;
     font-size: 1.6em;
