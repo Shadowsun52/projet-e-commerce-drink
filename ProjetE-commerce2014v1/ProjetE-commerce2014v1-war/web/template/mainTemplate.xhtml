@@ -14,7 +14,7 @@
     <h:body>
 
         <header>
-            <h1>Name of enterprise</h1>
+            <h1>BeerForTheWin</h1>
             <h2>J'ai deux amis ...</h2>
             <div id="search">
                 <h:form>
@@ -26,9 +26,14 @@
                 <a id="showConnexionBox" href="#">Sign in</a>                    
                 <div id="form_connexion">
                     <h:form>
-                        <p>formulaire connection</p>
+                        <p><h:outputLabel>E-mail :</h:outputLabel></p>
+                        <p><h:inputText></h:inputText></p>
+                        <p><h:outputLabel>Password :</h:outputLabel></p>
+                        <p><h:inputSecret></h:inputSecret></p>
+                        <p><h:commandButton value="Sign in"/></p>
+                        
                     </h:form>
-                    <a href="#">Password Forgot ?</a>
+                    <a href="#">Password Forgot ?</a><br/>
                     <a href="#">Inscription</a>
                 </div>
             </div>

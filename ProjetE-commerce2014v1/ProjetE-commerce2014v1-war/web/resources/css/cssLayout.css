@@ -3,6 +3,38 @@ header {
     background-color: #036fab;
     color: white;
     padding: 5px;
+    width: 100%;
+}
+#connexion {
+    float:right;
+    width: 170px;
+    margin-right: 10px;
+}
+
+#showConnexionBox {
+    background-color: brown;
+    display: block;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: black;
+    font-size: 1.6em;
+    text-decoration: none;
+}
+
+#form_connexion {
+    background-color: blueviolet;
+    width: 170px;
+    height: 210px;
+    padding: 5px 10px 10px 10px;
+    float: left;
+    display: none;
+    z-index: 12;
+}
+
+#connexion:hover #form_connexion{
+    display: block;
 }
 
 footer {
@@ -26,10 +58,11 @@ nav {
 }
 
 #content {
-    position: relative;
+   // position: relative;
     background-color: #dddddd;
     padding: 5px;
     width: 80%;
+    z-index: 1;
     margin: 0 auto;
 }
 
