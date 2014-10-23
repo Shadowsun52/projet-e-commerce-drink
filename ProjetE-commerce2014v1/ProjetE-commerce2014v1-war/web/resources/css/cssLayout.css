@@ -10,6 +10,7 @@ header {
     clear:both;
     position: relative;
     height: 130px;
+    padding: 5px 0 5px 0;
 }
 
 #connexion {
@@ -49,6 +50,13 @@ header {
 
 #connexion:hover #form_connexion{
     display: block;
+}
+
+#language {
+    float:right;
+}
+#language ul li{
+    display: inline-block;
 }
 
 nav {
