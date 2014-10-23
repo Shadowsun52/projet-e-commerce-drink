@@ -14,8 +14,19 @@
     <h:body>
 
         <header>
+            <div id="language">
+                <h:form>
+                    <!--générer via la base de donnée-->
+                    <ul>
+                        <li><h:commandLink>En</h:commandLink></li>
+                        <li><h:commandLink>Fr</h:commandLink></li>
+                    </ul>
+                    <!--fin generation-->
+                </h:form>
+            </div>
+            <div id="mainHeader">
             <h1>BeerForTheWin</h1>
-            <h2>J'ai deux amis ...</h2>
+            <h2>J'ai deux amis la Tequila et le Whisky</h2>
             <div id="search">
                 <h:form>
                     <h:inputText></h:inputText>
@@ -37,15 +48,6 @@
                     <a href="#">Inscription</a>
                 </div>
             </div>
-            <div id="language">
-                <h:form>
-                    <!--générer via la base de donnée-->
-                    <ul>
-                        <li><h:commandLink>English</h:commandLink></li>
-                        <li><h:commandLink>Français</h:commandLink></li>
-                    </ul>
-                    <!--fin generation-->
-                </h:form>
             </div>
         </header>
         

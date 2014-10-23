@@ -9,37 +9,43 @@ header {
     width: 100%;
     clear:both;
     position: relative;
-    height: 130px;
+    height: 90px;
     padding: 5px 0 5px 0;
+}
+
+#mainHeader{
+    margin: 0 auto;
+    width: 800px;
+}
+
+#search{
+    display: inline-block;
 }
 
 #connexion {
     width: 30%;
-    min-width: 140px;
+    min-width: 130px;
     max-width: 170px;
-    margin-right: 10px;
-    position: absolute;
-    right: 25px;
-    bottom: 5px;
-    height: 45px;
+    height: 35px;
+    display: inline-block;
 }
 
 #showConnexionBox {
     background-color: brown;
     display: block;
-    padding: 10px;
+    padding: 9px 10px 11px 10px;
     width: 100%;
-    height: 25px;
+    height: 15px;
     text-align: center;
     color: black;
-    font-size: 1.6em;
+    font-size: 1.2em;
     text-decoration: none;
 }
 
 #form_connexion {
     background-color: #D20005;
     width: 100%;
-    min-width: 140px;
+    min-width: 130px;
     max-width: 170px;
     height: 210px;
     padding: 5px 10px 10px 10px;
@@ -54,16 +60,20 @@ header {
 
 #language {
     float:right;
+    margin: 0 25px 0 0;
 }
 #language ul li{
     display: inline-block;
+    margin-left: 5px;
 }
 
 nav {
-    background-color: green;
+    background-color: #036fab;
     height: 40px;
     width: 100%;
-    margin: 0 0 10px 0;  
+    margin: 0 auto 10px auto;  
+    border-bottom: 1px solid black;
+    
 }
 
 nav ul {
@@ -136,7 +146,6 @@ nav ul li a{
 }
 
 footer {
-    position: relative;
     background-color: #c2dfef;
     padding: 5px;
     margin: 10px 0px 0px 0px;

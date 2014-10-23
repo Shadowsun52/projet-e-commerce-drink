@@ -8,12 +8,17 @@ body {
 
 h1 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-    border-bottom: 1px solid #AFAFAF; 
-    font-size:  16px;
+    font-size:  3.2em;
     font-weight: bold;
-    margin: 0px;
+    margin: 5px auto 0px auto;
     padding: 0px;
     color: #D20005;
+}
+
+header h2 {
+    margin: 10px 0 0 30px;
+    font-size: 1.25em;
+    display: inline-block;
 }
 
 a:link, a:visited {
