@@ -1,3 +1,6 @@
+*{
+    margin: 0;
+}
 header {
     position: relative;
     background-color: #036fab;
@@ -6,15 +9,18 @@ header {
     width: 100%;
     clear:both;
     position: relative;
+    height: 130px;
 }
+
 #connexion {
-    width: 170px;
+    width: 30%;
+    min-width: 140px;
+    max-width: 170px;
     margin-right: 10px;
     position: absolute;
     right: 25px;
-    bottom: 25px;
+    bottom: 5px;
     height: 45px;
-    
 }
 
 #showConnexionBox {
@@ -30,8 +36,10 @@ header {
 }
 
 #form_connexion {
-    background-color: blueviolet;
-    width: 170px;
+    background-color: #D20005;
+    width: 100%;
+    min-width: 140px;
+    max-width: 170px;
     height: 210px;
     padding: 5px 10px 10px 10px;
     float: left;
@@ -43,16 +51,39 @@ header {
     display: block;
 }
 
-footer {
-    position: relative;
-    background-color: #c2dfef;
-    padding: 5px;
-    margin: 10px 0px 0px 0px;
-}
-
 nav {
     background-color: green;
-    margin-bottom: 10px;
+    height: 40px;
+    width: 100%;
+    margin: 0 0 10px 0;  
+}
+
+nav ul {
+    height: 100%;
+    padding: 0;
+}
+
+nav ul li{
+    display: inline-block;
+    width: 150px;
+    height: 100%;
+    border-left: 2px solid black;
+}
+
+nav ul li:first-child {
+    border-left: none;
+}
+
+nav ul li:last-child {
+    border-right: 2px solid black;
+}
+
+nav ul li a{
+    display: block;
+    width: 150px;
+    height: 100%;
+    text-align: center;
+    line-height: 40px;
 }
 
 #order {
@@ -96,4 +127,9 @@ nav {
   text-decoration : underline;
 }
 
-
+footer {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
