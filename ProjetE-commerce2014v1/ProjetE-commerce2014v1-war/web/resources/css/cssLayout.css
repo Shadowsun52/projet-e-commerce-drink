@@ -164,38 +164,41 @@ nav ul li a{
 nav ul li a:link:hover, nav ul li a:visited:hover  {
     color: white;
 }
-
-#order {
-    //float: right;
-    background-color: #ece3a5;
-    padding: 5px;
-    width: 150px;
-    z-index: 20;
+#main {
+    margin: 0 auto;
+    width: 85%;
+    background-color: chocolate;
 }
 
 #content {
-   // position: relative;
+    width: 74%;
     background-color: #dddddd;
     padding: 5px;
-    width: 80%;
-    z-index: 1;
-    margin: 0 auto;
+    float: left;
 }
 
-.left_content {
-    background-color: #dddddd;
-    padding: 5px;
-    margin-left: 170px;
+#content article {
+    display: inline-block;
+    margin: 10px;
 }
 
-.right_content {
-    background-color: #dddddd;
+.discount_class{
+    width: 250px;
+    height: 350px;
+    background-color: yellowgreen;
+}
+
+#order {
+    background-color: #ece3a5;
     padding: 5px;
-    margin: 0px 170px 0px 170px;
+    width: 20%;
+    float: right;
+    max-width: 300px;
 }
 
 footer {
     background-color: #c2dfef;
     padding: 5px;
     margin: 10px 0px 0px 0px;
+    clear: both;
 }
