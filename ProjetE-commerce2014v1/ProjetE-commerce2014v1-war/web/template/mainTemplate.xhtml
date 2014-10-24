@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      >
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="en">
+    <f:loadBundle basename="languagePackage.lang" var="msg"/>
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
@@ -52,7 +54,7 @@
                         
                     </h:form>
                     <a href="#">Password Forgot ?</a><br/>
-                    <a href="#">Inscription</a>
+                    <a href="#">Sign up</a>
                 </div>
             </div>
             </div>
@@ -87,5 +89,5 @@
         </footer>
 
     </h:body>
-
+    </f:view>
 </html>
