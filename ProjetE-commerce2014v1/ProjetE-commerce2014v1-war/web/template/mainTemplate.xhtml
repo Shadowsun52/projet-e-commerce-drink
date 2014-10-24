@@ -16,8 +16,9 @@
     <h:body>
 
         <header>
-            <div id="language">
-                <h:form>
+            <div id="mainHeader">
+                <h1>BeerForTheWin</h1>
+                <h:form id="language">
                     <!--générer via la base de donnée-->
                     <ul>
                         <li><h:commandLink>
@@ -34,29 +35,25 @@
                     </ul>
                     <!--fin generation-->
                 </h:form>
-            </div>
-            <div id="mainHeader">
-            <h1>BeerForTheWin</h1>
-            <h2>J'ai deux amis la Tequila et le Whisky</h2>
-            <h:form id="search">
-                <h:inputText></h:inputText>
-                <h:commandButton value="Search" />
-            </h:form>
-            <div id="connexion">
-                <a id="showConnexionBox" href="#">Sign in</a>                    
-                <div id="form_connexion">
-                    <h:form>
-                        <p><h:outputLabel>E-mail :</h:outputLabel></p>
-                        <p><h:inputText></h:inputText></p>
-                        <p><h:outputLabel>Password :</h:outputLabel></p>
-                        <p><h:inputSecret></h:inputSecret></p>
-                        <p><h:commandButton value="Sign in"/></p>
-                        
-                    </h:form>
-                    <a href="#">Password Forgot ?</a><br/>
-                    <a href="#">Sign up</a>
+                <h2>J'ai deux amis la Tequila et le Whisky</h2>
+                <h:form id="search">
+                    <h:inputText></h:inputText>
+                    <h:commandButton value="Search" />
+                </h:form>
+                <div id="connexion">
+                    <a id="showConnexionBox" href="#">Sign in</a>                    
+                    <div id="form_connexion">
+                        <h:form>
+                            <p><h:outputLabel>E-mail :</h:outputLabel></p>
+                            <p><h:inputText></h:inputText></p>
+                            <p><h:outputLabel>Password :</h:outputLabel></p>
+                            <p><h:inputSecret></h:inputSecret></p>
+                            <p><h:commandButton value="Sign in"/></p>
+                        </h:form>
+                        <a href="#">Password Forgot ?</a><br/>
+                        <a href="#">Sign up</a>
+                    </div>
                 </div>
-            </div>
             </div>
         </header>
         

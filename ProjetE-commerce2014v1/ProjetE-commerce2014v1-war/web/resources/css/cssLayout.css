@@ -118,7 +118,7 @@ header {
 
 #language {
     float:right;
-    margin: 0 25px 0 0;
+    margin: -40px 25px 0 0;
 }
 #language ul li{
     display: inline-block;
@@ -161,6 +161,9 @@ nav ul li a{
     height: 100%;
     line-height: 40px;
 }
+nav ul li a:link:hover, nav ul li a:visited:hover  {
+    color: white;
+}
 
 #order {
     //float: right;
@@ -189,18 +192,6 @@ nav ul li a{
     background-color: #dddddd;
     padding: 5px;
     margin: 0px 170px 0px 170px;
-}
-
-#top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
-}
-
-#top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
 }
 
 footer {
