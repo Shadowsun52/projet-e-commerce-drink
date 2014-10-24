@@ -15,7 +15,8 @@ header {
 
 #mainHeader{
     margin: 0 auto;
-    width: 800px;
+    min-width: 730px;
+    max-width: 900px;
 }
 
 #search{
@@ -28,10 +29,22 @@ header {
     border: none;
     background-color: lightgrey;
     padding: 0;
+    font-style: italic;
+}
+
+#search input[type="text"] {
+    content: "search";
 }
 
 #search input[type="submit"] {
     background-color: grey;
+    cursor: pointer;
+    background-image: url(../images/search_icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 0;
+    width: 40px;
+    padding-top: 10px;
 }
 
 #connexion {
@@ -81,7 +94,6 @@ header {
 
 nav {
     background-color: #036fab;
-    height: 40px;
     width: 100%;
     margin: 0 0 10px 0;  
     border-bottom: 1px solid black;
