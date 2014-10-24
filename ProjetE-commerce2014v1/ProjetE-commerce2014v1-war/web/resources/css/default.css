@@ -21,6 +21,12 @@ header h2 {
     display: inline-block;
 }
 
+table {
+    border-spacing: 5px;
+}
+td{
+    background-color: blue;
+}
 a:link, a:visited {
   color: black;
   font-weight : bold;

@@ -33,6 +33,10 @@ header {
     font-weight: bold;
 }
 
+#search input[type="text"] {
+    padding-left: 5px;
+}
+
 #search input[type="submit"] {
     background-color: grey;
     cursor: pointer;
@@ -166,24 +170,24 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
 }
 #main {
     margin: 0 auto;
-    width: 85%;
+    width: 88%;
     background-color: chocolate;
 }
 
 #content {
-    width: 74%;
+    width: 67%;
     background-color: #dddddd;
-    padding: 5px;
+    padding: 5px 0 5px 5px;
     float: left;
 }
 
 #content article {
     display: inline-block;
-    margin: 10px;
+    margin: 10px 0 10px 20px;
 }
 
 .discount_class{
-    width: 250px;
+    width: 230px;
     height: 350px;
     background-color: yellowgreen;
 }
@@ -191,7 +195,7 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
 #order {
     background-color: #ece3a5;
     padding: 5px;
-    width: 20%;
+    width: 30%;
     float: right;
     max-width: 300px;
 }
@@ -201,4 +205,13 @@ footer {
     padding: 5px;
     margin: 10px 0px 0px 0px;
     clear: both;
+}
+
+@media screen and (max-width: 950px) {
+    footer {
+        background-color: brown;
+    }
+    #main {
+        width: 95%;
+    }
 }
