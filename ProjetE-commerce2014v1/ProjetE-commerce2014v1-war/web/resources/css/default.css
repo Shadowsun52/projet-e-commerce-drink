@@ -6,7 +6,7 @@ body {
     margin: 0;
 }
 
-h1 {
+header h1 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     font-size:  3.2em;
     font-weight: bold;
@@ -28,6 +28,7 @@ td{
     padding-top: 12px;
     text-align: center;
 }
+
 a:link, a:visited {
   color: black;
   font-weight : bold;

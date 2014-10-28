@@ -192,6 +192,33 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
     background-color: yellowgreen;
 }
 
+.discount_class h1{
+    color:red;
+    font-size: 1.7em;
+    text-align: center;
+    margin: 10px 0 15px 0;
+}
+
+.discount_class h2 {
+    margin: 0 0 0 10px;
+}
+
+a:hover .discount_class{
+    color: black;
+}
+
+.discount_class img{
+    background-color: purple;
+    display: block;
+    width: 200px;
+    height: 250px;
+    margin: 15px;
+}
+
+.discount_class h3{
+    position: relative;
+}
+
 #order {
     background-color: #ece3a5;
     padding: 5px;
