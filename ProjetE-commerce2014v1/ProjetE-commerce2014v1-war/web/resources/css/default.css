@@ -25,7 +25,8 @@ table {
     border-spacing: 5px;
 }
 td{
-    background-color: blue;
+    padding-top: 12px;
+    text-align: center;
 }
 a:link, a:visited {
   color: black;

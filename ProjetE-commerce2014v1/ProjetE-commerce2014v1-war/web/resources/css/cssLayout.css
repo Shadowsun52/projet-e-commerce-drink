@@ -200,9 +200,33 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
     max-width: 300px;
 }
 
+#order td:first-child{
+    width: 60%;
+    text-align: left;
+}
+
+#order td:last-child{
+    width: 30%;
+}
+
+.lastRowOrder{
+    background-color: rgba(0,0,0,0.1);
+}
+
+#linkToOrder{
+    display: block;
+    width: 40px;
+    height: 30px;
+    background-image: url(../images/order_icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 0;
+    padding: 5px;
+}
+
 footer {
     background-color: #c2dfef;
-    padding: 5px;
+    border-spacing: 15px;
     margin: 10px 0px 0px 0px;
     clear: both;
 }
