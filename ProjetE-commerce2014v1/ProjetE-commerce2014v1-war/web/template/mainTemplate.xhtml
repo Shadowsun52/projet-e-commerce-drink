@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <f:view locale="en">
+    <f:view locale="#{internationalizationManaged.locale}">
     <f:loadBundle basename="languagePackage.lang" var="msg"/>
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -19,13 +19,13 @@
                 <h:form id="language">
                     <!--générer via la base de donnée-->
                     <ul>
-                        <li><h:commandLink>
+                        <li><h:commandLink action="#{internationalizationManaged.setToEnglish()}">
                                 <img src="resources/images/en.png" 
                                      alt="English"/>
                             </h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink>
+                            <h:commandLink action="#{internationalizationManaged.setToFrench()}">
                                 <img src="resources/images/fr.png" 
                                      alt="Français"/>
                             </h:commandLink>
@@ -36,20 +36,20 @@
                 <h2>J'ai deux amis la Tequila et le Whisky</h2>
                 <h:form id="search">
                     <h:inputText></h:inputText>
-                    <h:commandButton value="Search" />
+                    <h:commandButton value="#{msg.search}" />
                 </h:form>
                 <div id="connexion">
-                    <a id="showConnexionBox" href="#">Sign in</a>                    
+                    <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
                     <div id="form_connexion">
                         <h:form>
-                            <p><h:outputLabel>E-mail :</h:outputLabel></p>
+                            <p><h:outputLabel value="#{msg.email}"/></p>
                             <p><h:inputText></h:inputText></p>
-                            <p><h:outputLabel>Password :</h:outputLabel></p>
+                            <p><h:outputLabel value="#{msg.password}"/></p>
                             <p><h:inputSecret></h:inputSecret></p>
-                            <p><h:commandButton value="Sign in"/></p>
+                            <p><h:commandButton value="#{msg.signIn}"/></p>
                         </h:form>
-                        <a href="#">Password Forgot ?</a><br/>
-                        <a href="#">Sign up</a>
+                        <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
+                        <a href="#"><h:outputText value="#{msg.signUp}"/></a>
                     </div>
                 </div>
             </div>
@@ -78,27 +78,27 @@
             <section id="order">
                 <table>
                     <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
+                        <th><h:outputText value="#{msg.orderItem}"/></th>
+                        <th><h:outputText value="#{msg.orderQuantity}"/></th>
+                        <th><h:outputText value="#{msg.orderPrice}"/></th>
                     </tr>
                     <tr>
                         <td>Orval</td>
                         <td>6</td>
-                        <td>2.10 &euro;</td>
+                        <td>12.60 &euro;</td>
                     </tr>
                     <tr>
                         <td>Leffe blonde</td>
                         <td>24</td>
-                        <td>1.70 &euro;</td>
+                        <td>40.80 &euro;</td>
                     </tr>
                     <tr class="lastRowOrder">
-                        <td colspan="2">Total price</td>
+                        <td colspan="2"><h:outputText value="#{msg.orderTotalPrice}"/></td>
                         <td>53.40 &euro;</td>
                     </tr>
                 </table>
                 <a href="#" id="linkToOrder">
-                    Go to order
+                    <h:outputText value="#{msg.goOrder}"/>
                 </a>
             </section>
         </div>
