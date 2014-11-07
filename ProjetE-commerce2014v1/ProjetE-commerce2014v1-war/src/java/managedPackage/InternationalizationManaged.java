@@ -30,12 +30,8 @@ public class InternationalizationManaged  implements Serializable{
         return locale;
     }
     
-    public void setToEnglish() {
-        locale = new Locale("en");
-    }
-    
-     public void setToFrench() {
-        locale = new Locale("fr");
+    public void setLocale(String language) {
+        locale = new Locale(language);
     }
      
      public String getLanguage() {

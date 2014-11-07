@@ -18,21 +18,19 @@
             <div id="mainHeader">
                 <h1>BeerForTheWin</h1>
                 <h:form id="language">
-                    <!--générer via la base de donnée-->
                     <ul>
-                        <li><h:commandLink action="#{internationalizationManaged.setToEnglish()}">
-                                <img src="resources/images/en.png" 
-                                     alt="English"/>
-                            </h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink action="#{internationalizationManaged.setToFrench()}">
-                                <img src="resources/images/fr.png" 
-                                     alt="Français"/>
-                            </h:commandLink>
-                        </li>
+                        <c:forEach items="#{languageMB.allLanguage}" 
+                                   var="language">
+                            <li>
+                                <h:commandLink 
+                                    action="#{internationalizationManaged.setLocale(
+                                              language.shortlabel)}">
+                                    <img src="resources/images/#{language.shortlabel}.png"
+                                         alt="#{language.label}"/>
+                                </h:commandLink>
+                            </li>
+                        </c:forEach>
                     </ul>
-                    <!--fin generation-->
                 </h:form>
                 <h2>J'ai deux amis la Tequila et le Whisky</h2>
                 <h:form id="search">
@@ -59,7 +57,7 @@
         <nav>
             <ul>
                 <li>
-                    <h:link value="Home" outcome="index.xhtml"/>
+                    <h:link value="#{msg.home}" outcome="index.xhtml"/>
                 </li>
             <c:forEach items="#{categoryMB.allCategory}" var="category">
                 <li>
