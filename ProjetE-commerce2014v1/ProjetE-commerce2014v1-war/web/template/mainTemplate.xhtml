@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view locale="#{internationalizationManaged.locale}">
     <f:loadBundle basename="languagePackage.lang" var="msg"/>
     <h:head>
@@ -56,19 +57,21 @@
         </header>
         
         <nav>
-            <!--générer via la base de donnée-->
             <ul>
                 <li>
-                    <a href="#">Index</a>
+                    <h:link value="Home" outcome="index.xhtml"/>
                 </li>
+            <c:forEach items="#{categoryMB.allCategory}" var="category">
                 <li>
-                    <a href="#">Beer</a>
+                    <h:link value="#{category.getLabel(
+                                 internationalizationManaged.language)}"
+                                 outcome="category.xhtml">
+                        <f:param name="idCat"
+                                 value="#{category.idcategory}"/>
+                    </h:link>
                 </li>
-                <li>
-                    <a href="#">Wine</a>
-                </li>
+            </c:forEach>
             </ul>
-            <!--fin generation-->
         </nav>
         
         <div id="main">

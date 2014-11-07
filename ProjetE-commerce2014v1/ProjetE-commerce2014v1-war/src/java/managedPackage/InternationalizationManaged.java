@@ -37,4 +37,8 @@ public class InternationalizationManaged  implements Serializable{
      public void setToFrench() {
         locale = new Locale("fr");
     }
+     
+     public String getLanguage() {
+         return locale.getLanguage();
+     }
 }
