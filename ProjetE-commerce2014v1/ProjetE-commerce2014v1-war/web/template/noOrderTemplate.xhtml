@@ -3,13 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view locale="#{internationalizationManaged.locale}">
     <f:loadBundle basename="languagePackage.lang" var="msg"/>
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/noOrderLayout.css"/>
         <title>BeerForTheWin</title>
     </h:head>
     <h:body>
@@ -17,58 +19,61 @@
             <div id="mainHeader">
                 <h1>BeerForTheWin</h1>
                 <h:form id="language">
-                    <!--générer via la base de donnée-->
                     <ul>
-                        <li><h:commandLink>
-                                <img src="resources/images/en.png" 
-                                     alt="English"/>
-                            </h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink>
-                                <img src="resources/images/fr.png" 
-                                     alt="Français"/>
-                            </h:commandLink>
-                        </li>
+                        <c:forEach items="#{languageMB.allLanguage}" 
+                                   var="language">
+                            <li>
+                                <h:commandLink 
+                                    action="#{internationalizationManaged.setLocale(
+                                              language.shortlabel)}">
+                                    <img src="resources/images/#{language.shortlabel}.png"
+                                         alt="#{language.label}"/>
+                                </h:commandLink>
+                            </li>
+                        </c:forEach>
                     </ul>
-                    <!--fin generation-->
                 </h:form>
-                <h2>J'ai deux amis la Tequila et le Whisky</h2>
+                <h2>
+                    <h:outputText value="#{languageMB.getSlogan(
+                                           internationalizationManaged.language)}"/>
+                </h2>
                 <h:form id="search">
                     <h:inputText></h:inputText>
-                    <h:commandButton value="Search" />
+                    <h:commandButton value="#{msg.search}" />
                 </h:form>
                 <div id="connexion">
-                    <a id="showConnexionBox" href="#">Sign in</a>                    
+                    <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
                     <div id="form_connexion">
                         <h:form>
-                            <p><h:outputLabel>E-mail :</h:outputLabel></p>
+                            <p><h:outputLabel value="#{msg.email}"/></p>
                             <p><h:inputText></h:inputText></p>
-                            <p><h:outputLabel>Password :</h:outputLabel></p>
+                            <p><h:outputLabel value="#{msg.password}"/></p>
                             <p><h:inputSecret></h:inputSecret></p>
-                            <p><h:commandButton value="Sign in"/></p>
+                            <p><h:commandButton value="#{msg.signIn}"/></p>
                         </h:form>
-                        <a href="#">Password Forgot ?</a><br/>
-                        <a href="#">Sign up</a>
+                        <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
+                        <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
                     </div>
                 </div>
             </div>
         </header>
         
         <nav>
-            <!--générer via la base de donnée-->
             <ul>
                 <li>
-                    <a href="#">Index</a>
+                    <h:link value="#{msg.home}" outcome="index.xhtml"/>
                 </li>
+            <c:forEach items="#{categoryMB.allCategory}" var="category">
                 <li>
-                    <a href="#">Beer</a>
+                    <h:link value="#{category.getLabel(
+                                 internationalizationManaged.language)}"
+                                 outcome="category.xhtml">
+                        <f:param name="idCat"
+                                 value="#{category.idcategory}"/>
+                    </h:link>
                 </li>
-                <li>
-                    <a href="#">Wine</a>
-                </li>
+            </c:forEach>
             </ul>
-            <!--fin generation-->
         </nav>
         
         <div id="main">

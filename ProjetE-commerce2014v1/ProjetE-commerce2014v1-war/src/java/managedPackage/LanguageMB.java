@@ -31,4 +31,8 @@ public class LanguageMB {
     public ArrayList<Language> getAllLanguage() {
         return new ArrayList(languageFacade.findAll());
     }
+    
+    public String getSlogan(String shortLanguage) {
+        return languageFacade.findByShortLabel(shortLanguage).getSlogan();
+    }
 }

@@ -30,4 +30,5 @@ public interface LanguageFacadeLocal {
 
     int count();
     
+    public Language findByShortLabel(String shortlabel);
 }

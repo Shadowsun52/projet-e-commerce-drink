@@ -9,6 +9,7 @@ import entityBeans.Language;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +29,10 @@ public class LanguageFacade extends AbstractFacade<Language> implements Language
         super(Language.class);
     }
     
+    public Language findByShortLabel(String shortlabel) {
+        Query query;
+        query = em.createNamedQuery("Language.findByShortlabel");
+        query.setParameter("shortlabel", shortlabel);
+        return (Language) query.getSingleResult();
+    }
 }

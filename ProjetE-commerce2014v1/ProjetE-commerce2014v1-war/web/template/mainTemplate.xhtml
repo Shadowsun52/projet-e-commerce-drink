@@ -32,9 +32,12 @@
                         </c:forEach>
                     </ul>
                 </h:form>
-                <h2>J'ai deux amis la Tequila et le Whisky</h2>
+                <h2>
+                    <h:outputText value="#{languageMB.getSlogan(
+                                           internationalizationManaged.language)}"/>
+                </h2>
                 <h:form id="search">
-                    <h:inputText></h:inputText>
+                    <h:inputText/>
                     <h:commandButton value="#{msg.search}" />
                 </h:form>
                 <div id="connexion">
@@ -48,7 +51,7 @@
                             <p><h:commandButton value="#{msg.signIn}"/></p>
                         </h:form>
                         <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
-                        <a href="#"><h:outputText value="#{msg.signUp}"/></a>
+                        <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
                     </div>
                 </div>
             </div>
