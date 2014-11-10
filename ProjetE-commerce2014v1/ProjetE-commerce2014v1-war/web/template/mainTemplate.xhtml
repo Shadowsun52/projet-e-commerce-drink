@@ -75,38 +75,39 @@
             </ul>
         </nav>
         
-        <div id="main">
-            <section id="content" class="center_content">
-                <ui:insert name="content">Ici la partie perso des pages</ui:insert>
-            </section>
-            <section id="order">
-                <table>
-                    <tr>
-                        <th><h:outputText value="#{msg.orderItem}"/></th>
-                        <th><h:outputText value="#{msg.orderQuantity}"/></th>
-                        <th><h:outputText value="#{msg.orderPrice}"/></th>
-                    </tr>
-                    <tr>
-                        <td>Orval</td>
-                        <td>6</td>
-                        <td>12.60 &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Leffe blonde</td>
-                        <td>24</td>
-                        <td>40.80 &euro;</td>
-                    </tr>
-                    <tr class="lastRowOrder">
-                        <td colspan="2"><h:outputText value="#{msg.orderTotalPrice}"/></td>
-                        <td>53.40 &euro;</td>
-                    </tr>
-                </table>
-                <a href="#" id="linkToOrder">
-                    <h:outputText value="#{msg.goOrder}"/>
-                </a>
-            </section>
+        <div id="background_main">
+            <div id="main">
+                <section id="content" class="center_content">
+                    <ui:insert name="content">Ici la partie perso des pages</ui:insert>
+                </section>
+                <section id="order">
+                    <table>
+                        <tr>
+                            <th><h:outputText value="#{msg.orderItem}"/></th>
+                            <th><h:outputText value="#{msg.orderQuantity}"/></th>
+                            <th><h:outputText value="#{msg.orderPrice}"/></th>
+                        </tr>
+                        <tr>
+                            <td>Orval</td>
+                            <td>6</td>
+                            <td>12.60 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Leffe blonde</td>
+                            <td>24</td>
+                            <td>40.80 &euro;</td>
+                        </tr>
+                        <tr class="lastRowOrder">
+                            <td colspan="2"><h:outputText value="#{msg.orderTotalPrice}"/></td>
+                            <td>53.40 &euro;</td>
+                        </tr>
+                    </table>
+                    <a href="#" id="linkToOrder">
+                        <h:outputText value="#{msg.goOrder}"/>
+                    </a>
+                </section>
+            </div>
         </div>
-        
         <footer>
             <p>Et enfin, le footer</p>
         </footer>
