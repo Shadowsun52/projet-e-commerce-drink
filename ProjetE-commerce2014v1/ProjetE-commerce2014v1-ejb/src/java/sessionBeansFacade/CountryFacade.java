@@ -5,18 +5,17 @@
  */
 package sessionBeansFacade;
 
-import entityBeans.Language;
+import entityBeans.Country;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Alexandre
  */
 @Stateless
-public class LanguageFacade extends AbstractFacade<Language> implements LanguageFacadeLocal {
+public class CountryFacade extends AbstractFacade<Country> implements CountryFacadeLocal {
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
 
@@ -25,15 +24,8 @@ public class LanguageFacade extends AbstractFacade<Language> implements Language
         return em;
     }
 
-    public LanguageFacade() {
-        super(Language.class);
+    public CountryFacade() {
+        super(Country.class);
     }
     
-    @Override
-    public Language findByShortLabel(String shortlabel) {
-        Query query;
-        query = em.createNamedQuery("Language.findByShortlabel");
-        query.setParameter("shortlabel", shortlabel);
-        return (Language) query.getSingleResult();
-    }
 }

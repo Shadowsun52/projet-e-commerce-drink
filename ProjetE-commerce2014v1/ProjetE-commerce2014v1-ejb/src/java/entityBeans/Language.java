@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Language.findBySlogan", query = "SELECT l FROM Language l WHERE l.slogan = :slogan"),
     @NamedQuery(name = "Language.findByShortlabel", query = "SELECT l FROM Language l WHERE l.shortlabel = :shortlabel")})
 public class Language implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangLoc> langLocCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangCountry> langCountryCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,6 +143,24 @@ public class Language implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Language[ idlanguage=" + idlanguage + " ]";
+    }
+
+    @XmlTransient
+    public Collection<LangLoc> getLangLocCollection() {
+        return langLocCollection;
+    }
+
+    public void setLangLocCollection(Collection<LangLoc> langLocCollection) {
+        this.langLocCollection = langLocCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangCountry> getLangCountryCollection() {
+        return langCountryCollection;
+    }
+
+    public void setLangCountryCollection(Collection<LangCountry> langCountryCollection) {
+        this.langCountryCollection = langCountryCollection;
     }
     
 }

@@ -116,6 +116,32 @@
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formCountry}:"
                                            for="country"/><br/>
+                            <h:selectOneMenu id="country" 
+                                             value="#{localityMB.idCountryChosen}">
+                                <f:ajax render="locality"/>
+                                <c:forEach items="#{localityMB.allCountries}" 
+                                           var="country">
+                                    <f:selectItem itemValue="#{country.idcountry}"
+                                                  itemLabel="#{country.getLabel(
+                                                               internationalizationManaged.language)}"/>
+                                </c:forEach>
+                            </h:selectOneMenu>
+                        </p>
+                        <div class="float_left">
+                            <h:outputLabel value="#{msg.formLocality}:"
+                                           for="locality"/><br/>
+                            <h:selectOneMenu id="locality">
+                                
+                                <c:forEach items="#{localityMB.localityForCountry}" 
+                                           var="locality">
+                                    <f:selectItem itemValue="#{locality.idlocality}"
+                                                  itemLabel="#{locality.getLabel(
+                                                               internationalizationManaged.language)}"/>
+                                </c:forEach>
+                            </h:selectOneMenu>
+                        </div>
+                        <p class="after_float">
+                            
                         </p>
                     </div>
                     <div class="partSignUp">

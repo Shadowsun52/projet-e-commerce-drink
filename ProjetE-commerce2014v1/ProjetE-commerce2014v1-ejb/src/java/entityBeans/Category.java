@@ -111,10 +111,7 @@ public class Category implements Serializable {
     }
     
     public String getLabel(String language) {
-        Iterator it = langCatCollection.iterator();
-        while(it.hasNext())
-        {
-            LangCat langCat = (LangCat)it.next();
+        for (LangCat langCat : langCatCollection) {
             if(langCat.getLanguage().getShortlabel().equals(language))
                 return langCat.getLabel();
         }
