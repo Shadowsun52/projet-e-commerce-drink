@@ -6,3 +6,20 @@
     text-align: center;
     font-size: 2em;
 }
+#main form{
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+
+.partSignUp{
+    border-top: 1px solid black;
+}
+
+.float_left{
+    float: left;
+    margin-right: 20px;
+}
+
+.after_float{
+    clear: both;
+}
