@@ -17,25 +17,32 @@
                         <p>
                             <h:outputLabel value="#{msg.formEmail}:" 
                                            for="inputEmail"/><br/>
-                            <h:inputText id="inputEmail" required="true"
-                                     requiredMessage="#{msg.emailRequired}">
-                            
+                            <h:inputText id="inputEmail" class="inputLong" 
+                                         required="true"
+                                         requiredMessage="#{msg.emailRequired}">
                             </h:inputText>
+                            <span class="errorMessage">
+                                <h:message for="inputEmail"/>
+                            </span>
                         </p>
                         <p>
                             <h:outputLabel value="#{msg.formConfirmEmail}:"
                                            for="confirmEmail"/><br/>
-                            <h:inputText id="confirmEmail" required="true"
+                            <h:inputText id="confirmEmail" class="inputLong" 
+                                         required="true"
                                      requiredMessage="#{msg.confirmEmailRequired}">
-                            
                             </h:inputText>
+                            <span class="errorMessage">
+                                <h:message for="confirmEmail"/>
+                            </span>
                         </p>
                     </div>
                     <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formFirstname}:"
                                            for="firstname"/><br/>
-                            <h:inputText id="firstname" required="true"
+                            <h:inputText id="firstname" class="inputShort" 
+                                         required="true"
                                      requiredMessage="#{msg.firstnameRequired}"
                                      validatorMessage="#{msg.firstnameLength}">
                                 <f:validateLength minimum="2" maximum="40"/>
@@ -44,79 +51,86 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formLastname}:"
                                            for="lastname"/><br/>
-                            <h:inputText id="lastname" required="true"
-                                     requiredMessage="#{msg.lastnameRequired}"
-                                     validatorMessage="#{msg.lastnameLength}">
+                            <h:inputText id="lastname" class="inputShort"
+                                         required="true"
+                                       requiredMessage="#{msg.lastnameRequired}"
+                                       validatorMessage="#{msg.lastnameLength}">
                                 <f:validateLength minimum="2" maximum="40"/>
                             </h:inputText>
                         </div>
+                        <p class="after_float">
+                            <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
+                            <h:selectOneMenu id="birthdateDay" 
+                                             class="selectShort">
+                                <f:selectItem itemValue="" 
+                                              itemLabel="#{msg.formDay}"/>
+                                <c:forEach items="#{dateMB.days}" var="day">
+                                    <f:selectItem itemValue="#{day}" 
+                                                  itemLabel="#{day}"/>
+                                </c:forEach>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu id="birthdateMonth" 
+                                             class="selectShort">
+                                <f:selectItem itemValue="" 
+                                              itemLabel="#{msg.formMonth}"/>
+                                <f:selectItem itemValue="#{msg.January}" 
+                                              itemLabel="#{msg.january}"/>
+                                <f:selectItem itemValue="#{msg.february}" 
+                                              itemLabel="#{msg.february}"/>
+                                <f:selectItem itemValue="#{msg.march}" 
+                                              itemLabel="#{msg.march}"/>
+                                <f:selectItem itemValue="#{msg.april}" 
+                                              itemLabel="#{msg.april}"/>
+                                <f:selectItem itemValue="#{msg.may}" 
+                                              itemLabel="#{msg.may}"/>
+                                <f:selectItem itemValue="#{msg.june}" 
+                                              itemLabel="#{msg.june}"/>
+                                <f:selectItem itemValue="#{msg.july}" 
+                                              itemLabel="#{msg.july}"/>
+                                <f:selectItem itemValue="#{msg.august}" 
+                                              itemLabel="#{msg.august}"/>
+                                <f:selectItem itemValue="#{msg.september}" 
+                                              itemLabel="#{msg.september}"/>
+                                <f:selectItem itemValue="#{msg.october}" 
+                                              itemLabel="#{msg.october}"/>
+                                <f:selectItem itemValue="#{msg.november}" 
+                                              itemLabel="#{msg.november}"/>
+                                <f:selectItem itemValue="#{msg.december}" 
+                                              itemLabel="#{msg.december}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu id="birthdateYear" 
+                                             class="selectShort">
+                                <f:selectItem itemValue="" 
+                                              itemLabel="#{msg.formYear}"/>
+                                <c:forEach items="#{dateMB.years}" var="year">
+                                    <f:selectItem itemValue="#{year}" 
+                                                  itemLabel="#{year}"/>
+                                </c:forEach>
+                            </h:selectOneMenu>
+                        </p>
                     </div>
-                    <p class="after_float">
-                        <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
-                        <h:selectOneMenu id="birthdateDay">
-                            <f:selectItem itemValue="" 
-                                          itemLabel="#{msg.formDay}"/>
-                            <c:forEach items="#{dateMB.days}" var="day">
-                                <f:selectItem itemValue="#{day}" 
-                                              itemLabel="#{day}"/>
-                            </c:forEach>
-                        </h:selectOneMenu>
-                        <h:selectOneMenu id="birthdateMonth">
-                            <f:selectItem itemValue="" 
-                                          itemLabel="#{msg.formMonth}"/>
-                            <f:selectItem itemValue="#{msg.January}" 
-                                          itemLabel="#{msg.january}"/>
-                            <f:selectItem itemValue="#{msg.february}" 
-                                          itemLabel="#{msg.february}"/>
-                            <f:selectItem itemValue="#{msg.march}" 
-                                          itemLabel="#{msg.march}"/>
-                            <f:selectItem itemValue="#{msg.april}" 
-                                          itemLabel="#{msg.april}"/>
-                            <f:selectItem itemValue="#{msg.may}" 
-                                          itemLabel="#{msg.may}"/>
-                            <f:selectItem itemValue="#{msg.june}" 
-                                          itemLabel="#{msg.june}"/>
-                            <f:selectItem itemValue="#{msg.july}" 
-                                          itemLabel="#{msg.july}"/>
-                            <f:selectItem itemValue="#{msg.august}" 
-                                          itemLabel="#{msg.august}"/>
-                            <f:selectItem itemValue="#{msg.september}" 
-                                          itemLabel="#{msg.september}"/>
-                            <f:selectItem itemValue="#{msg.october}" 
-                                          itemLabel="#{msg.october}"/>
-                            <f:selectItem itemValue="#{msg.november}" 
-                                          itemLabel="#{msg.november}"/>
-                            <f:selectItem itemValue="#{msg.december}" 
-                                          itemLabel="#{msg.december}"/>
-                        </h:selectOneMenu>
-                        <h:selectOneMenu id="birthdateYear">
-                            <f:selectItem itemValue="" 
-                                          itemLabel="#{msg.formYear}"/>
-                            <c:forEach items="#{dateMB.years}" var="year">
-                                <f:selectItem itemValue="#{year}" 
-                                              itemLabel="#{year}"/>
-                            </c:forEach>
-                        </h:selectOneMenu>
-                    </p>
                     <div class="partSignUp">
-                        <div class="float_left">
+                        <div id="div_name_street" class="float_left">
                             <h:outputLabel value="#{msg.formNameStreet}:"
                                            for="nameStreet"/><br/>
-                            <h:inputText id="nameStreet" required="true"
+                            <h:inputText id="nameStreet" class="inputLong" 
+                                         required="true"
                                          requiredMessage="#{msg.nameStreetRequired}">
                             </h:inputText>
                         </div>
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formNbStreet}:"
                                            for="nbStreet"/><br/>
-                            <h:inputText id="nbStreet" required="true"
+                            <h:inputText id="nbStreet" class="inputShorter" 
+                                         required="true"
                                          requiredMessage="#{msg.nbStreetRequired}">
                             </h:inputText>
                         </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formCountry}:"
                                            for="country"/><br/>
-                            <h:selectOneMenu id="country" 
+                            <h:selectOneMenu id="country"
+                                             class="selectLong"
                                              value="#{localityMB.idCountryChosen}">
                                 <f:ajax render="locality"/>
                                 <c:forEach items="#{localityMB.allCountries}" 
@@ -130,7 +144,7 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formLocality}:"
                                            for="locality"/><br/>
-                            <h:selectOneMenu id="locality">
+                            <h:selectOneMenu id="locality" class="selectLong">
                                 
                                 <c:forEach items="#{localityMB.localityForCountry}" 
                                            var="locality">
@@ -140,15 +154,29 @@
                                 </c:forEach>
                             </h:selectOneMenu>
                         </div>
+                        <div class="float_left">
+                            <h:outputLabel value="#{msg.formCity}:"
+                                           for="city"/><br/>
+                            <h:inputText id="city" class="inputShort" 
+                                         required="true"
+                                         requiredMessage="#{msg.cityRequired}">
+                            </h:inputText>
+                        </div>
                         <p class="after_float">
-                            
+                            <h:outputLabel value="#{msg.formNumTel}:"
+                                           for="numTel"/><br/>
+                            <h:inputText id="numTel" class="inputLong"
+                                         required="true"
+                                         requiredMessage="#{msg.numTelRequired}">
+                            </h:inputText>
                         </p>
                     </div>
                     <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
-                            <h:inputText id="password" required="true"
+                            <h:inputText id="password" class="inputShort"
+                                         required="true"
                                          requiredMessage="#{msg.passwordRequired}"
                                          validatorMessage="#{msg.passwordLength}">
                                 <f:validateLength minimum="2" maximum="40"/>
@@ -157,12 +185,13 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formConfirmPassword}:"
                                            for="confirmPassword"/><br/>
-                            <h:inputText id="confirmPassword" required="true"
+                            <h:inputText id="confirmPassword" class="inputShort"
+                                         required="true"
                                     requiredMessage="#{msg.confirmPasswordRequired}">
                             </h:inputText>
                         </div>
                         <p class="after_float">
-                            <h:commandButton value="#{msg.signUp}"/>
+                            <h:commandButton value="#{msg.bntValid}"/>
                         </p>
                     </div>
                 </h:form>

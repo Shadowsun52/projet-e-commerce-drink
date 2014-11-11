@@ -170,19 +170,19 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
 }
 
 #background_main{
-    background-color: white;
+    background-color: rgb(229,229,229);
     overflow: hidden;
-    padding-top: 10px;
 }
 
 #main {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 88%;
+    overflow: hidden;
 }
 
 #content {
     width: 67%;
-    background-color: #dddddd;
+    //background-color: #dddddd;
     padding: 5px 0 5px 5px;
     float: left;
 }

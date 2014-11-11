@@ -2,13 +2,25 @@
     width: 100%;
 }
 
+#main {
+    width: 60%;
+    background-color: white;
+    border-radius: 5px;
+}
+
 #main h1{
     text-align: center;
     font-size: 2em;
 }
 #main form{
-    width: 80%;
+    width: 95%;
     margin: 20px auto 0 auto;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#main form *{
+    margin-top: 10px;
 }
 
 .partSignUp{
@@ -16,10 +28,76 @@
 }
 
 .float_left{
-    float: left;
-    margin-right: 20px;
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    width: 80%;
+    max-width: 200px;
+    min-width: 150px;
 }
 
 .after_float{
     clear: both;
+}
+
+#main form select {
+    margin-right: 5px;
+}
+
+#main form select *{
+    margin:0;
+}
+
+#main input{
+    min-width: 150px;
+    width: 90%;
+}
+
+#main input, #main select{
+   border: 1px solid rgb(200,200,200); 
+}
+
+.inputLong {
+    max-width: 385px;
+}
+
+#div_name_street{
+    min-width: 50px;
+    max-width: 300px;
+    width: 90%;
+}
+
+.inputShort{
+    max-width: 170px; 
+}
+
+.inputShorter{
+    width: 50px !important;
+    min-width: 50px !important;
+}
+
+.selectLong{
+    width: 90%;
+    max-width: 385px;
+    min-width: 150px;
+}
+
+.selectShort{
+    width: 90%;
+    max-width: 126px;
+}
+
+#main form input[type="submit"]{
+    width: 150px;
+    height: 25px;
+}
+
+.errorMessage{
+    color: red;
+    font-weight: normal;
+    
+}
+@media screen and (max-width: 762px) {
+    .selectShort {
+        display: block;
+    }
 }
