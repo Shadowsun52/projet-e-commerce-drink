@@ -35,6 +35,14 @@
     min-width: 150px;
 }
 
+.float_error{
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    width: 80%;
+    max-width: 300px;
+    min-width: 150px;
+}
+
 .after_float{
     clear: both;
 }
@@ -91,13 +99,20 @@
     height: 25px;
 }
 
-.errorMessage{
-    color: red;
-    font-weight: normal;
-    
-}
 @media screen and (max-width: 762px) {
     .selectShort {
         display: block;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #main{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #main{
+        width: 95%;
     }
 }

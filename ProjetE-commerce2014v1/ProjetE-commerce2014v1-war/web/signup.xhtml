@@ -20,6 +20,7 @@
                             <h:inputText id="inputEmail" class="inputLong" 
                                          required="true"
                                          requiredMessage="#{msg.emailRequired}">
+                                <f:validator validatorId="validatorEmail"/>
                             </h:inputText>
                             <span class="errorMessage">
                                 <h:message for="inputEmail"/>
@@ -31,6 +32,7 @@
                             <h:inputText id="confirmEmail" class="inputLong" 
                                          required="true"
                                      requiredMessage="#{msg.confirmEmailRequired}">
+                                <f:validator validatorId="validatorConfirmEmail"/>
                             </h:inputText>
                             <span class="errorMessage">
                                 <h:message for="confirmEmail"/>
@@ -58,11 +60,19 @@
                                 <f:validateLength minimum="2" maximum="40"/>
                             </h:inputText>
                         </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message for="firstname"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message for="lastname"/>
+                            </span>
+                        </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
                             <h:selectOneMenu id="birthdateDay" 
                                              class="selectShort">
-                                <f:selectItem itemValue="" 
+                                <f:selectItem itemValue="none" 
                                               itemLabel="#{msg.formDay}"/>
                                 <c:forEach items="#{dateMB.days}" var="day">
                                     <f:selectItem itemValue="#{day}" 
@@ -71,7 +81,7 @@
                             </h:selectOneMenu>
                             <h:selectOneMenu id="birthdateMonth" 
                                              class="selectShort">
-                                <f:selectItem itemValue="" 
+                                <f:selectItem itemValue="none" 
                                               itemLabel="#{msg.formMonth}"/>
                                 <f:selectItem itemValue="#{msg.January}" 
                                               itemLabel="#{msg.january}"/>
@@ -100,7 +110,7 @@
                             </h:selectOneMenu>
                             <h:selectOneMenu id="birthdateYear" 
                                              class="selectShort">
-                                <f:selectItem itemValue="" 
+                                <f:selectItem itemValue="none" 
                                               itemLabel="#{msg.formYear}"/>
                                 <c:forEach items="#{dateMB.years}" var="year">
                                     <f:selectItem itemValue="#{year}" 
@@ -126,6 +136,14 @@
                                          requiredMessage="#{msg.nbStreetRequired}">
                             </h:inputText>
                         </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message for="nameStreet"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message for="nbStreet"/>
+                            </span>
+                        </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formCountry}:"
                                            for="country"/><br/>
@@ -145,11 +163,12 @@
                             <h:outputLabel value="#{msg.formLocality}:"
                                            for="locality"/><br/>
                             <h:selectOneMenu id="locality" class="selectLong">
-                                
+                                <f:selectItem itemValue="none" 
+                                              itemLabel="#{msg.formSelectLocality}"/>
                                 <c:forEach items="#{localityMB.localityForCountry}" 
                                            var="locality">
                                     <f:selectItem itemValue="#{locality.idlocality}"
-                                                  itemLabel="#{locality.getLabel(
+                                                  itemLabel="#{locality.postcode}-#{locality.getLabel(
                                                                internationalizationManaged.language)}"/>
                                 </c:forEach>
                             </h:selectOneMenu>
@@ -162,6 +181,14 @@
                                          requiredMessage="#{msg.cityRequired}">
                             </h:inputText>
                         </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message for="locality"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message for="city"/>
+                            </span>
+                        </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formNumTel}:"
                                            for="numTel"/><br/>
@@ -169,26 +196,37 @@
                                          required="true"
                                          requiredMessage="#{msg.numTelRequired}">
                             </h:inputText>
+                            <span class="errorMessage">
+                                <h:message for="numTel"/>
+                            </span>
                         </p>
                     </div>
                     <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
-                            <h:inputText id="password" class="inputShort"
+                            <h:inputSecret id="password" class="inputShort"
                                          required="true"
                                          requiredMessage="#{msg.passwordRequired}"
                                          validatorMessage="#{msg.passwordLength}">
                                 <f:validateLength minimum="2" maximum="40"/>
-                            </h:inputText>
+                            </h:inputSecret>
                         </div>
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formConfirmPassword}:"
                                            for="confirmPassword"/><br/>
-                            <h:inputText id="confirmPassword" class="inputShort"
+                            <h:inputSecret id="confirmPassword" class="inputShort"
                                          required="true"
                                     requiredMessage="#{msg.confirmPasswordRequired}">
-                            </h:inputText>
+                            </h:inputSecret>
+                        </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message for="password"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message for="confirmPassword"/>
+                            </span>
                         </div>
                         <p class="after_float">
                             <h:commandButton value="#{msg.bntValid}"/>

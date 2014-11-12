@@ -58,7 +58,7 @@ public class LocalityMB implements Serializable {
     }
 
     public ArrayList<Locality> getLocalityForCountry() {
-        Country test = countryFacade.find(new Integer(idCountryChosen));
-        return new ArrayList(test.getLocalityCollection());
+        Country countryChosen = countryFacade.find(new Integer(idCountryChosen));
+        return new ArrayList(countryChosen.getLocalityCollection());
     }
 }

@@ -44,3 +44,13 @@ a:link:hover, a:visited:hover  {
 input[type="submit"]:hover{
     cursor: pointer;
 }
+
+.errorMessage{
+    color: red;
+    font-weight: normal;
+    background-image: url(../images/error_icon.png);
+    background-size: 15px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    display: inline-block;
+}
