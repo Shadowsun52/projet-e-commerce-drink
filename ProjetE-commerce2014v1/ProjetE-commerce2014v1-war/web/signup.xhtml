@@ -17,25 +17,37 @@
                         <p>
                             <h:outputLabel value="#{msg.formEmail}:" 
                                            for="inputEmail"/><br/>
-                            <h:inputText id="inputEmail" class="inputLong" 
+                            <h:inputText id="inputEmail" class="inputLong"
+                                         maxlength="70"
+                                         binding="#{composantEmail}"
                                          required="true"
-                                         requiredMessage="#{msg.emailRequired}">
-                                <f:validator validatorId="validatorEmail"/>
+                                         requiredMessage="#{msg.emailRequired}"
+                                         validatorMessage="#{msg.emailNotCorrect}">
+                                <f:ajax execute="inputEmail confirmEmail" 
+                                        render="errorEmail errorConfirmEmail" 
+                                        event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^[a-zA-Z0-9._-]{2,}@[a-z0-9._-]{2,}\.[a-z]{2,4}$"/>
                             </h:inputText>
                             <span class="errorMessage">
-                                <h:message for="inputEmail"/>
+                                <h:message id="errorEmail" for="inputEmail"/>
                             </span>
                         </p>
                         <p>
                             <h:outputLabel value="#{msg.formConfirmEmail}:"
                                            for="confirmEmail"/><br/>
                             <h:inputText id="confirmEmail" class="inputLong" 
-                                         required="true"
+                                         maxlength="70" required="true"
                                      requiredMessage="#{msg.confirmEmailRequired}">
+                                <f:ajax execute="confirmEmail inputEmail" 
+                                        render="errorConfirmEmail" 
+                                        event="blur"/>
+                                <f:attribute name="composantEmail" 
+                                             value="#{composantEmail}"/>
                                 <f:validator validatorId="validatorConfirmEmail"/>
                             </h:inputText>
                             <span class="errorMessage">
-                                <h:message for="confirmEmail"/>
+                                <h:message id="errorConfirmEmail" for="confirmEmail"/>
                             </span>
                         </p>
                     </div>
@@ -44,79 +56,90 @@
                             <h:outputLabel value="#{msg.formFirstname}:"
                                            for="firstname"/><br/>
                             <h:inputText id="firstname" class="inputShort" 
-                                         required="true"
+                                         maxlength="40" required="true"
                                      requiredMessage="#{msg.firstnameRequired}"
                                      validatorMessage="#{msg.firstnameLength}">
+                                <f:ajax render="errorFirstname" event="blur"/>
                                 <f:validateLength minimum="2" maximum="40"/>
+                                <f:validateRegex pattern="^\D{2,}$"/>
                             </h:inputText>
                         </div>
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formLastname}:"
                                            for="lastname"/><br/>
                             <h:inputText id="lastname" class="inputShort"
-                                         required="true"
+                                         maxlength="40" required="true"
                                        requiredMessage="#{msg.lastnameRequired}"
                                        validatorMessage="#{msg.lastnameLength}">
+                                <f:ajax render="errorLastname" event="blur"/>
                                 <f:validateLength minimum="2" maximum="40"/>
+                                <f:validateRegex pattern="^\D{2,}$"/>
                             </h:inputText>
                         </div>
                         <div class="float_error">
                             <span class="errorMessage">
-                                <h:message for="firstname"/>
+                                <h:message id="errorFirstname" for="firstname"/>
                             </span>
                             <span class="errorMessage">
-                                <h:message for="lastname"/>
+                                <h:message id="errorLastname" for="lastname"/>
                             </span>
                         </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
                             <h:selectOneMenu id="birthdateDay" 
-                                             class="selectShort">
-                                <f:selectItem itemValue="none" 
-                                              itemLabel="#{msg.formDay}"/>
-                                <c:forEach items="#{dateMB.days}" var="day">
-                                    <f:selectItem itemValue="#{day}" 
-                                                  itemLabel="#{day}"/>
-                                </c:forEach>
+                                             class="selectShort"
+                                             binding="#{composantDay}"
+                                             value="test">
+                                <f:selectItem itemLabel="#{msg.formDay}"/>
+                                <f:selectItems value="#{dateMB.days}"/>
+                                <f:ajax render="errorBirthDate" event="blur"/>
+                                <f:attribute name="composantDay" 
+                                             value="#{composantDay}"/>
                             </h:selectOneMenu>
                             <h:selectOneMenu id="birthdateMonth" 
-                                             class="selectShort">
-                                <f:selectItem itemValue="none" 
+                                             class="selectShort"
+                                             binding="#{composantMonth}">
+                                <f:selectItem itemValue="" 
                                               itemLabel="#{msg.formMonth}"/>
-                                <f:selectItem itemValue="#{msg.January}" 
+                                <f:selectItem itemValue="0" 
                                               itemLabel="#{msg.january}"/>
-                                <f:selectItem itemValue="#{msg.february}" 
+                                <f:selectItem itemValue="1" 
                                               itemLabel="#{msg.february}"/>
-                                <f:selectItem itemValue="#{msg.march}" 
+                                <f:selectItem itemValue="2" 
                                               itemLabel="#{msg.march}"/>
-                                <f:selectItem itemValue="#{msg.april}" 
+                                <f:selectItem itemValue="3" 
                                               itemLabel="#{msg.april}"/>
-                                <f:selectItem itemValue="#{msg.may}" 
+                                <f:selectItem itemValue="4" 
                                               itemLabel="#{msg.may}"/>
-                                <f:selectItem itemValue="#{msg.june}" 
+                                <f:selectItem itemValue="5" 
                                               itemLabel="#{msg.june}"/>
-                                <f:selectItem itemValue="#{msg.july}" 
+                                <f:selectItem itemValue="6" 
                                               itemLabel="#{msg.july}"/>
-                                <f:selectItem itemValue="#{msg.august}" 
+                                <f:selectItem itemValue="7" 
                                               itemLabel="#{msg.august}"/>
-                                <f:selectItem itemValue="#{msg.september}" 
+                                <f:selectItem itemValue="8" 
                                               itemLabel="#{msg.september}"/>
-                                <f:selectItem itemValue="#{msg.october}" 
+                                <f:selectItem itemValue="9" 
                                               itemLabel="#{msg.october}"/>
-                                <f:selectItem itemValue="#{msg.november}" 
+                                <f:selectItem itemValue="10" 
                                               itemLabel="#{msg.november}"/>
-                                <f:selectItem itemValue="#{msg.december}" 
+                                <f:selectItem itemValue="11" 
                                               itemLabel="#{msg.december}"/>
+                                
                             </h:selectOneMenu>
                             <h:selectOneMenu id="birthdateYear" 
-                                             class="selectShort">
-                                <f:selectItem itemValue="none" 
+                                             class="selectShort"
+                                             >
+                                <f:selectItem itemValue="" 
                                               itemLabel="#{msg.formYear}"/>
                                 <c:forEach items="#{dateMB.years}" var="year">
                                     <f:selectItem itemValue="#{year}" 
                                                   itemLabel="#{year}"/>
                                 </c:forEach>
                             </h:selectOneMenu>
+                            <span class="errorMessage">
+                                <h:message id="errorBirthdate" for="birthdateDay"/>
+                            </span>
                         </p>
                     </div>
                     <div class="partSignUp">
@@ -126,6 +149,7 @@
                             <h:inputText id="nameStreet" class="inputLong" 
                                          required="true"
                                          requiredMessage="#{msg.nameStreetRequired}">
+                                <f:ajax render="errorNameStreet" event="blur"/>
                             </h:inputText>
                         </div>
                         <div class="float_left">
@@ -134,14 +158,15 @@
                             <h:inputText id="nbStreet" class="inputShorter" 
                                          required="true"
                                          requiredMessage="#{msg.nbStreetRequired}">
+                                <f:ajax render="errorNbStreet" event="blur"/>
                             </h:inputText>
                         </div>
                         <div class="float_error">
                             <span class="errorMessage">
-                                <h:message for="nameStreet"/>
+                                <h:message id="errorNameStreet" for="nameStreet"/>
                             </span>
                             <span class="errorMessage">
-                                <h:message for="nbStreet"/>
+                                <h:message id="errorNbStreet" for="nbStreet"/>
                             </span>
                         </div>
                         <p class="after_float">
@@ -163,69 +188,65 @@
                             <h:outputLabel value="#{msg.formLocality}:"
                                            for="locality"/><br/>
                             <h:selectOneMenu id="locality" class="selectLong">
-                                <f:selectItem itemValue="none" 
-                                              itemLabel="#{msg.formSelectLocality}"/>
-                                <c:forEach items="#{localityMB.localityForCountry}" 
-                                           var="locality">
-                                    <f:selectItem itemValue="#{locality.idlocality}"
-                                                  itemLabel="#{locality.postcode}-#{locality.getLabel(
-                                                               internationalizationManaged.language)}"/>
-                                </c:forEach>
+                                <f:selectItems value="#{localityMB.localityForCountry}"
+                                           var="locality" itemValue="#{locality.idlocality}"
+                                           itemLabel="#{locality.postcode}-#{locality.getLabel(
+                                                    internationalizationManaged.language)}"/>
                             </h:selectOneMenu>
                         </div>
                         <div class="float_left">
-                            <h:outputLabel value="#{msg.formCity}:"
-                                           for="city"/><br/>
-                            <h:inputText id="city" class="inputShort" 
+                            <h:outputLabel value="#{msg.formNumTel}:"
+                                           for="numTel"/><br/>
+                            <h:inputText id="numTel" class="inputShort" 
                                          required="true"
-                                         requiredMessage="#{msg.cityRequired}">
+                                         requiredMessage="#{msg.numTelRequired}"
+                                         validatorMessage="#{msg.numTelError}">
+                                <f:ajax render="errorNumTel" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^((0|\+32 ?)|((0|\+33 ?)\d[-.\/ ]?))\d{2}([-.\/ ]?\d{2}){3}+$"/>
                             </h:inputText>
                         </div>
                         <div class="float_error">
                             <span class="errorMessage">
-                                <h:message for="locality"/>
-                            </span>
-                            <span class="errorMessage">
-                                <h:message for="city"/>
+                                <h:message id="errorNumTel" for="numTel"/>
                             </span>
                         </div>
-                        <p class="after_float">
-                            <h:outputLabel value="#{msg.formNumTel}:"
-                                           for="numTel"/><br/>
-                            <h:inputText id="numTel" class="inputLong"
-                                         required="true"
-                                         requiredMessage="#{msg.numTelRequired}">
-                            </h:inputText>
-                            <span class="errorMessage">
-                                <h:message for="numTel"/>
-                            </span>
-                        </p>
+                        <span class="after_float"/>
                     </div>
                     <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
                             <h:inputSecret id="password" class="inputShort"
-                                         required="true"
+                                           maxlength="40" required="true"
+                                           binding="#{composantPassword}"
                                          requiredMessage="#{msg.passwordRequired}"
                                          validatorMessage="#{msg.passwordLength}">
                                 <f:validateLength minimum="2" maximum="40"/>
+                                <f:ajax execute="password confirmPassword" 
+                                        render="errorPassword errorConfirmPassword" 
+                                        event="blur"/>
                             </h:inputSecret>
                         </div>
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formConfirmPassword}:"
                                            for="confirmPassword"/><br/>
                             <h:inputSecret id="confirmPassword" class="inputShort"
-                                         required="true"
+                                           maxlength="40" required="true"
                                     requiredMessage="#{msg.confirmPasswordRequired}">
+                                <f:ajax render="errorConfirmPassword" event="blur"/>
+                                <f:attribute name="composantPassword" 
+                                             value="#{composantPassword}"/>
+                                <f:validator validatorId="validatorConfirmPassword"/>
                             </h:inputSecret>
                         </div>
                         <div class="float_error">
                             <span class="errorMessage">
-                                <h:message for="password"/>
+                                <h:message id="errorPassword" for="password"/>
                             </span>
                             <span class="errorMessage">
-                                <h:message for="confirmPassword"/>
+                                <h:message id="errorConfirmPassword"
+                                           for="confirmPassword"/>
                             </span>
                         </div>
                         <p class="after_float">

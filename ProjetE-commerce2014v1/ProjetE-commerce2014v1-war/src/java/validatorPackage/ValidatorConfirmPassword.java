@@ -7,35 +7,33 @@ package validatorPackage;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
-import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
  *
  * @author Alexandre
  */
-@FacesValidator("validatorEmail")
-public class ValidatorEmail implements Validator{
-    private String email;
+@FacesValidator("validatorConfirmPassword")
+public class ValidatorConfirmPassword extends ValidatorMultiFields{
+
+    private static final String PASSWORD_FIELD = "composantPassword",
+                                ERROR_MESSAGE = "emailsNotSame";
+    
+    private String password,
+                   confirmPassword;
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        email = (String)value; 
-        if(!Pattern.matches("^\\S{4,}@\\D{3,}[.]\\D{2,4}$",email))
-        {
-            Locale locale = context.getViewRoot().getLocale();
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(
-                    "languagePackage.lang", locale);
+        confirmPassword = (String)value;
+        password = getField(context, component, PASSWORD_FIELD);
+        if(!password.equals(confirmPassword)){
             throw new ValidatorException(
-                    new FacesMessage(resourceBundle.getString("emailNotCorrect")));
+                    new FacesMessage(linkToBundle(context).getString(ERROR_MESSAGE)));
         }
-        
     }
-    
     
 }
