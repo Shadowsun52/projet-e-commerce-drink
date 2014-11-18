@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -18,16 +19,15 @@
                             <h:outputLabel value="#{msg.formEmail}:" 
                                            for="inputEmail"/><br/>
                             <h:inputText id="inputEmail" class="inputLong"
-                                         maxlength="70"
+                                         maxlength="70" 
+                                         value="#{customerMB.customer.email}"
                                          binding="#{composantEmail}"
                                          required="true"
-                                         requiredMessage="#{msg.emailRequired}"
-                                         validatorMessage="#{msg.emailNotCorrect}">
+                                         requiredMessage="#{msg.emailRequired}">
                                 <f:ajax execute="inputEmail confirmEmail" 
                                         render="errorEmail errorConfirmEmail" 
                                         event="blur"/>
-                                <f:validateRegex 
-                                    pattern="^[a-zA-Z0-9._-]{2,}@[a-z0-9._-]{2,}\.[a-z]{2,4}$"/>
+                                <f:validator validatorId="validatorEmail"/>
                             </h:inputText>
                             <span class="errorMessage">
                                 <h:message id="errorEmail" for="inputEmail"/>
@@ -55,7 +55,8 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formFirstname}:"
                                            for="firstname"/><br/>
-                            <h:inputText id="firstname" class="inputShort" 
+                            <h:inputText id="firstname" class="inputShort"
+                                         value="#{customerMB.customer.name}"
                                          maxlength="40" required="true"
                                      requiredMessage="#{msg.firstnameRequired}"
                                      validatorMessage="#{msg.firstnameLength}">
@@ -68,6 +69,7 @@
                             <h:outputLabel value="#{msg.formLastname}:"
                                            for="lastname"/><br/>
                             <h:inputText id="lastname" class="inputShort"
+                                         value="#{customerMB.customer.lastname}"
                                          maxlength="40" required="true"
                                        requiredMessage="#{msg.lastnameRequired}"
                                        validatorMessage="#{msg.lastnameLength}">
@@ -86,57 +88,12 @@
                         </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
-                            <h:selectOneMenu id="birthdateDay" 
-                                             class="selectShort"
-                                             binding="#{composantDay}"
-                                             value="test">
-                                <f:selectItem itemLabel="#{msg.formDay}"/>
-                                <f:selectItems value="#{dateMB.days}"/>
-                                <f:ajax render="errorBirthDate" event="blur"/>
-                                <f:attribute name="composantDay" 
-                                             value="#{composantDay}"/>
-                            </h:selectOneMenu>
-                            <h:selectOneMenu id="birthdateMonth" 
-                                             class="selectShort"
-                                             binding="#{composantMonth}">
-                                <f:selectItem itemValue="" 
-                                              itemLabel="#{msg.formMonth}"/>
-                                <f:selectItem itemValue="0" 
-                                              itemLabel="#{msg.january}"/>
-                                <f:selectItem itemValue="1" 
-                                              itemLabel="#{msg.february}"/>
-                                <f:selectItem itemValue="2" 
-                                              itemLabel="#{msg.march}"/>
-                                <f:selectItem itemValue="3" 
-                                              itemLabel="#{msg.april}"/>
-                                <f:selectItem itemValue="4" 
-                                              itemLabel="#{msg.may}"/>
-                                <f:selectItem itemValue="5" 
-                                              itemLabel="#{msg.june}"/>
-                                <f:selectItem itemValue="6" 
-                                              itemLabel="#{msg.july}"/>
-                                <f:selectItem itemValue="7" 
-                                              itemLabel="#{msg.august}"/>
-                                <f:selectItem itemValue="8" 
-                                              itemLabel="#{msg.september}"/>
-                                <f:selectItem itemValue="9" 
-                                              itemLabel="#{msg.october}"/>
-                                <f:selectItem itemValue="10" 
-                                              itemLabel="#{msg.november}"/>
-                                <f:selectItem itemValue="11" 
-                                              itemLabel="#{msg.december}"/>
-                                
-                            </h:selectOneMenu>
-                            <h:selectOneMenu id="birthdateYear" 
-                                             class="selectShort"
-                                             >
-                                <f:selectItem itemValue="" 
-                                              itemLabel="#{msg.formYear}"/>
-                                <c:forEach items="#{dateMB.years}" var="year">
-                                    <f:selectItem itemValue="#{year}" 
-                                                  itemLabel="#{year}"/>
-                                </c:forEach>
-                            </h:selectOneMenu>
+                            <p class="inputLong">
+                            <p:calendar value="#{customerMB.customer.birthdate}"
+                                        navigator="true" pattern="dd-MMM-yyyy" 
+                                        yearRange="-100:-18"
+                                        locale="#{internationalizationManaged.language}"/>
+                            </p>
                             <span class="errorMessage">
                                 <h:message id="errorBirthdate" for="birthdateDay"/>
                             </span>
@@ -146,7 +103,8 @@
                         <div id="div_name_street" class="float_left">
                             <h:outputLabel value="#{msg.formNameStreet}:"
                                            for="nameStreet"/><br/>
-                            <h:inputText id="nameStreet" class="inputLong" 
+                            <h:inputText id="nameStreet" class="inputLong"
+                                         value="#{customerMB.customer.addNamestreet}"
                                          required="true"
                                          requiredMessage="#{msg.nameStreetRequired}">
                                 <f:ajax render="errorNameStreet" event="blur"/>
@@ -156,6 +114,7 @@
                             <h:outputLabel value="#{msg.formNbStreet}:"
                                            for="nbStreet"/><br/>
                             <h:inputText id="nbStreet" class="inputShorter" 
+                                         value="#{customerMB.customer.addNumstreet}"
                                          required="true"
                                          requiredMessage="#{msg.nbStreetRequired}">
                                 <f:ajax render="errorNbStreet" event="blur"/>
@@ -187,9 +146,10 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formLocality}:"
                                            for="locality"/><br/>
-                            <h:selectOneMenu id="locality" class="selectLong">
+                            <h:selectOneMenu id="locality" class="selectLong"
+                                             value="#{customerMB.customer.idlocality}">
                                 <f:selectItems value="#{localityMB.localityForCountry}"
-                                           var="locality" itemValue="#{locality.idlocality}"
+                                           var="locality" itemValue="#{locality}"
                                            itemLabel="#{locality.postcode}-#{locality.getLabel(
                                                     internationalizationManaged.language)}"/>
                             </h:selectOneMenu>
@@ -197,7 +157,8 @@
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formNumTel}:"
                                            for="numTel"/><br/>
-                            <h:inputText id="numTel" class="inputShort" 
+                            <h:inputText id="numTel" class="inputShort"
+                                         value="#{customerMB.customer.numphone}"
                                          required="true"
                                          requiredMessage="#{msg.numTelRequired}"
                                          validatorMessage="#{msg.numTelError}">
@@ -218,6 +179,7 @@
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
                             <h:inputSecret id="password" class="inputShort"
+                                           value="#{customerMB.customer.password}"
                                            maxlength="40" required="true"
                                            binding="#{composantPassword}"
                                          requiredMessage="#{msg.passwordRequired}"
@@ -250,7 +212,7 @@
                             </span>
                         </div>
                         <p class="after_float">
-                            <h:commandButton value="#{msg.bntValid}"/>
+                            <h:commandButton value="#{msg.bntValid}" action="#{customerMB.signUp()}"/>
                         </p>
                     </div>
                 </h:form>

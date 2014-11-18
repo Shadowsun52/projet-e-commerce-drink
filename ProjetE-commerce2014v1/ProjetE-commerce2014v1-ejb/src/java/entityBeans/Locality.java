@@ -36,6 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Locality.findByIdlocality", query = "SELECT l FROM Locality l WHERE l.idlocality = :idlocality"),
     @NamedQuery(name = "Locality.findByPostcode", query = "SELECT l FROM Locality l WHERE l.postcode = :postcode")})
 public class Locality implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idlocality")
+    private Collection<Customer> customerCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,5 +131,14 @@ public class Locality implements Serializable {
         }
         //il faudra gérer une erreur ici
         return "not found";
+    }
+
+    @XmlTransient
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
+    }
+
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
     }
 }

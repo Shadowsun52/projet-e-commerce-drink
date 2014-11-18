@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Category.findByIdcategory", query = "SELECT c FROM Category c WHERE c.idcategory = :idcategory"),
     @NamedQuery(name = "Category.findByDaterequired", query = "SELECT c FROM Category c WHERE c.daterequired = :daterequired")})
 public class Category implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcategory")
+    private Collection<Type> typeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Collection<LangCat> langCatCollection;
     private static final long serialVersionUID = 1L;
@@ -117,5 +119,14 @@ public class Category implements Serializable {
         }
         //il faudra gérer une erreur ici
         return "not found";
+    }
+
+    @XmlTransient
+    public Collection<Type> getTypeCollection() {
+        return typeCollection;
+    }
+
+    public void setTypeCollection(Collection<Type> typeCollection) {
+        this.typeCollection = typeCollection;
     }
 }

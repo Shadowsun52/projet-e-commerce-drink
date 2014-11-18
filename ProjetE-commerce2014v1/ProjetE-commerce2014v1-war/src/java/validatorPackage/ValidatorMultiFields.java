@@ -20,8 +20,8 @@ public abstract class ValidatorMultiFields implements Validator{
     private static final String BUNDLE_LOCALE = "languagePackage.lang";
     
     protected String getField(FacesContext context, UIComponent component, String nameComponent){
-       UIInput componentField  =(UIInput) component.getAttributes().get(nameComponent);
-       return (String) componentField.getValue();
+            UIInput componentField  =(UIInput) component.getAttributes().get(nameComponent);
+            return (String) componentField.getValue();
     }
     
     protected ResourceBundle linkToBundle(FacesContext context){

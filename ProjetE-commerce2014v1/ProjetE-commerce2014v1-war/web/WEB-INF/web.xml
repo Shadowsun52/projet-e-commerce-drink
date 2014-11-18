@@ -21,4 +21,16 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <ejb-local-ref>
+        <ejb-ref-name>LocalityFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.LocalityFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#LocalityFacade</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CustomerFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.CustomerFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

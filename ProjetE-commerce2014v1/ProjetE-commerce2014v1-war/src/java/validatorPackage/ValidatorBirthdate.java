@@ -39,7 +39,6 @@ public class ValidatorBirthdate extends ValidatorMultiFields{
                     new FacesMessage(linkToBundle(context).getString(ERROR_MESSAGE)));
         
         GregorianCalendar birthdate = new GregorianCalendar(day, month, year);
-        year = 0;
     }
     
     private void readingValue(FacesContext context, UIComponent component) {
