@@ -5,9 +5,7 @@
  */
 package validatorPackage;
 
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,33 +19,23 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("validatorBirthdate")
 public class ValidatorBirthdate extends ValidatorMultiFields{
     
-    private static final String DAY_FIELD = "composantDay",
-                                MONTH_FIELD = "composantMonth",
-                                YEAR_FIELD = "composantYear",
-                                ERROR_MESSAGE = "emailsNotSame";
-    
-    private Integer day,
-                    month,
-                    year;
+    private static final String ERROR_MESSAGE = "min18years";
+    private static final long TIME_FOR_ONE_YEAR = 31449600000L;
+    private Date birthdate,
+                 now;
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
-        readingValue(context, component);
-        if(fieldsAreEmpty())
+        birthdate = (Date) value;
+        now = new Date();
+        if(!eighteenYearsBetweenDate(birthdate, now))
             throw new ValidatorException(
                     new FacesMessage(linkToBundle(context).getString(ERROR_MESSAGE)));
-        
-        GregorianCalendar birthdate = new GregorianCalendar(day, month, year);
     }
     
-    private void readingValue(FacesContext context, UIComponent component) {
-        day = Integer.parseInt(getField(context, component, DAY_FIELD));
-        month = Integer.parseInt(getField(context, component, MONTH_FIELD));
-        year = Integer.parseInt(getField(context, component, YEAR_FIELD));
-    }
-    
-    private Boolean fieldsAreEmpty() {
-        return day == null || month == null || year == null;
+    private boolean eighteenYearsBetweenDate(Date deb, Date end){
+        long diffDates = (end.getTime() - deb.getTime())/TIME_FOR_ONE_YEAR;
+        return diffDates >= 18.0;
     }
 }

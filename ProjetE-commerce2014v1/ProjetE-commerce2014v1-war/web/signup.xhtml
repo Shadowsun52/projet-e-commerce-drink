@@ -89,10 +89,17 @@
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
                             <p class="inputLong">
-                            <p:calendar value="#{customerMB.customer.birthdate}"
+                            <p:calendar id="birthdateDay"
+                                        value="#{customerMB.customer.birthdate}"
                                         navigator="true" pattern="dd-MMM-yyyy" 
                                         yearRange="-100:-18"
-                                        locale="#{internationalizationManaged.language}"/>
+                                        locale="#{internationalizationManaged.language}"
+                                        required="true" 
+                                        requiredMessage="#{msg.birthdateRequired}">
+                                <f:ajax event="blur" render="errorBirthdate"/>
+                                <p:ajax event="dateSelect" update="errorBirthdate"/>
+                                <f:validator validatorId="validatorBirthdate"/>
+                            </p:calendar>  
                             </p>
                             <span class="errorMessage">
                                 <h:message id="errorBirthdate" for="birthdateDay"/>
