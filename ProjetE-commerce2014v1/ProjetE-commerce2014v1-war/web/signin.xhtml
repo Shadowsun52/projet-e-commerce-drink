@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./template/noOrderTemplate.xhtml">
+
+            <ui:define name="content">
+                <h1><h:outputText value="#{msg.signIn}"/></h1>
+                <h:form>   
+                    <div class="partSignUp">
+                        <p>
+                            <h:outputLabel value="#{msg.formEmail}:" 
+                                           for="email"/><br/>
+                            <h:inputText id="email" class="inputLong"
+                                         maxlength="70" 
+                                         value="#{customerMB.emailConnection}"
+                                         required="true"
+                                         requiredMessage="#{msg.emailRequired}">
+                                <f:ajax render="errorEmail" event="blur"/>
+                            </h:inputText>
+                            <span class="errorMessage">
+                                <h:message id="errorEmail" for="email"/>
+                            </span>
+                        </p>
+                        <p>
+                            <h:outputLabel value="#{msg.formPassword}:" 
+                                           for="password"/><br/>
+                            <h:inputSecret id="password" class="inputLong"
+                                         maxlength="70" 
+                                         value="#{customerMB.passwordConnection}"
+                                         required="true"
+                                         requiredMessage="#{msg.passwordRequired}">
+                                <f:ajax render="errorPassword" event="blur"/>
+                            </h:inputSecret>
+                            <span class="errorMessage">
+                                <h:message id="errorPassword" for="password"/>
+                            </span>
+                        </p>
+                        <c:if test="#{customerMB.errorConnection}">
+                            <span class="errorMessage">
+                                <h:outputText value="#{msg.errorConnection}"/>
+                            </span>       
+                        </c:if>
+                        <p>
+                            <h:commandButton value="#{msg.signIn}" 
+                                           action="#{customerMB.connection()}"/>
+                        </p>
+                        <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
+                        <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

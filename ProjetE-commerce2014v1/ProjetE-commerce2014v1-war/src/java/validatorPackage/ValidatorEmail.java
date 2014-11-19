@@ -29,8 +29,7 @@ import sessionBeansFacade.CustomerFacadeLocal;
 public class ValidatorEmail  implements Validator{
     private static final String BUNDLE_LOCALE = "languagePackage.lang",
                                 EMAIL_EXIST = "emailExist",
-                                ERROR_EMAIL = "emailNotCorrect",
-                                ERROR_BD = "errorBD";
+                                ERROR_EMAIL = "emailNotCorrect";
     
     CustomerFacadeLocal customerFacade = lookupCustomerFacadeLocal();
     private String email;
@@ -38,21 +37,13 @@ public class ValidatorEmail  implements Validator{
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         email = (String) value;
-        try{
-            if(customerFacade.findByEmail(email) != null)
-                throw new ValidatorException(
-                        new FacesMessage(linkToBundle(context).getString(EMAIL_EXIST)));
-            
-            if(!Pattern.matches("^[a-zA-Z0-9._-]{2,}@[a-z0-9._-]{2,}\\.[a-z]{2,4}$",email))
-                throw new ValidatorException(
-                        new FacesMessage(linkToBundle(context).getString(ERROR_EMAIL)));
-        }
-        catch(Exception e)
-        {
-            System.err.println(e);
+        if(customerFacade.findByEmail(email) != null)
             throw new ValidatorException(
-                        new FacesMessage(linkToBundle(context).getString(ERROR_BD)));
-        }
+                    new FacesMessage(linkToBundle(context).getString(EMAIL_EXIST)));
+            
+        if(!Pattern.matches("^[a-zA-Z0-9._-]{2,}@[a-z0-9._-]{2,}\\.[a-z]{2,4}$",email))
+            throw new ValidatorException(
+                    new FacesMessage(linkToBundle(context).getString(ERROR_EMAIL)));
     }
 
     private CustomerFacadeLocal lookupCustomerFacadeLocal() {

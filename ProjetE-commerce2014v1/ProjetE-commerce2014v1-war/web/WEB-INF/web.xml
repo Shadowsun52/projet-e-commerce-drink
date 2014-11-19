@@ -33,4 +33,10 @@
         <local>sessionBeansFacade.CustomerFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CustomerFacade1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.CustomerFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

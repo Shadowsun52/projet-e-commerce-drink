@@ -10,11 +10,10 @@ import entityBeans.Language;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.security.MessageDigest;
 import java.util.Date;
-import java.util.Locale;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import model.Encryption;
 import sessionBeansFacade.CustomerFacadeLocal;
 import sessionBeansFacade.LanguageFacadeLocal;
 
@@ -25,7 +24,6 @@ import sessionBeansFacade.LanguageFacadeLocal;
 @Named(value = "customerMB")
 @SessionScoped
 public class CustomerMB implements Serializable {
-    private static final String SALT = "KIOPURTE";
     
     @EJB
     private LanguageFacadeLocal languageFacade;
@@ -33,9 +31,11 @@ public class CustomerMB implements Serializable {
     private CustomerFacadeLocal customerFacade;
     
     private Customer customer; 
-    private Boolean connected;
+    private Boolean connected,
+                    errorConnection;
     private String emailConnection,
-                   passwordConnection;
+                   passwordConnection,
+                   previousPage;
 
     /**
      * Creates a new instance of CustomerMB
@@ -62,7 +62,7 @@ public class CustomerMB implements Serializable {
     public String signUp(){
         try{
             customer.setInscriptiondate(new Date());
-            customer.setPassword(encryption(customer.getPassword()));
+            customer.setPassword(Encryption.encryption(customer.getPassword()));
             customer.setChosenlanguage(findLanguageCurrent());
             customerFacade.create(customer);
             return "endsignup";
@@ -74,12 +74,20 @@ public class CustomerMB implements Serializable {
         }
     }
     
-    public void connection(){
+    public String connection(){
         customer = customerFacade.findByEmail(getEmailConnection());
         if(customer != null && PasswordCorrect()) {
             setLanguageCurrent();
-            setConnected(true);  
-        }         
+            setConnected(true);
+            setErrorConnection(false);
+            return previousPage;
+        }
+        else
+        {
+            previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+            setErrorConnection(true);
+            return "signin";
+        }
     }
     
     public void deconnection(){
@@ -88,27 +96,8 @@ public class CustomerMB implements Serializable {
     
     private boolean PasswordCorrect()
     {
-        String passwordProtected = encryption(getPasswordConnection());
+        String passwordProtected = Encryption.encryption(getPasswordConnection());
         return passwordProtected.equals(customer.getPassword());
-    }
-    
-    private String encryption(String input)
-    {
-        try{
-            String password = input + SALT;
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(password.getBytes());
-            
-            byte byteData[] = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < byteData.length; i++)
-                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-            return sb.toString();
-        }
-        catch(Exception e){
-            System.err.println(e);
-            return null;
-        }    
     }
     
     private Language findLanguageCurrent() {
@@ -174,5 +163,33 @@ public class CustomerMB implements Serializable {
      */
     public void setPasswordConnection(String passwordConnection) {
         this.passwordConnection = passwordConnection;
+    }
+
+    /**
+     * @return the previousPage
+     */
+    public String getPreviousPage() {
+        return previousPage;
+    }
+
+    /**
+     * @param previousPage the previousPage to set
+     */
+    public void setPreviousPage(String previousPage) {
+        this.previousPage = previousPage;
+    }
+
+    /**
+     * @return the errorConnection
+     */
+    public Boolean getErrorConnection() {
+        return errorConnection;
+    }
+
+    /**
+     * @param errorConnection the errorConnection to set
+     */
+    public void setErrorConnection(Boolean errorConnection) {
+        this.errorConnection = errorConnection;
     }
 }

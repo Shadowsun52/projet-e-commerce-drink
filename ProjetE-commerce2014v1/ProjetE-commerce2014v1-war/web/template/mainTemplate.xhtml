@@ -40,9 +40,9 @@
                     <h:inputText/>
                     <h:commandButton value="#{msg.search}" />
                 </h:form>
-                <div id="connexion">
                     <c:choose>
                         <c:when test="#{customerMB.connected}">
+                            <div id="connexion">
                             <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
                             <div id="form_connexion" class="connected">
                                 <h:link value="#{msg.paramAccount}" outcome="index.xhtml"/>
@@ -53,14 +53,17 @@
                                     </p>
                                 </h:form>
                             </div>
+                        </div>
                         </c:when>
                         <c:when test="#{!customerMB.connected}">
+                            <div id="connexion">
                             <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
                             <div id="form_connexion" class="notConnected">
                                 <h:form>
                                     <p><h:outputLabel value="#{msg.email}"/></p>
                                     <p>
-                                        <h:inputText value="#{customerMB.emailConnection}"/>
+                                        <h:inputText id="email" 
+                                                value="#{customerMB.emailConnection}"/>
                                     </p>
                                     <p>
                                         <h:outputLabel value="#{msg.password}"/>
@@ -75,13 +78,14 @@
                                 </h:form>
                                 <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
                                 <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
-                            </div>
+                            </div></div>
+                            <span class="errorConnection">
+                                        <h:message id="errorEmail" for="email"/>
+                                    </span>
                         </c:when>
-                    </c:choose>
-                </div>
+                    </c:choose>  
             </div>
         </header>
-        
         <nav>
             <ul>
                 <li>

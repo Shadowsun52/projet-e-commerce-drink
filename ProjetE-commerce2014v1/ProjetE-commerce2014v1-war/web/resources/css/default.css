@@ -54,3 +54,10 @@ input[type="submit"]:hover{
     padding-left: 20px;
     display: inline-block;
 }
+
+.errorConnection{
+    color: rgb(180,50,50);
+    font-weight: bold;
+    display: inline-block;
+    padding-left: 20px;
+}
