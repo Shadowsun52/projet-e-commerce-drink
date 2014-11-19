@@ -77,11 +77,19 @@ header {
     width: 100%;
     min-width: 130px;
     max-width: 170px;
-    height: 210px;
-    padding: 5px 10px 10px 10px;
     float: left;
     display: none;
     z-index: 12;
+}
+
+.notConnected {
+    height: 210px;
+    padding: 5px 10px 10px 10px;
+}
+
+.connected{
+    height: 70px;
+    padding: 15px 10px 10px 10px;
 }
 
 #form_connexion * {

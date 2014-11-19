@@ -9,12 +9,13 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Alexandre
  */
-@Named
+@Named(value = "internationalizationManaged")
 @SessionScoped
 public class InternationalizationManaged  implements Serializable{
 
@@ -32,9 +33,26 @@ public class InternationalizationManaged  implements Serializable{
     
     public void setLocale(String language) {
         locale = new Locale(language);
+        setChosenLanguageCustomerConneted(language);
     }
      
      public String getLanguage() {
          return locale.getLanguage();
+     }
+     
+     private void setChosenLanguageCustomerConneted(String language){
+         FacesContext context = FacesContext.getCurrentInstance();
+         CustomerMB customerMB = (CustomerMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{customerMB}", 
+                                CustomerMB.class)
+                        .getValue(context.getELContext());
+        if(customerConnected(customerMB))
+            customerMB.setChosenLanguage(language);
+     }
+     
+     private boolean customerConnected(CustomerMB customerMB){
+        return customerMB != null && customerMB.getConnected();
      }
 }

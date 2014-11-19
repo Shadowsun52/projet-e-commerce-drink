@@ -39,22 +39,47 @@
                                            internationalizationManaged.language)}"/>
                 </h2>
                 <h:form id="search">
-                    <h:inputText></h:inputText>
+                    <h:inputText/>
                     <h:commandButton value="#{msg.search}" />
                 </h:form>
                 <div id="connexion">
-                    <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
-                    <div id="form_connexion">
-                        <h:form>
-                            <p><h:outputLabel value="#{msg.email}"/></p>
-                            <p><h:inputText></h:inputText></p>
-                            <p><h:outputLabel value="#{msg.password}"/></p>
-                            <p><h:inputSecret></h:inputSecret></p>
-                            <p><h:commandButton value="#{msg.signIn}"/></p>
-                        </h:form>
-                        <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
-                        <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
-                    </div>
+                    <c:choose>
+                        <c:when test="#{customerMB.connected}">
+                            <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
+                            <div id="form_connexion" class="connected">
+                                <h:link value="#{msg.paramAccount}" outcome="index.xhtml"/>
+                                <h:form>
+                                    <p>
+                                        <h:commandButton value="#{msg.signOut}" 
+                                                         action="#{customerMB.deconnection()}"/>
+                                    </p>
+                                </h:form>
+                            </div>
+                        </c:when>
+                        <c:when test="#{!customerMB.connected}">
+                            <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
+                            <div id="form_connexion" class="notConnected">
+                                <h:form>
+                                    <p><h:outputLabel value="#{msg.email}"/></p>
+                                    <p>
+                                        <h:inputText value="#{customerMB.emailConnection}"/>
+                                    </p>
+                                    <p>
+                                        <h:outputLabel value="#{msg.password}"/>
+                                    </p>
+                                    <p>
+                                        <h:inputSecret value="#{customerMB.passwordConnection}"/>
+                                    </p>
+                                    <p>
+                                        <h:commandButton value="#{msg.signIn}" 
+                                                 action="#{customerMB.connection()}"/>
+                                    </p>
+                                </h:form>
+                                <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
+                                <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
+                            </div>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
         </header>
@@ -76,7 +101,6 @@
             </c:forEach>
             </ul>
         </nav>
-        
         <div id="background_main">
             <div id="main">
                 <section id="content" class="center_content">
