@@ -49,6 +49,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Promotion.findByAmountdiscount", query = "SELECT p FROM Promotion p WHERE p.amountdiscount = :amountdiscount"),
     @NamedQuery(name = "Promotion.findByMinquantity", query = "SELECT p FROM Promotion p WHERE p.minquantity = :minquantity")})
 public class Promotion implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PROMO_UNIQUE")
+    private Boolean promoUnique;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "TYPEDISCOUNT")
+    private Boolean typediscount;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,14 +76,6 @@ public class Promotion implements Serializable {
     @Size(max = 30)
     @Column(name = "CODEPROMO")
     private String codepromo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PROMO_UNIQUE")
-    private Character promoUnique;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "TYPEDISCOUNT")
-    private Character typediscount;
     @Column(name = "PERCENTAGEDISCOUNT")
     private Short percentagediscount;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -101,7 +101,7 @@ public class Promotion implements Serializable {
         this.idpromotion = idpromotion;
     }
 
-    public Promotion(Integer idpromotion, Date datestart, Date dateend, Character promoUnique, Character typediscount) {
+    public Promotion(Integer idpromotion, Date datestart, Date dateend, boolean promoUnique, boolean typediscount) {
         this.idpromotion = idpromotion;
         this.datestart = datestart;
         this.dateend = dateend;
@@ -141,21 +141,14 @@ public class Promotion implements Serializable {
         this.codepromo = codepromo;
     }
 
-    public Character getPromoUnique() {
+    public boolean getPromoUnique() {
         return promoUnique;
     }
 
-    public void setPromoUnique(Character promoUnique) {
+    public void setPromoUnique(Boolean promoUnique) {
         this.promoUnique = promoUnique;
     }
 
-    public Character getTypediscount() {
-        return typediscount;
-    }
-
-    public void setTypediscount(Character typediscount) {
-        this.typediscount = typediscount;
-    }
 
     public Short getPercentagediscount() {
         return percentagediscount;
@@ -238,6 +231,14 @@ public class Promotion implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Promotion[ idpromotion=" + idpromotion + " ]";
+    }
+
+    public Boolean getTypediscount() {
+        return typediscount;
+    }
+
+    public void setTypediscount(Boolean typediscount) {
+        this.typediscount = typediscount;
     }
     
 }

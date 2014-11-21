@@ -7,7 +7,6 @@ package entityBeans;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,16 +34,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Category.findByIdcategory", query = "SELECT c FROM Category c WHERE c.idcategory = :idcategory"),
     @NamedQuery(name = "Category.findByDaterequired", query = "SELECT c FROM Category c WHERE c.daterequired = :daterequired")})
 public class Category implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATEREQUIRED")
+    private Boolean daterequired;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDCATEGORY")
     private Integer idcategory;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "DATEREQUIRED")
-    private Character daterequired;
     @OneToMany(mappedBy = "idcategory")
     private Collection<Promotion> promotionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
@@ -59,7 +58,7 @@ public class Category implements Serializable {
         this.idcategory = idcategory;
     }
 
-    public Category(Integer idcategory, Character daterequired) {
+    public Category(Integer idcategory, boolean daterequired) {
         this.idcategory = idcategory;
         this.daterequired = daterequired;
     }
@@ -72,13 +71,6 @@ public class Category implements Serializable {
         this.idcategory = idcategory;
     }
 
-    public Character getDaterequired() {
-        return daterequired;
-    }
-
-    public void setDaterequired(Character daterequired) {
-        this.daterequired = daterequired;
-    }
 
     @XmlTransient
     public Collection<Promotion> getPromotionCollection() {
@@ -138,5 +130,13 @@ public class Category implements Serializable {
         }
         //il faudra gérer une erreur ici
         return "not found";
+    }
+
+    public Boolean getDaterequired() {
+        return daterequired;
+    }
+
+    public void setDaterequired(Boolean daterequired) {
+        this.daterequired = daterequired;
     }
 }
