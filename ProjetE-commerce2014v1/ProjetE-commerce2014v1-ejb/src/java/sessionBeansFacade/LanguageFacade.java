@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Language;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,10 +31,29 @@ public class LanguageFacade extends AbstractFacade<Language> implements Language
     }
     
     @Override
-    public Language findByShortLabel(String shortlabel) {
+    public model.Language findByShortLabel(String shortlabel) {
         Query query;
         query = em.createNamedQuery("Language.findByShortlabel");
         query.setParameter("shortlabel", shortlabel);
-        return (Language) query.getSingleResult();
+        return converterToModel((Language) query.getSingleResult());
+    }
+
+    @Override
+    public model.Language findLanguage(Object id) {
+        return converterToModel(find(id));
+    }
+
+    @Override
+    public ArrayList<model.Language> findAllLanguages() {
+        ArrayList<model.Language> languages = new ArrayList();
+        findAll().stream().forEach((entity) -> {
+            languages.add(converterToModel(entity));
+        });
+        return languages;
+    }
+    
+    private model.Language converterToModel(Language entity) {
+        return new model.Language(entity.getIdlanguage(), entity.getLabel(), 
+                entity.getSlogan(), entity.getShortlabel());
     }
 }

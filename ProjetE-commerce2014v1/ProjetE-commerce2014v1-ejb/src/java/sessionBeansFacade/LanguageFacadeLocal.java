@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Language;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,9 @@ public interface LanguageFacadeLocal {
 
     int count();
     
-    public Language findByShortLabel(String shortlabel);
+    public model.Language findLanguage(Object id);
+    
+    public ArrayList<model.Language> findAllLanguages();
+    
+    public model.Language findByShortLabel(String shortlabel);
 }

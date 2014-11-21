@@ -5,8 +5,9 @@
  */
 package managedPackage;
 
-import entityBeans.Language;
+import model.Language;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
@@ -22,16 +23,18 @@ public class LanguageMB {
     @EJB
     private LanguageFacadeLocal languageFacade;
 
+    private ArrayList<Language> languages;
     /**
      * Creates a new instance of LanguageMB
      */
     public LanguageMB() {
     }
     
-    public ArrayList<Language> getAllLanguage() {
-        return new ArrayList(languageFacade.findAll());
-    }
-    
+    @PostConstruct
+     public void init(){
+         languages = languageFacade.findAllLanguages();
+     }
+     
     public String getSlogan(String shortLanguage) {
         return languageFacade.findByShortLabel(shortLanguage).getSlogan();
     }

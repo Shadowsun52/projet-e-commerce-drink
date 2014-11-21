@@ -118,7 +118,7 @@ public class CustomerMB implements Serializable {
                                 "#{internationalizationManaged}", 
                                 InternationalizationManaged.class)
                         .getValue(context.getELContext());
-      iM.setLocale(customer.getChosenlanguage().getShortlabel());
+//      iM.setLocale(customer.getChosenlanguage().getShortlabel());
     }
     
     public void setChosenLanguage(String shortLabelLanguage)

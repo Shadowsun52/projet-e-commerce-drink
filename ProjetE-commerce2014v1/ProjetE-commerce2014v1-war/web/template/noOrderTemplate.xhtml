@@ -21,13 +21,13 @@
                 <h1>BeerForTheWin</h1>
                 <h:form id="language">
                     <ul>
-                        <c:forEach items="#{languageMB.allLanguage}" 
+                        <c:forEach items="#{internationalizationManaged.languages}" 
                                    var="language">
                             <li>
                                 <h:commandLink 
                                     action="#{internationalizationManaged.setLocale(
-                                              language.shortlabel)}">
-                                    <img src="resources/images/#{language.shortlabel}.png"
+                                              language)}">
+                                    <img src="resources/images/#{language.shortLabel}.png"
                                          alt="#{language.label}"/>
                                 </h:commandLink>
                             </li>
@@ -35,8 +35,8 @@
                     </ul>
                 </h:form>
                 <h2>
-                    <h:outputText value="#{languageMB.getSlogan(
-                                           internationalizationManaged.language)}"/>
+                    <h:outputText value="#{internationalizationManaged
+                                           .currentLanguage.slogan}"/>
                 </h2>
                 <h:form id="search">
                     <h:inputText/>
