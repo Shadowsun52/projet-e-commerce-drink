@@ -106,7 +106,8 @@ public class CustomerMB implements Serializable {
     private Language findLanguageCurrent() {
         String shortLabel = FacesContext.getCurrentInstance()
                 .getViewRoot().getLocale().getLanguage();
-        return languageFacade.findByShortLabel(shortLabel);
+//        return languageFacade.findByShortLabel(shortLabel);
+        return null;
     }
 
     private void setLanguageCurrent() {
@@ -122,9 +123,9 @@ public class CustomerMB implements Serializable {
     
     public void setChosenLanguage(String shortLabelLanguage)
     {
-        Language LanguageChosen = languageFacade.findByShortLabel(shortLabelLanguage);
-        customer.setChosenlanguage(LanguageChosen);
-        customerFacade.edit(customer);
+//        Language LanguageChosen = languageFacade.findByShortLabel(shortLabelLanguage);
+//        customer.setChosenlanguage(LanguageChosen);
+//        customerFacade.edit(customer);
     }
     /**
      * @return the connected

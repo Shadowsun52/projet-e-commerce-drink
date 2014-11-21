@@ -22,6 +22,7 @@ public class Category {
     public Category(Integer id, boolean dateRequired) {
         this.id = id;
         this.dateRequired = dateRequired;
+        hashLabel = new HashMap();
     }
 
     /**
@@ -68,5 +69,9 @@ public class Category {
     
     public void addLabel(String language, String label){
         this.hashLabel.put(language, label);
+    }
+    
+    public String getLabel(String language) {
+        return hashLabel.get(language);
     }
 }

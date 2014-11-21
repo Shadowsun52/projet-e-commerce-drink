@@ -91,13 +91,12 @@
                 <li>
                     <h:link value="#{msg.home}" outcome="index.xhtml"/>
                 </li>
-            <c:forEach items="#{categoryMB.allCategory}" var="category">
+                <c:forEach items="#{categoryMB.categories}" var="category">
                 <li>
-                    <h:link value="#{category.getLabel(
-                                 internationalizationManaged.language)}"
+                    <h:link value="#{category.getLabel('en')}"
                                  outcome="category.xhtml">
                         <f:param name="idCat"
-                                 value="#{category.idcategory}"/>
+                                 value="#{category.id}"/>
                     </h:link>
                 </li>
             </c:forEach>

@@ -5,11 +5,12 @@
  */
 package managedPackage;
 
-import entityBeans.Category;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import model.Category;
 import sessionBeansFacade.CategoryFacadeLocal;
 
 /**
@@ -22,13 +23,28 @@ public class CategoriesMB {
     @EJB
     private CategoryFacadeLocal categoryFacade;
     
+    private ArrayList<Category> categories;
     /**
      * Creates a new instance of ManagedBeanCategory
      */
-    public CategoriesMB() {
+    public CategoriesMB() {    
     }
-    
-    public ArrayList<Category> getAllCategory() {
-       return new ArrayList(categoryFacade.findAll());
+
+    @PostConstruct
+    public void init(){
+        categories = categoryFacade.findAllCategories();
+    }
+    /**
+     * @return the categories
+     */
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    /**
+     * @param categories the categories to set
+     */
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
     }
 }

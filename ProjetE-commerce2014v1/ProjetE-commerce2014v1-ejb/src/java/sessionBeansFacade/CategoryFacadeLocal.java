@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Category;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,8 @@ public interface CategoryFacadeLocal {
     List<Category> findRange(int[] range);
 
     int count();
+            
+    model.Category findCategory(Object id);
     
+    ArrayList<model.Category> findAllCategories();
 }

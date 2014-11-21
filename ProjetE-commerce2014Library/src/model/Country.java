@@ -22,6 +22,7 @@ public class Country {
     public Country(Integer id, Integer tva) {
         this.id = id;
         this.tva = tva;
+        hashLabel = new HashMap();
     }
 
     /**
