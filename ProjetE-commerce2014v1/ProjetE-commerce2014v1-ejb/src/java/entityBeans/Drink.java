@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -69,6 +71,12 @@ public class Drink implements Serializable {
         @JoinColumn(name = "IDTYPE", referencedColumnName = "IDTYPE")})
     @ManyToMany
     private Collection<Type> typeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "drink")
+    private Collection<LangDrink> langDrinkCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "drink")
+    private Collection<LineOrder> lineOrderCollection;
+    @OneToMany(mappedBy = "iddrink")
+    private Collection<Promotion> promotionCollection;
 
     public Drink() {
     }
@@ -131,6 +139,33 @@ public class Drink implements Serializable {
 
     public void setTypeCollection(Collection<Type> typeCollection) {
         this.typeCollection = typeCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangDrink> getLangDrinkCollection() {
+        return langDrinkCollection;
+    }
+
+    public void setLangDrinkCollection(Collection<LangDrink> langDrinkCollection) {
+        this.langDrinkCollection = langDrinkCollection;
+    }
+
+    @XmlTransient
+    public Collection<LineOrder> getLineOrderCollection() {
+        return lineOrderCollection;
+    }
+
+    public void setLineOrderCollection(Collection<LineOrder> lineOrderCollection) {
+        this.lineOrderCollection = lineOrderCollection;
+    }
+
+    @XmlTransient
+    public Collection<Promotion> getPromotionCollection() {
+        return promotionCollection;
+    }
+
+    public void setPromotionCollection(Collection<Promotion> promotionCollection) {
+        this.promotionCollection = promotionCollection;
     }
 
     @Override

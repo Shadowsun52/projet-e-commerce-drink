@@ -97,6 +97,9 @@ header {
     border: none;
     color: black;
 }
+#form_connexion input:-moz-autofill{
+    color: yellowgreen;
+}
 
 #form_connexion label{
     font-size: 1.1em;

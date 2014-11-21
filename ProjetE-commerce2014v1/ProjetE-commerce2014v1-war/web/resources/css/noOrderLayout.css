@@ -61,10 +61,14 @@
 #main input{
     min-width: 150px;
     width: 90%;
+    padding:4px;
 }
 
-#main input, #main select{
-   border: 1px solid rgb(200,200,200); 
+#main input, #main select, .calendar .ui-datepicker{
+   border: 1px solid rgb(200,200,200)!important; 
+   box-shadow: none!important;
+   border-radius: 0px!important;
+   max-width: 385px;
 }
 
 .inputLong {
@@ -78,7 +82,7 @@
 }
 
 .inputShort{
-    max-width: 170px; 
+    max-width: 170px!important; 
 }
 
 .inputShorter{
@@ -88,7 +92,7 @@
 
 .selectLong{
     width: 90%;
-    max-width: 385px;
+    max-width: 385px!important;
     min-width: 150px;
 }
 

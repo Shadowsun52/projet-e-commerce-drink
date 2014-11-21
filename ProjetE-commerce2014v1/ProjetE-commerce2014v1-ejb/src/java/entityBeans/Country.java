@@ -45,7 +45,7 @@ public class Country implements Serializable {
     @Column(name = "TVA")
     private short tva;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcountry")
-    private Collection<Locality> localityCollection;
+    private Collection<Address> addressCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
     private Collection<LangCountry> langCountryCollection;
 
@@ -78,12 +78,12 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Locality> getLocalityCollection() {
-        return localityCollection;
+    public Collection<Address> getAddressCollection() {
+        return addressCollection;
     }
 
-    public void setLocalityCollection(Collection<Locality> localityCollection) {
-        this.localityCollection = localityCollection;
+    public void setAddressCollection(Collection<Address> addressCollection) {
+        this.addressCollection = addressCollection;
     }
 
     @XmlTransient

@@ -16,22 +16,22 @@ import javax.validation.constraints.NotNull;
  * @author Alexandre
  */
 @Embeddable
-public class LangLocPK implements Serializable {
+public class LangTypePK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IDLANGUAGE")
     private int idlanguage;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IDLOCALITY")
-    private int idlocality;
+    @Column(name = "IDTYPE")
+    private int idtype;
 
-    public LangLocPK() {
+    public LangTypePK() {
     }
 
-    public LangLocPK(int idlanguage, int idlocality) {
+    public LangTypePK(int idlanguage, int idtype) {
         this.idlanguage = idlanguage;
-        this.idlocality = idlocality;
+        this.idtype = idtype;
     }
 
     public int getIdlanguage() {
@@ -42,33 +42,33 @@ public class LangLocPK implements Serializable {
         this.idlanguage = idlanguage;
     }
 
-    public int getIdlocality() {
-        return idlocality;
+    public int getIdtype() {
+        return idtype;
     }
 
-    public void setIdlocality(int idlocality) {
-        this.idlocality = idlocality;
+    public void setIdtype(int idtype) {
+        this.idtype = idtype;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idlanguage;
-        hash += (int) idlocality;
+        hash += (int) idtype;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LangLocPK)) {
+        if (!(object instanceof LangTypePK)) {
             return false;
         }
-        LangLocPK other = (LangLocPK) object;
+        LangTypePK other = (LangTypePK) object;
         if (this.idlanguage != other.idlanguage) {
             return false;
         }
-        if (this.idlocality != other.idlocality) {
+        if (this.idtype != other.idtype) {
             return false;
         }
         return true;
@@ -76,7 +76,7 @@ public class LangLocPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entityBeans.LangLocPK[ idlanguage=" + idlanguage + ", idlocality=" + idlocality + " ]";
+        return "entityBeans.LangTypePK[ idlanguage=" + idlanguage + ", idtype=" + idtype + " ]";
     }
     
 }

@@ -5,8 +5,6 @@
  */
 package sessionBeansFacade;
 
-import entityBeans.Locality;
-import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,20 +13,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface LocalityFacadeLocal {
-
-    void create(Locality locality);
-
-    void edit(Locality locality);
-
-    void remove(Locality locality);
-
-    Locality find(Object id);
-
-    List<Locality> findAll();
-
-    List<Locality> findRange(int[] range);
-
-    int count();
     
-    public List<Locality> findByCountry(Integer idCountry);
 }

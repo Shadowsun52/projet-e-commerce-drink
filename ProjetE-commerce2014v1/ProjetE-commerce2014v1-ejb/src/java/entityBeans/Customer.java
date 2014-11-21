@@ -6,8 +6,10 @@
 package entityBeans;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,8 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
     @NamedQuery(name = "Customer.findByLastname", query = "SELECT c FROM Customer c WHERE c.lastname = :lastname"),
     @NamedQuery(name = "Customer.findByBirthdate", query = "SELECT c FROM Customer c WHERE c.birthdate = :birthdate"),
-    @NamedQuery(name = "Customer.findByAddNumstreet", query = "SELECT c FROM Customer c WHERE c.addNumstreet = :addNumstreet"),
-    @NamedQuery(name = "Customer.findByAddNamestreet", query = "SELECT c FROM Customer c WHERE c.addNamestreet = :addNamestreet"),
     @NamedQuery(name = "Customer.findByNumphone", query = "SELECT c FROM Customer c WHERE c.numphone = :numphone"),
     @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
     @NamedQuery(name = "Customer.findByPassword", query = "SELECT c FROM Customer c WHERE c.password = :password"),
@@ -67,16 +69,6 @@ public class Customer implements Serializable {
     private Date birthdate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "ADD_NUMSTREET")
-    private String addNumstreet;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 70)
-    @Column(name = "ADD_NAMESTREET")
-    private String addNamestreet;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 16)
     @Column(name = "NUMPHONE")
     private String numphone;
@@ -96,12 +88,14 @@ public class Customer implements Serializable {
     @Column(name = "INSCRIPTIONDATE")
     @Temporal(TemporalType.DATE)
     private Date inscriptiondate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer")
+    private Collection<OrderTable> orderTableCollection;
+    @JoinColumn(name = "IDADDRESS", referencedColumnName = "IDADDRESS")
+    @ManyToOne(optional = false)
+    private Address idaddress;
     @JoinColumn(name = "CHOSENLANGUAGE", referencedColumnName = "IDLANGUAGE")
     @ManyToOne(optional = false)
     private Language chosenlanguage;
-    @JoinColumn(name = "IDLOCALITY", referencedColumnName = "IDLOCALITY")
-    @ManyToOne(optional = false)
-    private Locality idlocality;
 
     public Customer() {
     }
@@ -110,13 +104,11 @@ public class Customer implements Serializable {
         this.idcustomer = idcustomer;
     }
 
-    public Customer(Integer idcustomer, String name, String lastname, Date birthdate, String addNumstreet, String addNamestreet, String numphone, String email, String password, Date inscriptiondate) {
+    public Customer(Integer idcustomer, String name, String lastname, Date birthdate, String numphone, String email, String password, Date inscriptiondate) {
         this.idcustomer = idcustomer;
         this.name = name;
         this.lastname = lastname;
         this.birthdate = birthdate;
-        this.addNumstreet = addNumstreet;
-        this.addNamestreet = addNamestreet;
         this.numphone = numphone;
         this.email = email;
         this.password = password;
@@ -155,22 +147,6 @@ public class Customer implements Serializable {
         this.birthdate = birthdate;
     }
 
-    public String getAddNumstreet() {
-        return addNumstreet;
-    }
-
-    public void setAddNumstreet(String addNumstreet) {
-        this.addNumstreet = addNumstreet;
-    }
-
-    public String getAddNamestreet() {
-        return addNamestreet;
-    }
-
-    public void setAddNamestreet(String addNamestreet) {
-        this.addNamestreet = addNamestreet;
-    }
-
     public String getNumphone() {
         return numphone;
     }
@@ -203,20 +179,29 @@ public class Customer implements Serializable {
         this.inscriptiondate = inscriptiondate;
     }
 
+    @XmlTransient
+    public Collection<OrderTable> getOrderTableCollection() {
+        return orderTableCollection;
+    }
+
+    public void setOrderTableCollection(Collection<OrderTable> orderTableCollection) {
+        this.orderTableCollection = orderTableCollection;
+    }
+
+    public Address getIdaddress() {
+        return idaddress;
+    }
+
+    public void setIdaddress(Address idaddress) {
+        this.idaddress = idaddress;
+    }
+
     public Language getChosenlanguage() {
         return chosenlanguage;
     }
 
     public void setChosenlanguage(Language chosenlanguage) {
         this.chosenlanguage = chosenlanguage;
-    }
-
-    public Locality getIdlocality() {
-        return idlocality;
-    }
-
-    public void setIdlocality(Locality idlocality) {
-        this.idlocality = idlocality;
     }
 
     @Override

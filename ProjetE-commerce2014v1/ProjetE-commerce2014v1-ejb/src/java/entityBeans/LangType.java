@@ -24,17 +24,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Alexandre
  */
 @Entity
-@Table(name = "LANG_LOC")
+@Table(name = "LANG_TYPE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LangLoc.findAll", query = "SELECT l FROM LangLoc l"),
-    @NamedQuery(name = "LangLoc.findByIdlanguage", query = "SELECT l FROM LangLoc l WHERE l.langLocPK.idlanguage = :idlanguage"),
-    @NamedQuery(name = "LangLoc.findByIdlocality", query = "SELECT l FROM LangLoc l WHERE l.langLocPK.idlocality = :idlocality"),
-    @NamedQuery(name = "LangLoc.findByLabel", query = "SELECT l FROM LangLoc l WHERE l.label = :label")})
-public class LangLoc implements Serializable {
+    @NamedQuery(name = "LangType.findAll", query = "SELECT l FROM LangType l"),
+    @NamedQuery(name = "LangType.findByIdlanguage", query = "SELECT l FROM LangType l WHERE l.langTypePK.idlanguage = :idlanguage"),
+    @NamedQuery(name = "LangType.findByIdtype", query = "SELECT l FROM LangType l WHERE l.langTypePK.idtype = :idtype"),
+    @NamedQuery(name = "LangType.findByLabel", query = "SELECT l FROM LangType l WHERE l.label = :label")})
+public class LangType implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected LangLocPK langLocPK;
+    protected LangTypePK langTypePK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
@@ -43,32 +43,32 @@ public class LangLoc implements Serializable {
     @JoinColumn(name = "IDLANGUAGE", referencedColumnName = "IDLANGUAGE", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Language language;
-    @JoinColumn(name = "IDLOCALITY", referencedColumnName = "IDLOCALITY", insertable = false, updatable = false)
+    @JoinColumn(name = "IDTYPE", referencedColumnName = "IDTYPE", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Locality locality;
+    private Type type;
 
-    public LangLoc() {
+    public LangType() {
     }
 
-    public LangLoc(LangLocPK langLocPK) {
-        this.langLocPK = langLocPK;
+    public LangType(LangTypePK langTypePK) {
+        this.langTypePK = langTypePK;
     }
 
-    public LangLoc(LangLocPK langLocPK, String label) {
-        this.langLocPK = langLocPK;
+    public LangType(LangTypePK langTypePK, String label) {
+        this.langTypePK = langTypePK;
         this.label = label;
     }
 
-    public LangLoc(int idlanguage, int idlocality) {
-        this.langLocPK = new LangLocPK(idlanguage, idlocality);
+    public LangType(int idlanguage, int idtype) {
+        this.langTypePK = new LangTypePK(idlanguage, idtype);
     }
 
-    public LangLocPK getLangLocPK() {
-        return langLocPK;
+    public LangTypePK getLangTypePK() {
+        return langTypePK;
     }
 
-    public void setLangLocPK(LangLocPK langLocPK) {
-        this.langLocPK = langLocPK;
+    public void setLangTypePK(LangTypePK langTypePK) {
+        this.langTypePK = langTypePK;
     }
 
     public String getLabel() {
@@ -87,29 +87,29 @@ public class LangLoc implements Serializable {
         this.language = language;
     }
 
-    public Locality getLocality() {
-        return locality;
+    public Type getType() {
+        return type;
     }
 
-    public void setLocality(Locality locality) {
-        this.locality = locality;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (langLocPK != null ? langLocPK.hashCode() : 0);
+        hash += (langTypePK != null ? langTypePK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LangLoc)) {
+        if (!(object instanceof LangType)) {
             return false;
         }
-        LangLoc other = (LangLoc) object;
-        if ((this.langLocPK == null && other.langLocPK != null) || (this.langLocPK != null && !this.langLocPK.equals(other.langLocPK))) {
+        LangType other = (LangType) object;
+        if ((this.langTypePK == null && other.langTypePK != null) || (this.langTypePK != null && !this.langTypePK.equals(other.langTypePK))) {
             return false;
         }
         return true;
@@ -117,7 +117,7 @@ public class LangLoc implements Serializable {
 
     @Override
     public String toString() {
-        return "entityBeans.LangLoc[ langLocPK=" + langLocPK + " ]";
+        return "entityBeans.LangType[ langTypePK=" + langTypePK + " ]";
     }
     
 }

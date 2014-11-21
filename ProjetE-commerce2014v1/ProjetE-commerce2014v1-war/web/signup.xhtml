@@ -88,19 +88,18 @@
                         </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
-                            <p class="inputLong">
-                            <p:calendar id="birthdateDay"
+                                <p:calendar id="birthdateDay"
                                         value="#{customerMB.customer.birthdate}"
                                         navigator="true" pattern="dd-MMM-yyyy" 
                                         yearRange="-100:-18"
                                         locale="#{internationalizationManaged.language}"
                                         required="true" 
-                                        requiredMessage="#{msg.birthdateRequired}">
+                                        requiredMessage="#{msg.birthdateRequired}"
+                                        converterMessage="#{msg.isNotDate}">
                                 <f:ajax event="blur" render="errorBirthdate"/>
                                 <p:ajax event="dateSelect" update="errorBirthdate"/>
                                 <f:validator validatorId="validatorBirthdate"/>
                             </p:calendar>  
-                            </p>
                             <span class="errorMessage">
                                 <h:message id="errorBirthdate" for="birthdateDay"/>
                             </span>
@@ -111,7 +110,7 @@
                             <h:outputLabel value="#{msg.formNameStreet}:"
                                            for="nameStreet"/><br/>
                             <h:inputText id="nameStreet" class="inputLong"
-                                         value="#{customerMB.customer.addNamestreet}"
+                                         value="#{customerMB.customer.idaddress.namestreet}"
                                          required="true"
                                          requiredMessage="#{msg.nameStreetRequired}">
                                 <f:ajax render="errorNameStreet" event="blur"/>
@@ -121,7 +120,7 @@
                             <h:outputLabel value="#{msg.formNbStreet}:"
                                            for="nbStreet"/><br/>
                             <h:inputText id="nbStreet" class="inputShorter" 
-                                         value="#{customerMB.customer.addNumstreet}"
+                                         value="#{customerMB.customer.idaddress.numstreet}"
                                          required="true"
                                          requiredMessage="#{msg.nbStreetRequired}">
                                 <f:ajax render="errorNbStreet" event="blur"/>
@@ -140,31 +139,56 @@
                                            for="country"/><br/>
                             <h:selectOneMenu id="country"
                                              class="selectLong"
-                                             value="#{localityMB.idCountryChosen}">
-                                <f:ajax render="locality"/>
-                                <c:forEach items="#{localityMB.allCountries}" 
+                                             value="#{customerMB.customer
+                                                      .idaddress.idcountry}">
+                                <c:forEach items="#{countryMB.allCountries}" 
                                            var="country">
-                                    <f:selectItem itemValue="#{country.idcountry}"
+                                    <f:selectItem itemValue="#{country}"
                                                   itemLabel="#{country.getLabel(
                                                                internationalizationManaged.language)}"/>
                                 </c:forEach>
                             </h:selectOneMenu>
                         </p>
                         <div class="float_left">
-                            <h:outputLabel value="#{msg.formLocality}:"
-                                           for="locality"/><br/>
-                            <h:selectOneMenu id="locality" class="selectLong"
-                                             value="#{customerMB.customer.idlocality}">
-                                <f:selectItems value="#{localityMB.localityForCountry}"
-                                           var="locality" itemValue="#{locality}"
-                                           itemLabel="#{locality.postcode}-#{locality.getLabel(
-                                                    internationalizationManaged.language)}"/>
-                            </h:selectOneMenu>
+                            <h:outputLabel value="#{msg.formPostCode}:"
+                                           for="postCode"/><br/>
+                            <h:inputText id="postCode" class="inputShort"
+                                         value="#{customerMB.customer
+                                                  .idaddress.postcode}"
+                                         required="true"
+                                         requiredMessage="#{msg.postCodeRequired}"
+                                         validatorMessage="#{msg.postCodeError}">
+                                <f:ajax render="errorPostCode" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^(\d{4,5})|([a-zA-Z]{1,2}\d[a-zA-Z0-9]? \d[a-zA-Z]{2})$"/>
+                            </h:inputText>
                         </div>
                         <div class="float_left">
+                            <h:outputLabel value="#{msg.formCity}:"
+                                           for="city"/><br/>
+                            <h:inputText id="city" class="inputShort"
+                                         value="#{customerMB.customer
+                                                  .idaddress.city}"
+                                         required="true"
+                                         requiredMessage="#{msg.cityRequired}"
+                                         validatorMessage="#{msg.cityNoNumber}">
+                                <f:ajax render="errorCity" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^[a-zA-z-]+$"/>
+                            </h:inputText>
+                        </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message id="errorPostCode" for="postCode"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message id="errorCity" for="city"/>
+                            </span>
+                        </div>
+                        <p class="after_float">
                             <h:outputLabel value="#{msg.formNumTel}:"
                                            for="numTel"/><br/>
-                            <h:inputText id="numTel" class="inputShort"
+                            <h:inputText id="numTel" class="inputLong"
                                          value="#{customerMB.customer.numphone}"
                                          required="true"
                                          requiredMessage="#{msg.numTelRequired}"
@@ -173,15 +197,12 @@
                                 <f:validateRegex 
                                     pattern="^((0|\+32 ?)|((0|\+33 ?)\d[-.\/ ]?))\d{2}([-.\/ ]?\d{2}){3}+$"/>
                             </h:inputText>
-                        </div>
-                        <div class="float_error">
                             <span class="errorMessage">
                                 <h:message id="errorNumTel" for="numTel"/>
                             </span>
-                        </div>
-                        <span class="after_float"/>
+                        </p>
                     </div>
-                    <div class="partSignUp">
+                     <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
@@ -219,7 +240,7 @@
                             </span>
                         </div>
                         <p class="after_float">
-                            <h:commandButton value="#{msg.bntValid}" action="#{customerMB.signUp()}"/>
+                            <h:commandButton value="#{msg.bntValid}" action="#{customerMB.debug()}"/>
                         </p>
                     </div>
                 </h:form>

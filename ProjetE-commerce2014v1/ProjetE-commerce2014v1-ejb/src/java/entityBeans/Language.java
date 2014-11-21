@@ -37,12 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Language.findBySlogan", query = "SELECT l FROM Language l WHERE l.slogan = :slogan"),
     @NamedQuery(name = "Language.findByShortlabel", query = "SELECT l FROM Language l WHERE l.shortlabel = :shortlabel")})
 public class Language implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chosenlanguage")
-    private Collection<Customer> customerCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private Collection<LangLoc> langLocCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private Collection<LangCountry> langCountryCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +59,21 @@ public class Language implements Serializable {
     @Column(name = "SHORTLABEL")
     private String shortlabel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangDrink> langDrinkCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangType> langTypeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangDelmode> langDelmodeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangPromotion> langPromotionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
     private Collection<LangCat> langCatCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chosenlanguage")
+    private Collection<Customer> customerCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private Collection<LangCountry> langCountryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "defaultlanguage")
+    private Collection<Parameter> parameterCollection;
 
     public Language() {
     }
@@ -114,12 +122,75 @@ public class Language implements Serializable {
     }
 
     @XmlTransient
+    public Collection<LangDrink> getLangDrinkCollection() {
+        return langDrinkCollection;
+    }
+
+    public void setLangDrinkCollection(Collection<LangDrink> langDrinkCollection) {
+        this.langDrinkCollection = langDrinkCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangType> getLangTypeCollection() {
+        return langTypeCollection;
+    }
+
+    public void setLangTypeCollection(Collection<LangType> langTypeCollection) {
+        this.langTypeCollection = langTypeCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangDelmode> getLangDelmodeCollection() {
+        return langDelmodeCollection;
+    }
+
+    public void setLangDelmodeCollection(Collection<LangDelmode> langDelmodeCollection) {
+        this.langDelmodeCollection = langDelmodeCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangPromotion> getLangPromotionCollection() {
+        return langPromotionCollection;
+    }
+
+    public void setLangPromotionCollection(Collection<LangPromotion> langPromotionCollection) {
+        this.langPromotionCollection = langPromotionCollection;
+    }
+
+    @XmlTransient
     public Collection<LangCat> getLangCatCollection() {
         return langCatCollection;
     }
 
     public void setLangCatCollection(Collection<LangCat> langCatCollection) {
         this.langCatCollection = langCatCollection;
+    }
+
+    @XmlTransient
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
+    }
+
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangCountry> getLangCountryCollection() {
+        return langCountryCollection;
+    }
+
+    public void setLangCountryCollection(Collection<LangCountry> langCountryCollection) {
+        this.langCountryCollection = langCountryCollection;
+    }
+
+    @XmlTransient
+    public Collection<Parameter> getParameterCollection() {
+        return parameterCollection;
+    }
+
+    public void setParameterCollection(Collection<Parameter> parameterCollection) {
+        this.parameterCollection = parameterCollection;
     }
 
     @Override
@@ -145,33 +216,6 @@ public class Language implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Language[ idlanguage=" + idlanguage + " ]";
-    }
-
-    @XmlTransient
-    public Collection<LangLoc> getLangLocCollection() {
-        return langLocCollection;
-    }
-
-    public void setLangLocCollection(Collection<LangLoc> langLocCollection) {
-        this.langLocCollection = langLocCollection;
-    }
-
-    @XmlTransient
-    public Collection<LangCountry> getLangCountryCollection() {
-        return langCountryCollection;
-    }
-
-    public void setLangCountryCollection(Collection<LangCountry> langCountryCollection) {
-        this.langCountryCollection = langCountryCollection;
-    }
-
-    @XmlTransient
-    public Collection<Customer> getCustomerCollection() {
-        return customerCollection;
-    }
-
-    public void setCustomerCollection(Collection<Customer> customerCollection) {
-        this.customerCollection = customerCollection;
     }
     
 }

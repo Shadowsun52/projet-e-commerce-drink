@@ -5,6 +5,7 @@
  */
 package managedPackage;
 
+import entityBeans.Address;
 import entityBeans.Customer;
 import entityBeans.Language;
 import javax.inject.Named;
@@ -42,6 +43,7 @@ public class CustomerMB implements Serializable {
      */
     public CustomerMB() {
         customer = new Customer();
+        customer.setIdaddress(new Address());
         connected = false;
     }
 
@@ -92,6 +94,7 @@ public class CustomerMB implements Serializable {
     
     public void deconnection(){
         setConnected(false);
+        customer = new Customer();
     }
     
     private boolean PasswordCorrect()
@@ -191,5 +194,10 @@ public class CustomerMB implements Serializable {
      */
     public void setErrorConnection(Boolean errorConnection) {
         this.errorConnection = errorConnection;
+    }
+    
+    public String debug(){
+        customer.getBirthdate();
+        return "signup";
     }
 }

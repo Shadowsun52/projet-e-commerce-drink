@@ -5,36 +5,15 @@
  */
 package sessionBeansFacade;
 
-import entityBeans.Locality;
-import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Alexandre
  */
 @Stateless
-public class LocalityFacade extends AbstractFacade<Locality> implements LocalityFacadeLocal {
-    @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
-    private EntityManager em;
+public class LocalityFacade implements LocalityFacadeLocal {
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public LocalityFacade() {
-        super(Locality.class);
-    }
-    
-    @Override
-    public List<Locality> findByCountry(Integer idCountry) {
-        Query query;
-        query = em.createNamedQuery("Country.findByIdcountry");
-        query.setParameter("idcountry", idCountry);
-        return query.getResultList();
-    }
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }

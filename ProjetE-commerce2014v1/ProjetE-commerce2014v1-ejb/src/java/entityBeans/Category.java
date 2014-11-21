@@ -35,10 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Category.findByIdcategory", query = "SELECT c FROM Category c WHERE c.idcategory = :idcategory"),
     @NamedQuery(name = "Category.findByDaterequired", query = "SELECT c FROM Category c WHERE c.daterequired = :daterequired")})
 public class Category implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcategory")
-    private Collection<Type> typeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Collection<LangCat> langCatCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +45,12 @@ public class Category implements Serializable {
     @NotNull
     @Column(name = "DATEREQUIRED")
     private Character daterequired;
+    @OneToMany(mappedBy = "idcategory")
+    private Collection<Promotion> promotionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Collection<LangCat> langCatCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcategory")
+    private Collection<Type> typeCollection;
 
     public Category() {
     }
@@ -78,6 +80,33 @@ public class Category implements Serializable {
         this.daterequired = daterequired;
     }
 
+    @XmlTransient
+    public Collection<Promotion> getPromotionCollection() {
+        return promotionCollection;
+    }
+
+    public void setPromotionCollection(Collection<Promotion> promotionCollection) {
+        this.promotionCollection = promotionCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangCat> getLangCatCollection() {
+        return langCatCollection;
+    }
+
+    public void setLangCatCollection(Collection<LangCat> langCatCollection) {
+        this.langCatCollection = langCatCollection;
+    }
+
+    @XmlTransient
+    public Collection<Type> getTypeCollection() {
+        return typeCollection;
+    }
+
+    public void setTypeCollection(Collection<Type> typeCollection) {
+        this.typeCollection = typeCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -102,16 +131,6 @@ public class Category implements Serializable {
     public String toString() {
         return "entityBeans.Category[ idcategory=" + idcategory + " ]";
     }
-
-    @XmlTransient
-    public Collection<LangCat> getLangCatCollection() {
-        return langCatCollection;
-    }
-
-    public void setLangCatCollection(Collection<LangCat> langCatCollection) {
-        this.langCatCollection = langCatCollection;
-    }
-    
     public String getLabel(String language) {
         for (LangCat langCat : langCatCollection) {
             if(langCat.getLanguage().getShortlabel().equals(language))
@@ -119,14 +138,5 @@ public class Category implements Serializable {
         }
         //il faudra gérer une erreur ici
         return "not found";
-    }
-
-    @XmlTransient
-    public Collection<Type> getTypeCollection() {
-        return typeCollection;
-    }
-
-    public void setTypeCollection(Collection<Type> typeCollection) {
-        this.typeCollection = typeCollection;
     }
 }

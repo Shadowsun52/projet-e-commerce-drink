@@ -8,6 +8,7 @@ package entityBeans;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,6 +43,8 @@ public class Type implements Serializable {
     private Integer idtype;
     @ManyToMany(mappedBy = "typeCollection")
     private Collection<Drink> drinkCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    private Collection<LangType> langTypeCollection;
     @JoinColumn(name = "IDCATEGORY", referencedColumnName = "IDCATEGORY")
     @ManyToOne(optional = false)
     private Category idcategory;
@@ -67,6 +71,15 @@ public class Type implements Serializable {
 
     public void setDrinkCollection(Collection<Drink> drinkCollection) {
         this.drinkCollection = drinkCollection;
+    }
+
+    @XmlTransient
+    public Collection<LangType> getLangTypeCollection() {
+        return langTypeCollection;
+    }
+
+    public void setLangTypeCollection(Collection<LangType> langTypeCollection) {
+        this.langTypeCollection = langTypeCollection;
     }
 
     public Category getIdcategory() {
