@@ -1,14 +1,59 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./template/mainTemplate.xhtml">
 
             <ui:define name="content">
-                content
+                <section id="searchOptions">
+                    <h:form>
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+                            <h:outputText value="Grid:" />
+                            <p:selectManyCheckbox id="grid" value="#{checkboxView.selectedCities}" layout="grid" columns="3">
+                                <f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
+
+                        <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
+                            <p:outputPanel id="display">
+                                <p:dataList value="#{checkboxView.selectedConsoles}" var="console">
+                                    #{console}
+                                </p:dataList>
+                                <p:dataList value="#{checkboxView.selectedCities}" var="city">
+                                    #{city}
+                                </p:dataList>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+                </section>
+                <section id="listDrinks">
+                    <h:form>
+                        <p:dataScroller value="#{drinksMB.listDrink}" var="drink" chunkSize="10" mode="inline" scrollHeight="500">
+                            <f:facet name="header">
+                                Scroll down to load more drinks
+                            </f:facet>
+                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                <p:graphicImage name="resources/images/search_icon.png"/>
+
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Id:" />
+                                        <h:outputText value="#{drink.id}" />                                    
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </h:panelGrid>
+                        </p:dataScroller>
+                    </h:form>
+                </section>
             </ui:define>
 
         </ui:composition>

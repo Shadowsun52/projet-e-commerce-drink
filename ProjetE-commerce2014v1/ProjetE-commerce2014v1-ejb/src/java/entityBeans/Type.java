@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
     @NamedQuery(name = "Type.findByIdtype", query = "SELECT t FROM Type t WHERE t.idtype = :idtype")})
 public class Type implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    private Collection<Typedrink> typedrinkCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,6 +115,15 @@ public class Type implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Type[ idtype=" + idtype + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Typedrink> getTypedrinkCollection() {
+        return typedrinkCollection;
+    }
+
+    public void setTypedrinkCollection(Collection<Typedrink> typedrinkCollection) {
+        this.typedrinkCollection = typedrinkCollection;
     }
     
 }
