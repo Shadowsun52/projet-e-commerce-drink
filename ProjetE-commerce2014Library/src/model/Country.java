@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Country implements Serializable{
     private Integer id;
     private short tva;
-    private HashMap<String,String> hashLabel;
+    private HashMap<Language,String> hashLabel;
     
     public Country() {  
     }
@@ -57,22 +57,22 @@ public class Country implements Serializable{
     /**
      * @return the hashLabel
      */
-    public HashMap<String,String> getHashLabel() {
+    public HashMap<Language,String> getHashLabel() {
         return hashLabel;
     }
 
     /**
      * @param hashLabel the hashLabel to set
      */
-    public void setHashLabel(HashMap<String,String> hashLabel) {
+    public void setHashLabel(HashMap<Language,String> hashLabel) {
         this.hashLabel = hashLabel;
     }
     
-    public void addLabel(String language, String label) {
+    public void addLabel(Language language, String label) {
         this.hashLabel.put(language, label);
     }
     
-    public String getLabel(String language) {
+    public String getLabel(Language language) {
         return hashLabel.get(language);
     }
     

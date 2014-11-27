@@ -144,7 +144,7 @@
                                 <f:selectItems value="#{countryMB.countries}"
                                                var="country"
                                                itemValue="#{country}"
-                                               itemLabel="#{country.getLabel(internationalizationManaged.currentLanguage.shortLabel)}"/>
+                                               itemLabel="#{country.getLabel(internationalizationManaged.currentLanguage)}"/>
                                 <f:ajax render="errorCountry" event="blur"/>
                             </h:selectOneMenu>
                             <span class="errorMessage">

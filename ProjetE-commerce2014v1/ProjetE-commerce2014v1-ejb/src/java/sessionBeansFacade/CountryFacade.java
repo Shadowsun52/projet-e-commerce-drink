@@ -7,13 +7,16 @@ package sessionBeansFacade;
 
 import entityBeans.Country;
 import entityBeans.LangCountry;
+import entityBeans.LangCountryPK;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.Language;
 
 /**
  *
@@ -21,6 +24,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CountryFacade extends AbstractFacade<Country> implements CountryFacadeLocal {
+    @EJB
+    private LanguageFacadeLocal languageFacade;
+    
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
 
@@ -38,8 +44,8 @@ public class CountryFacade extends AbstractFacade<Country> implements CountryFac
         model.Country country = new model.Country(entity.getIdcountry(), 
                 entity.getTva());      
         for(LangCountry langCountry: entity.getLangCountryCollection()){
-            country.addLabel(langCountry.getLanguage().getShortlabel(), 
-                    langCountry.getLabel());
+            country.addLabel(languageFacade.converterToModel(
+                    langCountry.getLanguage()), langCountry.getLabel());
         }
         return country;
     }
@@ -48,14 +54,17 @@ public class CountryFacade extends AbstractFacade<Country> implements CountryFac
     public Country converterToEntity(model.Country country)
     {
        Country entity = new Country(country.getId(), country.getTva());
-       entity.setLangCountryCollection(getAllLabels(country.getHashLabel()));
+       entity.setLangCountryCollection(getAllLabels(country.getHashLabel(),
+               country.getId()));
        return entity;
     }         
             
-    private Collection<LangCountry> getAllLabels(HashMap<String,String> hashLabel) {
+    private Collection<LangCountry> getAllLabels(
+            HashMap<Language,String> hashLabel,Integer id) {
         Collection<LangCountry> labels = new ArrayList();
-        for (Map.Entry<String, String> label : hashLabel.entrySet()) {
-            labels.add(new LangCountry(null,label.getValue()));
+        for (Map.Entry<Language, String> label : hashLabel.entrySet()) {
+            labels.add(new LangCountry(new LangCountryPK(
+                    id, label.getKey().getId()),label.getValue()));
         }
         return labels;
     }

@@ -91,7 +91,7 @@
                 </li>
                 <c:forEach items="#{categoryMB.categories}" var="category">
                 <li>
-                    <h:link value="#{category.getLabel('en')}"
+                    <h:link value="#{category.getLabel(internationalizationManaged.currentLanguage)}"
                                  outcome="category.xhtml">
                         <f:param name="idCat"
                                  value="#{category.id}"/>

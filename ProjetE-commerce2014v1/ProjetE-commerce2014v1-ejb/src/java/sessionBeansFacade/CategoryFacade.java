@@ -53,7 +53,7 @@ public class CategoryFacade extends AbstractFacade<Category> implements Category
         model.Category category = new model.Category(entity.getIdcategory(), 
                 entity.getDaterequired());
         for (LangCat langCat : entity.getLangCatCollection()) {
-            category.addLabel(langCat.getLanguage().getShortlabel(),
+            category.addLabel(languageFacade.converterToModel(langCat.getLanguage()),
                     langCat.getLabel());
         }
         return category;
