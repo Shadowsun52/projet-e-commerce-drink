@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Customer;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,17 @@ public interface CustomerFacadeLocal {
 
     int count();
     
-    public Customer findByEmail(String email);
+    public void create(model.Customer customer);
+    
+    public void edit(model.Customer customer);
+    
+    public model.Customer findCustomer(Object id);
+    
+    public ArrayList<model.Customer> findAllCustomers();
+    
+    public model.Customer findByEmail(String email);
+    
+    public model.Customer converterToModel(Customer entity);
+    
+    public Customer converterToEntity(model.Customer customer);
 }

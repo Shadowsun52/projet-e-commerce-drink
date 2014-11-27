@@ -41,7 +41,7 @@
                     <h:commandButton value="#{msg.search}" />
                 </h:form>
                     <c:choose>
-                        <c:when test="#{customerMB.connected}">
+                        <c:when test="#{customerMB.infoConnexion.isconnected}">
                             <div id="connexion">
                             <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
                             <div id="form_connexion" class="connected">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         </c:when>
-                        <c:when test="#{!customerMB.connected}">
+                        <c:when test="#{!customerMB.infoConnexion.isconnected}">
                             <div id="connexion">
                             <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
                             <div id="form_connexion" class="notConnected">
@@ -63,13 +63,13 @@
                                     <p><h:outputLabel value="#{msg.email}"/></p>
                                     <p>
                                         <h:inputText id="email"
-                                                value="#{customerMB.emailConnection}"/>
+                                                     value="#{customerMB.infoConnexion.email}"/>
                                     </p>
                                     <p>
                                         <h:outputLabel value="#{msg.password}"/>
                                     </p>
                                     <p>
-                                        <h:inputSecret value="#{customerMB.passwordConnection}"/>
+                                        <h:inputSecret value="#{customerMB.infoConnexion.password}"/>
                                     </p>
                                     <p>
                                         <h:commandButton value="#{msg.signIn}" 
@@ -93,7 +93,7 @@
                 </li>
                 <c:forEach items="#{categoryMB.categories}" var="category">
                 <li>
-                    <h:link value="#{category.getLabel('en')}"
+                    <h:link value="#{category.getLabel(internationalizationManaged.currentLanguage.shortLabel)}"
                                  outcome="category.xhtml">
                         <f:param name="idCat"
                                  value="#{category.id}"/>

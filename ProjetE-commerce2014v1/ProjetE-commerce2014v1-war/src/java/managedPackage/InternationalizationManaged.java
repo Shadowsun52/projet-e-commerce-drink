@@ -45,28 +45,27 @@ public class InternationalizationManaged  implements Serializable{
     public void init(){
         setLanguages(languageFacade.findAllLanguages());
         setCurrentLanguage(languages.get(0));
-        locale = new Locale(getCurrentLanguage().getShortLabel());
     }
     
     public void setLocale(Language language) {
-        locale = new Locale(language.getShortLabel());
-//        setChosenLanguageCustomerConneted(language);
+        setCurrentLanguage(language);
+        setChosenLanguageCustomerConneted(language);
     }
 
-     private void setChosenLanguageCustomerConneted(String language){
-//         FacesContext context = FacesContext.getCurrentInstance();
-//         CustomerMB customerMB = (CustomerMB) 
-//                context.getApplication().getExpressionFactory()
-//                        .createValueExpression(context.getELContext(), 
-//                                "#{customerMB}", 
-//                                CustomerMB.class)
-//                        .getValue(context.getELContext());
-//        if(customerConnected(customerMB))
-//            customerMB.setChosenLanguage(language);
+     private void setChosenLanguageCustomerConneted(Language language){
+         FacesContext context = FacesContext.getCurrentInstance();
+         CustomerMB customerMB = (CustomerMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{customerMB}", 
+                                CustomerMB.class)
+                        .getValue(context.getELContext());
+        if(customerConnected(customerMB))
+            customerMB.setChosenLanguage(language);
      }
      
      private boolean customerConnected(CustomerMB customerMB){
-        return customerMB != null && customerMB.getConnected();
+        return customerMB != null && customerMB.getInfoConnexion().isIsconnected();
      }
 
     /**
@@ -95,5 +94,6 @@ public class InternationalizationManaged  implements Serializable{
      */
     public void setCurrentLanguage(Language currentLanguage) {
         this.currentLanguage = currentLanguage;
+        locale = new Locale(this.currentLanguage.getShortLabel());
     }
 }

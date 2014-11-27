@@ -5,7 +5,6 @@
  */
 package converterPackage;
 
-import entityBeans.Country;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -14,6 +13,7 @@ import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import model.Country;
 import sessionBeansFacade.CountryFacadeLocal;
 
 /**
@@ -21,17 +21,17 @@ import sessionBeansFacade.CountryFacadeLocal;
  * @author Alexandre
  */
 @FacesConverter(forClass=Country.class)
-public class CountryConverter implements javax.faces.convert.Converter{
+public class ConverterCountry implements javax.faces.convert.Converter{
     CountryFacadeLocal countryFacade = lookupCountryFacadeLocal();
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return countryFacade.find(Integer.valueOf(value));
+        return countryFacade.findCountry(Integer.valueOf(value));
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return String.valueOf(((Country) value).getIdcountry());
+        return String.valueOf(((Country)value).getId());
     }
 
     private CountryFacadeLocal lookupCountryFacadeLocal() {

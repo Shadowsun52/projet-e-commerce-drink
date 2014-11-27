@@ -45,15 +45,22 @@ public class LanguageFacade extends AbstractFacade<Language> implements Language
 
     @Override
     public ArrayList<model.Language> findAllLanguages() {
-        ArrayList<model.Language> languages = new ArrayList();
-        findAll().stream().forEach((entity) -> {
-            languages.add(converterToModel(entity));
+        ArrayList<model.Language> listLanguages = new ArrayList();
+        findAll().stream().forEach((language) -> {
+            listLanguages.add(converterToModel(language));
         });
-        return languages;
+        return listLanguages;
     }
     
-    private model.Language converterToModel(Language entity) {
+    @Override
+    public model.Language converterToModel(Language entity) {
         return new model.Language(entity.getIdlanguage(), entity.getLabel(), 
                 entity.getSlogan(), entity.getShortlabel());
+    }
+    
+    @Override
+    public Language converterToEntity(model.Language language){
+        return new Language(language.getId(), language.getLabel(), 
+                language.getSlogan(), language.getShortLabel());
     }
 }

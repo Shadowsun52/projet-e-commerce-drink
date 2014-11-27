@@ -44,7 +44,7 @@
                 </h:form>
                 <div id="connexion">
                     <c:choose>
-                        <c:when test="#{customerMB.connected}">
+                        <c:when test="#{customerMB.infoConnexion.isconnected}">
                             <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
                             <div id="form_connexion" class="connected">
                                 <h:link value="#{msg.paramAccount}" outcome="index.xhtml"/>
@@ -56,19 +56,19 @@
                                 </h:form>
                             </div>
                         </c:when>
-                        <c:when test="#{!customerMB.connected}">
+                        <c:when test="#{!customerMB.infoConnexion.isconnected}">
                             <a id="showConnexionBox" href="#">#{msg.signIn}</a>                    
                             <div id="form_connexion" class="notConnected">
                                 <h:form>
                                     <p><h:outputLabel value="#{msg.email}"/></p>
                                     <p>
-                                        <h:inputText value="#{customerMB.emailConnection}"/>
+                                        <h:inputText value="#{customerMB.infoConnexion.email}"/>
                                     </p>
                                     <p>
                                         <h:outputLabel value="#{msg.password}"/>
                                     </p>
                                     <p>
-                                        <h:inputSecret value="#{customerMB.passwordConnection}"/>
+                                        <h:inputSecret value="#{customerMB.infoConnexion.password}"/>
                                     </p>
                                     <p>
                                         <h:commandButton value="#{msg.signIn}" 

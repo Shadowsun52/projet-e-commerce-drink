@@ -36,4 +36,8 @@ public interface LanguageFacadeLocal {
     public ArrayList<model.Language> findAllLanguages();
     
     public model.Language findByShortLabel(String shortlabel);
+    
+    public model.Language converterToModel(Language entity);
+    
+    public Language converterToEntity(model.Language language);
 }

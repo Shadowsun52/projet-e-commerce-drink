@@ -20,7 +20,8 @@ import javax.persistence.PersistenceContext;
 public class CategoryFacade extends AbstractFacade<Category> implements CategoryFacadeLocal {
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
-
+    private final LanguageFacade languageFacade;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -28,6 +29,7 @@ public class CategoryFacade extends AbstractFacade<Category> implements Category
 
     public CategoryFacade() {
         super(Category.class);
+        languageFacade = new LanguageFacade();
     }
     
     @Override
@@ -38,14 +40,15 @@ public class CategoryFacade extends AbstractFacade<Category> implements Category
 
     @Override
     public ArrayList<model.Category> findAllCategories() {
-        ArrayList<model.Category> categories = new ArrayList();
-        findAll().stream().forEach((entity)-> {
-            categories.add(converterToModel(entity));
+        ArrayList<model.Category> listCategories = new ArrayList();
+        findAll().stream().forEach((category)-> {
+            listCategories.add(converterToModel(category));
         });
-        return categories;
+        return listCategories;
     }
     
-    private model.Category converterToModel(Category entity)
+    @Override
+    public model.Category converterToModel(Category entity)
     {
         model.Category category = new model.Category(entity.getIdcategory(), 
                 entity.getDaterequired());

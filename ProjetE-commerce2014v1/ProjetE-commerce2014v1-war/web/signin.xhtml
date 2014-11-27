@@ -19,7 +19,7 @@
                                            for="email"/><br/>
                             <h:inputText id="email" class="inputLong"
                                          maxlength="70" 
-                                         value="#{customerMB.emailConnection}"
+                                         value="#{customerMB.infoConnexion.email}"
                                          required="true"
                                          requiredMessage="#{msg.emailRequired}">
                                 <f:ajax render="errorEmail" event="blur"/>
@@ -33,7 +33,7 @@
                                            for="password"/><br/>
                             <h:inputSecret id="password" class="inputLong"
                                          maxlength="70" 
-                                         value="#{customerMB.passwordConnection}"
+                                         value="#{customerMB.infoConnexion.password}"
                                          required="true"
                                          requiredMessage="#{msg.passwordRequired}">
                                 <f:ajax render="errorPassword" event="blur"/>
@@ -42,7 +42,7 @@
                                 <h:message id="errorPassword" for="password"/>
                             </span>
                         </p>
-                        <c:if test="#{customerMB.errorConnection}">
+                        <c:if test="#{customerMB.infoConnexion.errorConnection}">
                             <span class="errorMessage">
                                 <h:outputText value="#{msg.errorConnection}"/>
                             </span>       

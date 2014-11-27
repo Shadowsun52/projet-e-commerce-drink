@@ -6,22 +6,20 @@
 package entityBeans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,8 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "IDADDRESS")
     private Integer idaddress;
     @Basic(optional = false)
@@ -64,15 +62,9 @@ public class Address implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "CITY")
     private String city;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delAddress")
-    private Collection<OrderTable> orderTableCollection;
     @JoinColumn(name = "IDCOUNTRY", referencedColumnName = "IDCOUNTRY")
     @ManyToOne(optional = false)
     private Country idcountry;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaddress")
-    private Collection<Customer> customerCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaddress")
-    private Collection<Parameter> parameterCollection;
 
     public Address() {
     }
@@ -129,39 +121,12 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    @XmlTransient
-    public Collection<OrderTable> getOrderTableCollection() {
-        return orderTableCollection;
-    }
-
-    public void setOrderTableCollection(Collection<OrderTable> orderTableCollection) {
-        this.orderTableCollection = orderTableCollection;
-    }
-
     public Country getIdcountry() {
         return idcountry;
     }
 
     public void setIdcountry(Country idcountry) {
         this.idcountry = idcountry;
-    }
-
-    @XmlTransient
-    public Collection<Customer> getCustomerCollection() {
-        return customerCollection;
-    }
-
-    public void setCustomerCollection(Collection<Customer> customerCollection) {
-        this.customerCollection = customerCollection;
-    }
-
-    @XmlTransient
-    public Collection<Parameter> getParameterCollection() {
-        return parameterCollection;
-    }
-
-    public void setParameterCollection(Collection<Parameter> parameterCollection) {
-        this.parameterCollection = parameterCollection;
     }
 
     @Override

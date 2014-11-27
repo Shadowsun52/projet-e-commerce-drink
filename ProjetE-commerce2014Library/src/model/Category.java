@@ -5,13 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Alexandre
  */
-public class Category {
+public class Category implements Serializable{
     private Integer id;
     private boolean dateRequired;
     private HashMap<String, String> hashLabel;
@@ -74,4 +75,8 @@ public class Category {
     public String getLabel(String language) {
         return hashLabel.get(language);
     }
+    
+//    public String getLabel(Language language) {
+//        return hashLabel.get(language.);
+//    }
 }

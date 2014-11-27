@@ -45,4 +45,10 @@
         <local>sessionBeansFacade.CountryFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#CountryFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CountryFacade1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.CountryFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CountryFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

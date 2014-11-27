@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alexandre
  */
-public class Language {
+public class Language implements Serializable{
     private Integer id;
     private String label;
     private String slogan;

@@ -5,18 +5,19 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Alexandre
  */
-public class Customer {
+public class Customer implements Serializable{
     private Integer id;
     private String name;
     private String lastname;
     private Date birthdate;
-    private Address adress;
+    private Address address;
     private String numphone;
     private String email;
     private String password;
@@ -34,7 +35,7 @@ public class Customer {
         this.name = name;
         this.lastname = lastname;
         this.birthdate = birthdate;
-        this.adress = adress;
+        this.address = adress;
         this.numphone = numphone;
         this.email = email;
         this.password = password;
@@ -95,21 +96,21 @@ public class Customer {
      * @param birthdate the birthdate to set
      */
     public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+         this.birthdate = birthdate;
     }
 
     /**
      * @return the adress
      */
-    public Address getAdress() {
-        return adress;
+    public Address getAddress() {
+        return address;
     }
 
     /**
      * @param adress the adress to set
      */
-    public void setAdress(Address adress) {
-        this.adress = adress;
+    public void setAddress(Address adress) {
+        this.address = adress;
     }
 
     /**

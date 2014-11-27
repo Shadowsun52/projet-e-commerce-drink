@@ -5,21 +5,22 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Alexandre
  */
-public class Country {
+public class Country implements Serializable{
     private Integer id;
-    private Integer tva;
+    private short tva;
     private HashMap<String,String> hashLabel;
     
     public Country() {  
     }
 
-    public Country(Integer id, Integer tva) {
+    public Country(Integer id, short tva) {
         this.id = id;
         this.tva = tva;
         hashLabel = new HashMap();
@@ -42,14 +43,14 @@ public class Country {
     /**
      * @return the tva
      */
-    public Integer getTva() {
+    public short getTva() {
         return tva;
     }
 
     /**
      * @param tva the tva to set
      */
-    public void setTva(Integer tva) {
+    public void setTva(short tva) {
         this.tva = tva;
     }
 
@@ -69,5 +70,31 @@ public class Country {
     
     public void addLabel(String language, String label) {
         this.hashLabel.put(language, label);
+    }
+    
+    public String getLabel(String language) {
+        return hashLabel.get(language);
+    }
+    
+    @Override
+    public int hashCode() {        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Country)) {
+            return false;
+        }
+        Country other = (Country) object;
+        return !((this.id == null && other.id != null) || 
+                (this.id != null && !this.id.equals(other.id)));
+    }
+
+    @Override
+    public String toString() {
+        return "model.Person[ id=" + id + " ]";
     }
 }

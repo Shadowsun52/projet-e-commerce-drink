@@ -5,11 +5,12 @@
  */
 package managedPackage;
 
-import entityBeans.Country;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import model.Country;
 import sessionBeansFacade.CountryFacadeLocal;
 
 /**
@@ -21,13 +22,32 @@ import sessionBeansFacade.CountryFacadeLocal;
 public class CountryMB {
     @EJB
     private CountryFacadeLocal countryFacade;
+    
+    private ArrayList<Country> countries;
+            
+            
     /**
      * Creates a new instance of CountryMB
      */
     public CountryMB() {
     }
-    
-    public ArrayList<Country> getAllCountries() {
-        return new ArrayList(countryFacade.findAll());
+
+    @PostConstruct
+    public void init(){
+        setCountries(countryFacade.findAllCountries());
+    } 
+
+    /**
+     * @return the countries
+     */
+    public ArrayList<Country> getCountries() {
+        return countries;
+    }
+
+    /**
+     * @param countries the countries to set
+     */
+    public void setCountries(ArrayList<Country> countries) {
+        this.countries = countries;
     }
 }

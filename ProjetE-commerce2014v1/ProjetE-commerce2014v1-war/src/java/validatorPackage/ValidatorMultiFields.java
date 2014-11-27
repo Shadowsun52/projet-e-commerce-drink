@@ -21,7 +21,8 @@ public abstract class ValidatorMultiFields implements Validator{
     
     protected String getField(FacesContext context, UIComponent component, String nameComponent){
             UIInput componentField  =(UIInput) component.getAttributes().get(nameComponent);
-            return (String) componentField.getValue();
+            return (String) (componentField.getSubmittedValue() == null ? 
+                    componentField.getValue() : componentField.getSubmittedValue());
     }
     
     protected ResourceBundle linkToBundle(FacesContext context){

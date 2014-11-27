@@ -34,4 +34,6 @@ public interface CategoryFacadeLocal {
     model.Category findCategory(Object id);
     
     ArrayList<model.Category> findAllCategories();
+    
+    public model.Category converterToModel(Category entity);
 }

@@ -5,16 +5,16 @@
  */
 package managedPackage;
 
-import entityBeans.Address;
-import entityBeans.Customer;
-import entityBeans.Language;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import model.Address;
+import model.Customer;
 import model.Encryption;
+import model.InfoConnexion;
+import model.Language;
 import sessionBeansFacade.CustomerFacadeLocal;
 import sessionBeansFacade.LanguageFacadeLocal;
 
@@ -32,19 +32,15 @@ public class CustomerMB implements Serializable {
     private CustomerFacadeLocal customerFacade;
     
     private Customer customer; 
-    private Boolean connected,
-                    errorConnection;
-    private String emailConnection,
-                   passwordConnection,
-                   previousPage;
-
+    private InfoConnexion infoConnexion;
+    private String previousPage;
     /**
      * Creates a new instance of CustomerMB
      */
     public CustomerMB() {
         customer = new Customer();
-        customer.setIdaddress(new Address());
-        connected = false;
+        customer.setAddress(new Address());
+        infoConnexion = new InfoConnexion();
     }
 
     /**
@@ -63,9 +59,7 @@ public class CustomerMB implements Serializable {
     
     public String signUp(){
         try{
-            customer.setInscriptiondate(new Date());
-            customer.setPassword(Encryption.encryption(customer.getPassword()));
-            customer.setChosenlanguage(findLanguageCurrent());
+            customer.setChosenLanguage(findLanguageCurrent());
             customerFacade.create(customer);
             return "endsignup";
         }
@@ -77,96 +71,62 @@ public class CustomerMB implements Serializable {
     }
     
     public String connection(){
-        customer = customerFacade.findByEmail(getEmailConnection());
-        if(customer != null && PasswordCorrect()) {
+        customer = customerFacade.findByEmail(infoConnexion.getEmail());
+        if(infoConnectionCorrect()) {
             setLanguageCurrent();
-            setConnected(true);
-            setErrorConnection(false);
+            infoConnexion.setIsconnected(true);
+            infoConnexion.setErrorConnection(false);
             return previousPage;
         }
         else
         {
-            previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-            setErrorConnection(true);
+            previousPage = FacesContext.getCurrentInstance().getViewRoot()
+                    .getViewId();
+            infoConnexion.setErrorConnection(true);
             return "signin";
         }
     }
     
     public void deconnection(){
-        setConnected(false);
+        infoConnexion.setIsconnected(false);
+        infoConnexion.setErrorConnection(false);
         customer = new Customer();
     }
     
-    private boolean PasswordCorrect()
+    private boolean infoConnectionCorrect()
     {
-        String passwordProtected = Encryption.encryption(getPasswordConnection());
-        return passwordProtected.equals(customer.getPassword());
+        String passwordProtected = Encryption.encryption(
+                infoConnexion.getPassword());
+        return customer != null && passwordProtected.equals(
+                customer.getPassword());
     }
     
     private Language findLanguageCurrent() {
-        String shortLabel = FacesContext.getCurrentInstance()
-                .getViewRoot().getLocale().getLanguage();
-//        return languageFacade.findByShortLabel(shortLabel);
-        return null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        InternationalizationManaged im = (InternationalizationManaged) context
+                .getApplication().getExpressionFactory()
+                .createValueExpression(context.getELContext(), 
+                        "#{internationalizationManaged}", 
+                        InternationalizationManaged.class)
+                .getValue(context.getELContext());
+        return im.getCurrentLanguage();
     }
 
     private void setLanguageCurrent() {
         FacesContext context = FacesContext.getCurrentInstance();
-        InternationalizationManaged iM = (InternationalizationManaged) 
+        InternationalizationManaged im = (InternationalizationManaged) 
                 context.getApplication().getExpressionFactory()
                         .createValueExpression(context.getELContext(), 
                                 "#{internationalizationManaged}", 
                                 InternationalizationManaged.class)
                         .getValue(context.getELContext());
-//      iM.setLocale(customer.getChosenlanguage().getShortlabel());
+        im.setLocale(customer.getChosenLanguage());
     }
     
-    public void setChosenLanguage(String shortLabelLanguage)
+    public void setChosenLanguage(Language language)
     {
-//        Language LanguageChosen = languageFacade.findByShortLabel(shortLabelLanguage);
-//        customer.setChosenlanguage(LanguageChosen);
-//        customerFacade.edit(customer);
-    }
-    /**
-     * @return the connected
-     */
-    public Boolean getConnected() {
-        return connected;
-    }
-
-    /**
-     * @param connected the connected to set
-     */
-    public void setConnected(Boolean connected) {
-        this.connected = connected;
-    }
-
-    /**
-     * @return the emailConnection
-     */
-    public String getEmailConnection() {
-        return emailConnection;
-    }
-
-    /**
-     * @param emailConnection the emailConnection to set
-     */
-    public void setEmailConnection(String emailConnection) {
-        this.emailConnection = emailConnection;
-    }
-
-    /**
-     * @return the passwordConnection
-     */
-    public String getPasswordConnection() {
-        return passwordConnection;
-    }
-
-    /**
-     * @param passwordConnection the passwordConnection to set
-     */
-    public void setPasswordConnection(String passwordConnection) {
-        this.passwordConnection = passwordConnection;
+        customer.setChosenLanguage(language);
+        customerFacade.edit(customer);
     }
 
     /**
@@ -182,23 +142,23 @@ public class CustomerMB implements Serializable {
     public void setPreviousPage(String previousPage) {
         this.previousPage = previousPage;
     }
-
-    /**
-     * @return the errorConnection
-     */
-    public Boolean getErrorConnection() {
-        return errorConnection;
-    }
-
-    /**
-     * @param errorConnection the errorConnection to set
-     */
-    public void setErrorConnection(Boolean errorConnection) {
-        this.errorConnection = errorConnection;
-    }
     
     public String debug(){
         customer.getBirthdate();
         return "signup";
+    }
+
+    /**
+     * @return the infoConnexion
+     */
+    public InfoConnexion getInfoConnexion() {
+        return infoConnexion;
+    }
+
+    /**
+     * @param infoConnexion the infoConnexion to set
+     */
+    public void setInfoConnexion(InfoConnexion infoConnexion) {
+        this.infoConnexion = infoConnexion;
     }
 }

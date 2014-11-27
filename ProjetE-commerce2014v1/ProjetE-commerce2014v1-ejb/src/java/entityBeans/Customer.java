@@ -80,7 +80,7 @@ public class Customer implements Serializable {
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 128)
     @Column(name = "PASSWORD")
     private String password;
     @Basic(optional = false)

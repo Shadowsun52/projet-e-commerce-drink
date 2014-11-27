@@ -21,7 +21,7 @@ import javax.faces.validator.ValidatorException;
 public class ValidatorConfirmPassword extends ValidatorMultiFields{
 
     private static final String PASSWORD_FIELD = "composantPassword",
-                                ERROR_MESSAGE = "emailsNotSame";
+                                ERROR_MESSAGE = "passwordsNotSame";
     
     private String password,
                    confirmPassword;

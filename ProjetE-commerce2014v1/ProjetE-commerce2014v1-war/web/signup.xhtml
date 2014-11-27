@@ -88,20 +88,21 @@
                         </div>
                         <p class="after_float">
                             <h:outputLabel value="#{msg.formBirthdate}:"/><br/>
-                                <p:calendar id="birthdateDay"
+                            <p:calendar id="birthdate" 
                                         value="#{customerMB.customer.birthdate}"
-                                        navigator="true" pattern="dd-MMM-yyyy" 
+                                        navigator="true" pattern="dd-MMMM-yyyy"
                                         yearRange="-100:-18"
-                                        locale="#{internationalizationManaged.language}"
-                                        required="true" 
+                                        locale="#{internationalizationManaged
+                                                  .currentLanguage.shortLabel}"
+                                        required="true"
                                         requiredMessage="#{msg.birthdateRequired}"
                                         converterMessage="#{msg.isNotDate}">
                                 <f:ajax event="blur" render="errorBirthdate"/>
                                 <p:ajax event="dateSelect" update="errorBirthdate"/>
                                 <f:validator validatorId="validatorBirthdate"/>
-                            </p:calendar>  
+                            </p:calendar>
                             <span class="errorMessage">
-                                <h:message id="errorBirthdate" for="birthdateDay"/>
+                                <h:message id="errorBirthdate" for="birthdate"/>
                             </span>
                         </p>
                     </div>
@@ -110,7 +111,7 @@
                             <h:outputLabel value="#{msg.formNameStreet}:"
                                            for="nameStreet"/><br/>
                             <h:inputText id="nameStreet" class="inputLong"
-                                         value="#{customerMB.customer.idaddress.namestreet}"
+                                         value="#{customerMB.customer.address.nameStreet}"
                                          required="true"
                                          requiredMessage="#{msg.nameStreetRequired}">
                                 <f:ajax render="errorNameStreet" event="blur"/>
@@ -120,7 +121,7 @@
                             <h:outputLabel value="#{msg.formNbStreet}:"
                                            for="nbStreet"/><br/>
                             <h:inputText id="nbStreet" class="inputShorter" 
-                                         value="#{customerMB.customer.idaddress.numstreet}"
+                                         value="#{customerMB.customer.address.numStreet}"
                                          required="true"
                                          requiredMessage="#{msg.nbStreetRequired}">
                                 <f:ajax render="errorNbStreet" event="blur"/>
@@ -139,22 +140,22 @@
                                            for="country"/><br/>
                             <h:selectOneMenu id="country"
                                              class="selectLong"
-                                             value="#{customerMB.customer
-                                                      .idaddress.idcountry}">
-                                <c:forEach items="#{countryMB.allCountries}" 
-                                           var="country">
-                                    <f:selectItem itemValue="#{country}"
-                                                  itemLabel="#{country.getLabel(
-                                                               internationalizationManaged.language)}"/>
-                                </c:forEach>
+                                             value="#{customerMB.customer.address.country}">
+                                <f:selectItems value="#{countryMB.countries}"
+                                               var="country"
+                                               itemValue="#{country}"
+                                               itemLabel="#{country.getLabel(internationalizationManaged.currentLanguage.shortLabel)}"/>
+                                <f:ajax render="errorCountry" event="blur"/>
                             </h:selectOneMenu>
+                            <span class="errorMessage">
+                                <h:message id="errorCountry" for="country"/>
+                            </span>
                         </p>
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPostCode}:"
                                            for="postCode"/><br/>
                             <h:inputText id="postCode" class="inputShort"
-                                         value="#{customerMB.customer
-                                                  .idaddress.postcode}"
+                                         value="#{customerMB.customer.address.postCode}"
                                          required="true"
                                          requiredMessage="#{msg.postCodeRequired}"
                                          validatorMessage="#{msg.postCodeError}">
@@ -168,7 +169,7 @@
                                            for="city"/><br/>
                             <h:inputText id="city" class="inputShort"
                                          value="#{customerMB.customer
-                                                  .idaddress.city}"
+                                                  .address.city}"
                                          required="true"
                                          requiredMessage="#{msg.cityRequired}"
                                          validatorMessage="#{msg.cityNoNumber}">
@@ -240,7 +241,7 @@
                             </span>
                         </div>
                         <p class="after_float">
-                            <h:commandButton value="#{msg.bntValid}" action="#{customerMB.debug()}"/>
+                            <h:commandButton value="#{msg.bntValid}" action="#{customerMB.signUp()}"/>
                         </p>
                     </div>
                 </h:form>

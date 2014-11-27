@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Country;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,11 @@ public interface CountryFacadeLocal {
 
     int count();
     
+    public model.Country converterToModel(Country entity);
+    
+    public Country converterToEntity(model.Country country);
+    
+    public model.Country findCountry(Object id);
+    
+    public ArrayList<model.Country> findAllCountries();
 }

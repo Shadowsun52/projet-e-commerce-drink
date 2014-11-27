@@ -119,13 +119,4 @@ public class Country implements Serializable {
     public String toString() {
         return "entityBeans.Country[ idcountry=" + idcountry + " ]";
     }
-    
-    public String getLabel(String language) {
-        for (LangCountry langCountry : langCountryCollection) {
-            if(langCountry.getLanguage().getShortlabel().equals(language))
-                return langCountry.getLabel();
-        }
-        //il faudra gérer une erreur ici
-        return "not found";
-    }
 }
