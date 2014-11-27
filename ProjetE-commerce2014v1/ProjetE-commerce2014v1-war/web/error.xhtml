@@ -9,7 +9,10 @@
         <ui:composition template="./template/noOrderTemplate.xhtml">
 
             <ui:define name="content">
-                <h2 class="alone"><h:outputText value="#{msg.signUpSuccess} #{customerMB.customer.email}."/></h2>
+                <div id="error404">    
+                    <h2><h:outputText value="#{msg.error404Title}"/></h2>
+                    <p><h:outputText value="#{msg.error404Descr}"/></p>
+                </div>
             </ui:define>
 
         </ui:composition>

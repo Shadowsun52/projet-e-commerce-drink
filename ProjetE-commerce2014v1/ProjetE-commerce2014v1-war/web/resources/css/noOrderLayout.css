@@ -106,6 +106,24 @@
     height: 25px;
 }
 
+.alone{
+    margin: 40px 0 40px 20px;
+}
+
+#error404{
+    margin: 25px auto;
+    width: 80%;
+    background-color: rgba(220,0,0,0.9);
+    border-radius: 5px;
+    border: solid 3px rgb(140,0,0);
+    font-size: 1.6em;
+    padding: 8% 0 8% 20px;
+    padding-top:8%;
+}
+
+#error404 h2{
+    text-align: center;
+}
 @media screen and (max-width: 762px) {
     .selectShort {
         display: block;
