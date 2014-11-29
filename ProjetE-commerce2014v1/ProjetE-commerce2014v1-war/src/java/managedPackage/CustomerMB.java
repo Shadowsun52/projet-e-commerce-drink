@@ -8,10 +8,13 @@ package managedPackage;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import model.Address;
 import model.Customer;
+import model.EmailSender;
 import model.Encryption;
 import model.InfoConnexion;
 import model.Language;
@@ -25,6 +28,7 @@ import sessionBeansFacade.LanguageFacadeLocal;
 @Named(value = "customerMB")
 @SessionScoped
 public class CustomerMB implements Serializable {
+    private static final String BUNDLE_LOCALE = "languagePackage.lang";
     
     @EJB
     private LanguageFacadeLocal languageFacade;
@@ -60,7 +64,7 @@ public class CustomerMB implements Serializable {
     public String signUp(){
         try{
             customer.setChosenLanguage(findLanguageCurrent());
-            customerFacade.create(customer);
+            customerFacade.create(customer, getBundle());
             return "endsignup";
         }
         catch(Exception e)
@@ -160,5 +164,10 @@ public class CustomerMB implements Serializable {
      */
     public void setInfoConnexion(InfoConnexion infoConnexion) {
         this.infoConnexion = infoConnexion;
+    }
+    
+    private ResourceBundle getBundle(){
+        return ResourceBundle.getBundle(BUNDLE_LOCALE, 
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
     }
 }

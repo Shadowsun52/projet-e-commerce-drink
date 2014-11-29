@@ -9,12 +9,14 @@ import entityBeans.Address;
 import entityBeans.Customer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.EmailSender;
 import model.Encryption;
 
 /**
@@ -22,7 +24,11 @@ import model.Encryption;
  * @author Alexandre
  */
 @Stateless
-public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {
+public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {  
+    private static final String SIGN_UP_SUBJECT = "signUpEmailSubject";
+    private static final String SIGN_UP_BODY1 = "signUpEmailBody1";
+    private static final String SIGN_UP_BODY2 = "signUpEmailBody2";
+    
     @EJB
     private AddressFacadeLocal addressFacade;
     @EJB
@@ -55,7 +61,7 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
     }
 
     @Override
-    public void create(model.Customer customer) {
+    public void create(model.Customer customer, ResourceBundle bundle) {
         try{
         customer.setPassword(Encryption.encryption(customer.getPassword()));
         Address address = addressFacade.converterToEntity(customer.getAddress());
@@ -63,6 +69,9 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         Customer entity = converterToEntity(customer);
         entity.setIdaddress(address);
         create(entity);
+        EmailSender.sendEmail(customer.getEmail(), 
+                bundle.getString(SIGN_UP_SUBJECT), 
+                createBodyForEmailSignUp(bundle, customer.getEmail()));
         }
         catch(Exception e){
             System.out.println(e.toString());
@@ -117,5 +126,11 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
                 languageFacade.find(customer.getChosenLanguage().getId()));
         
         return entity;
+    }
+    
+    private String createBodyForEmailSignUp(ResourceBundle bundle, String email){
+        return "<h1>" + bundle.getString(SIGN_UP_SUBJECT) + "</h1><p>" 
+                + bundle.getString(SIGN_UP_BODY1) + " " 
+                + email + "</p><p>" + bundle.getString(SIGN_UP_BODY2) + "</p>";
     }
 }

@@ -8,6 +8,7 @@ package sessionBeansFacade;
 import entityBeans.Customer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.Local;
 
 /**
@@ -31,7 +32,7 @@ public interface CustomerFacadeLocal {
 
     int count();
     
-    public void create(model.Customer customer);
+    public void create(model.Customer customer, ResourceBundle bundle);
     
     public void edit(model.Customer customer);
     
