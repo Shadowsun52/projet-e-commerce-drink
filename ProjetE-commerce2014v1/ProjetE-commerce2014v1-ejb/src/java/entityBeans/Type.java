@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
-    @NamedQuery(name = "Type.findByIdtype", query = "SELECT t FROM Type t WHERE t.idtype = :idtype")})
+    @NamedQuery(name = "Type.findByIdtype", query = "SELECT t FROM Type t WHERE t.idtype = :idtype"),
+    @NamedQuery(name = "Type.findByCateg", query = "SELECT t FROM Type t WHERE t.idcategory.idcategory = :idcateg")})
 public class Type implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     private Collection<Typedrink> typedrinkCollection;

@@ -7,14 +7,12 @@ package managedPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpServletRequest;
 import model.Drink;
 import sessionBeansFacade.DrinkFacadeLocal;
 
@@ -42,9 +40,6 @@ public class DrinksMB implements Serializable{
         listDrink=findDrinksbyCateg();
         System.out.println("machin");
     }
-    /*public List<Drink> findDrinks() {       
-        return drinkFacade.findAllDrinks();
-    }*/
     
     public ArrayList<Drink> findDrinksbyCateg()
     {     

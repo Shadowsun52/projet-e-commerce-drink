@@ -6,6 +6,7 @@
 package sessionBeansFacade;
 
 import entityBeans.Type;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,11 @@ public interface TypeFacadeLocal {
     List<Type> findRange(int[] range);
 
     int count();
+    
+    ArrayList<model.Type> findByCateg(int idCateg);
+    
+    ArrayList<entityBeans.Type> findEntityByCateg(int idCateg);
+    
+    model.Type converterToModel(Type entity);
     
 }

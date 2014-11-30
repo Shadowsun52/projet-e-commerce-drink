@@ -13,26 +13,13 @@
             <ui:define name="content">
                 <section id="searchOptions">
                     <h:form>
+                       <h3>Grid</h3>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-
-                            <h:outputText value="Grid:" />
-                            <p:selectManyCheckbox id="grid" value="#{checkboxView.selectedCities}" layout="grid" columns="3">
-                                <f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />
-                            </p:selectManyCheckbox>
+                            <p:outputLabel for="city" value="#{typeMB.getTypeByCateg()}" />
+                            <p:selectOneRadio id="city" value="#{typeMB.getTypeByCateg()}"  layout="grid" columns="3">
+                                <f:selectItems value="#{typeMB.getTypeByCateg()}" var="c" itemLabel="testing" itemValue="test"/>
+                            </p:selectOneRadio>
                         </h:panelGrid>
-
-                        <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
-
-                        <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
-                            <p:outputPanel id="display">
-                                <p:dataList value="#{checkboxView.selectedConsoles}" var="console">
-                                    #{console}
-                                </p:dataList>
-                                <p:dataList value="#{checkboxView.selectedCities}" var="city">
-                                    #{city}
-                                </p:dataList>
-                            </p:outputPanel>
-                        </p:dialog>
                     </h:form>
                 </section>
                 <section id="listDrinks">
