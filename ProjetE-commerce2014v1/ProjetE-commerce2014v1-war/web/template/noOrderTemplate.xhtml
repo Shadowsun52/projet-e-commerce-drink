@@ -47,7 +47,7 @@
                         <c:when test="#{customerMB.infoConnexion.isconnected}">
                             <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
                             <div id="form_connexion" class="connected">
-                                <h:link value="#{msg.paramAccount}" outcome="index.xhtml"/>
+                                <h:link value="#{msg.paramAccount}" outcome="editcustomer.xhtml"/>
                                 <h:form>
                                     <p>
                                         <h:commandButton value="#{msg.signOut}" 
