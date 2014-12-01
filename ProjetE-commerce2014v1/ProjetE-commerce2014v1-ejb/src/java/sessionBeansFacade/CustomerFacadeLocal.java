@@ -32,7 +32,7 @@ public interface CustomerFacadeLocal {
 
     int count();
     
-    public void create(model.Customer customer, ResourceBundle bundle);
+    public void create(model.Customer customer, ResourceBundle bundle) throws Exception;
     
     public void edit(model.Customer customer);
     
@@ -45,4 +45,6 @@ public interface CustomerFacadeLocal {
     public model.Customer converterToModel(Customer entity);
     
     public Customer converterToEntity(model.Customer customer);
+    
+    public void sendEmailForNewPassword(ResourceBundle bundle, String email) throws Exception;
 }

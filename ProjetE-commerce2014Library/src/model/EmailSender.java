@@ -32,7 +32,7 @@ public class EmailSender {
     }
    
     public static void sendEmail(String emailFrom, String subject, 
-            String message){
+            String message) throws Exception{
         Authenticator auth = new Authenticator() {       
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -45,9 +45,7 @@ public class EmailSender {
     }
     
     private static void send(Session session, String toEmail, 
-            String subject, String body){
-        try
-        {
+            String subject, String body) throws Exception{
           MimeMessage msg = new MimeMessage(session);
           //set message headers
           msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -65,11 +63,6 @@ public class EmailSender {
           System.out.println("Message is ready");
           Transport.send(msg); 
  
-          System.out.println("EMail Sent Successfully!!");
-        }
-        catch (Exception e) {
-          e.printStackTrace();
-        }
-        
+          System.out.println("EMail Sent Successfully!!");      
     }
 }

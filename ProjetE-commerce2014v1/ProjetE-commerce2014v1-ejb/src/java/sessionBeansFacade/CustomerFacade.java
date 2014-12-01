@@ -25,9 +25,14 @@ import model.Encryption;
  */
 @Stateless
 public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {  
+    private static final String PATCH_PAGE_NEW_PW = "http://localhost:8080/" 
+            +"ProjetE-commerce2014v1-war/faces/newpassword.xhtml";
     private static final String SIGN_UP_SUBJECT = "signUpEmailSubject";
     private static final String SIGN_UP_BODY1 = "signUpEmailBody1";
     private static final String SIGN_UP_BODY2 = "signUpEmailBody2";
+    private static final String FORGOT_PW_SUBJECT = "forgotPwEmailSubject";
+    private static final String FORGOT_PW_BODY = "forgotPwEmailBody";
+    private static final String FORGOT_PW_LINK = "forgotPwEmailLink";
     
     @EJB
     private AddressFacadeLocal addressFacade;
@@ -47,11 +52,11 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         super(Customer.class);
     }
 
+// <editor-fold defaultstate="collapsed" desc="CRUD">
     @Override
     public model.Customer findByEmail(String email) {
         try {
-            Query query;
-            query = em.createNamedQuery("Customer.findByEmail");
+            Query query = em.createNamedQuery("Customer.findByEmail");
             query.setParameter("email", email);
             return converterToModel((Customer)query.getSingleResult());
         }
@@ -61,8 +66,8 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
     }
 
     @Override
-    public void create(model.Customer customer, ResourceBundle bundle) {
-        try{
+    public void create(model.Customer customer, ResourceBundle bundle)
+            throws Exception{
         customer.setPassword(Encryption.encryption(customer.getPassword()));
         Address address = addressFacade.converterToEntity(customer.getAddress());
         addressFacade.create(address);
@@ -72,10 +77,6 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         EmailSender.sendEmail(customer.getEmail(), 
                 bundle.getString(SIGN_UP_SUBJECT), 
                 createBodyForEmailSignUp(bundle, customer.getEmail()));
-        }
-        catch(Exception e){
-            System.out.println(e.toString());
-        }
     }
 
     @Override
@@ -97,6 +98,14 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         return listCustomers;
     }
     
+    private String createBodyForEmailSignUp(ResourceBundle bundle, String email){
+        return "<h1>" + bundle.getString(SIGN_UP_SUBJECT) + "</h1><p>" 
+                + bundle.getString(SIGN_UP_BODY1) + " " 
+                + email + "</p><p>" + bundle.getString(SIGN_UP_BODY2) + "</p>";
+    }
+// </editor-fold>
+    
+// <editor-fold defaultstate="collapsed" desc="Converter">
     @Override
     public model.Customer converterToModel(Customer entity){
         model.Address address = addressFacade.converterToModel(
@@ -127,10 +136,24 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         
         return entity;
     }
+// </editor-fold>
     
-    private String createBodyForEmailSignUp(ResourceBundle bundle, String email){
-        return "<h1>" + bundle.getString(SIGN_UP_SUBJECT) + "</h1><p>" 
-                + bundle.getString(SIGN_UP_BODY1) + " " 
-                + email + "</p><p>" + bundle.getString(SIGN_UP_BODY2) + "</p>";
+// <editor-fold defaultstate="collapsed" desc="password Forgot">
+    @Override
+    public void sendEmailForNewPassword(ResourceBundle bundle, String email) 
+            throws Exception{
+        model.Customer customer = findByEmail(email);
+        String body = "<h1>" + bundle.getString(FORGOT_PW_SUBJECT) + "</h1>" 
+                + bundle.getString(FORGOT_PW_BODY) +"<p><a href=\"" 
+                + createLinkNewPassword(customer) + "\">" 
+                + bundle.getString(FORGOT_PW_LINK) + "</a></p>";
+        EmailSender.sendEmail(email, bundle.getString(FORGOT_PW_SUBJECT), body);
     }
+    
+    private String createLinkNewPassword(model.Customer customer){
+        return PATCH_PAGE_NEW_PW + "?email=" + customer.getEmail() +"&key="
+                + Encryption.encryption(
+                        customer.getEmail() + customer.getPassword());
+    }
+// </editor-fold>
 }

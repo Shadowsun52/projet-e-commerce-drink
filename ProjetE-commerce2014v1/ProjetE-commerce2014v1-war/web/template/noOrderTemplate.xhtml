@@ -62,7 +62,8 @@
                                 <h:form>
                                     <p><h:outputLabel value="#{msg.email}"/></p>
                                     <p>
-                                        <h:inputText value="#{customerMB.infoConnexion.email}"/>
+                                        <h:inputText id="email"
+                                                     value="#{customerMB.infoConnexion.email}"/>
                                     </p>
                                     <p>
                                         <h:outputLabel value="#{msg.password}"/>
@@ -75,8 +76,10 @@
                                                  action="#{customerMB.connection()}"/>
                                     </p>
                                 </h:form>
-                                <a href="#"><h:outputText value="#{msg.forgotPassword}"/></a><br/>
-                                <h:link value="#{msg.signUp}" outcome="signup.xhtml"/>
+                                <h:link value="#{msg.forgotPassword}" 
+                                        outcome="passwordForgot.xhtml"/><br/>
+                                <h:link value="#{msg.signUp}" 
+                                        outcome="signup.xhtml"/>
                             </div>
                         </c:when>
                     </c:choose>

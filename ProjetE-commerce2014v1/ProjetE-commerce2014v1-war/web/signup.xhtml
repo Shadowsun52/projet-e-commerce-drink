@@ -203,7 +203,7 @@
                             </span>
                         </p>
                     </div>
-                     <div class="partSignUp">
+                    <div class="partSignUp">
                         <div class="float_left">
                             <h:outputLabel value="#{msg.formPassword}:"
                                            for="password"/><br/>
@@ -213,7 +213,7 @@
                                            binding="#{composantPassword}"
                                          requiredMessage="#{msg.passwordRequired}"
                                          validatorMessage="#{msg.passwordLength}">
-                                <f:validateLength minimum="2" maximum="40"/>
+                                <f:validateLength minimum="8" maximum="40"/>
                                 <f:ajax execute="password confirmPassword" 
                                         render="errorPassword errorConfirmPassword" 
                                         event="blur"/>

@@ -34,6 +34,7 @@ public class CategoriesMB {
     public void init(){
         categories = categoryFacade.findAllCategories();
     }
+    
     /**
      * @return the categories
      */

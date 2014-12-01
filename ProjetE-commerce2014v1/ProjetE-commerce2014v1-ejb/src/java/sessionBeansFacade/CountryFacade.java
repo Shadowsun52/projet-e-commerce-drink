@@ -24,7 +24,6 @@ import model.Language;
  */
 @Stateless
 public class CountryFacade extends AbstractFacade<Country> implements CountryFacadeLocal {
-    @EJB
     private LanguageFacadeLocal languageFacade;
     
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
@@ -37,6 +36,7 @@ public class CountryFacade extends AbstractFacade<Country> implements CountryFac
 
     public CountryFacade() {
         super(Country.class);
+        languageFacade = new LanguageFacade();
     }
     
     @Override
