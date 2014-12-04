@@ -41,9 +41,8 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
 
     @Override
     public model.Drink converterToModel(Drink entity) {
-        return new model.Drink(entity.getIddrink(), entity.getCurrentprice(), 
-                entity.getCapacity(), entity.getPercentagealcohol(), entity.getDatebottling());
-        
+        return new model.Drink(entity.getIddrink(), entity.getCurrentprice().doubleValue(), 
+                entity.getCapacity().doubleValue(), entity.getPercentagealcohol(), entity.getDatebottling());
     }
 
     @Override

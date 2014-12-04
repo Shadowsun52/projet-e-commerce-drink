@@ -37,4 +37,5 @@ public interface TypeFacadeLocal {
     
     model.Type converterToModel(Type entity);
     
+    model.Type findType(Object id);
 }

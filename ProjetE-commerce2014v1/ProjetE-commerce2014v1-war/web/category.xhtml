@@ -5,7 +5,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
+    <f:metadata>
+        <f:viewParam name="idCat" value="#{drinksMB.idCat}"/>
+    </f:metadata>
     <body>
 
         <ui:composition template="./template/mainTemplate.xhtml">
@@ -15,11 +17,38 @@
                     <h:form>
                        <h3>Grid</h3>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="city" value="#{typeMB.getTypeByCateg()}" />
-                            <p:selectOneRadio id="city" value="#{typeMB.getTypeByCateg()}"  layout="grid" columns="3">
-                                <f:selectItems value="#{typeMB.getTypeByCateg()}" var="c" itemLabel="testing" itemValue="test"/>
+                            <p:outputLabel for="type" value="Types :" />
+                            <p:selectOneRadio id="type" value="#{drinksMB.typeChosen}"  layout="grid" columns="3">
+                                <f:selectItems value="#{typeMB.getTypeByCateg()}" var="type" itemLabel="#{type.getLabel(internationalizationManaged.currentLanguage)}" itemValue="#{type}"/>
                             </p:selectOneRadio>
                         </h:panelGrid>
+                       
+                        <h3>Range Slider</h3>
+                         <h:panelGrid columns="1" style="margin-bottom: 10px">
+                             <h:outputText id="displayRange" value="Between #{sliderView.number6} and #{sliderView.number7}" />
+                             <p:slider for="txt6,txt7" maxValue="250" display="displayRange" style="width: 400px" range="true" displayTemplate="Between {min} and {max}" />
+                         </h:panelGrid>
+                         <h:inputHidden id="txt6" value="#{sliderView.number6}" />
+                         <h:inputHidden id="txt7" value="#{sliderView.number7}" />
+
+                         <p:separator />
+
+                         <p:dialog header="Prix drinks" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+                             <h:panelGrid id="display" columns="1" cellpadding="5">
+                                 <h:outputText value="Number 1: " />
+
+                                 <h:outputText value="Number 2: " />
+
+                                 <h:outputText value="Number 3: " />
+
+                                 <h:outputText value="Number 4: " />
+
+                                 <h:outputText value="Number 5: " />
+
+                                 <h:outputText value="Range: [300,600]" />
+                             </h:panelGrid>
+                         </p:dialog>
+                       <p:commandButton value="Submit" icon="ui-icon-check" />
                     </h:form>
                 </section>
                 <section id="listDrinks">

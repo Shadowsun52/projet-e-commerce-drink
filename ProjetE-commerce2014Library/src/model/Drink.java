@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,8 +14,8 @@ import java.util.HashMap;
  */
 public class Drink {
     private int id;
-    private BigDecimal currentPrice;
-    private BigDecimal capacity;
+    private double currentPrice;
+    private double capacity;
     private short percentageAlcohol;
     private Date dateBottling;
     private HashMap<Language,String> hashLabel;
@@ -24,7 +23,7 @@ public class Drink {
     public Drink() {
     }
 
-    public Drink(int id, BigDecimal currentPrice, BigDecimal capacity, short percentageAlcohol, Date dateBottling) {
+    public Drink(int id, double currentPrice, double capacity, short percentageAlcohol, Date dateBottling) {
         this.id = id;
         this.currentPrice = currentPrice;
         this.capacity = capacity;
@@ -50,28 +49,28 @@ public class Drink {
     /**
      * @return the currentPrice
      */
-    public BigDecimal getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
     /**
      * @param currentPrice the currentPrice to set
      */
-    public void setCurrentPrice(BigDecimal currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
 
     /**
      * @return the capacity
      */
-    public BigDecimal getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
     /**
      * @param capacity the capacity to set
      */
-    public void setCapacity(BigDecimal capacity) {
+    public void setCapacity(double capacity) {
         this.capacity = capacity;
     }
 

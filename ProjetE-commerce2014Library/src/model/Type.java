@@ -5,13 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Alex
  */
-public class Type {
+public class Type implements Serializable {
     private Integer id;
     private Category category;
     private HashMap<Language,String> hashLabel;
@@ -51,5 +52,28 @@ public class Type {
     
     public String getLabel(Language language) {
         return hashLabel.get(language);
+    }
+    
+    @Override
+    public int hashCode() {    	
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+    // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Type)) {
+                return false;
+        }
+        Type other = (Type) object;
+        return !((this.id == null && other.id != null) ||
+            (this.id != null && !this.id.equals(other.id)));
+    }
+
+    @Override
+    public String toString() {
+        return "model.Type[ id=" + id + " ]";
     }
 }

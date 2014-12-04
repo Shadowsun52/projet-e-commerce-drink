@@ -7,13 +7,12 @@ package managedPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import model.Drink;
+import model.Type;
 import sessionBeansFacade.DrinkFacadeLocal;
 
 /**
@@ -27,7 +26,9 @@ public class DrinksMB implements Serializable{
     private DrinkFacadeLocal drinkFacade;
     
     private ArrayList<Drink> listDrink;
-
+    private model.Type typeChosen;
+    private int idCat;
+    
     
     /**
      * Creates a new instance of DrinksMB
@@ -37,15 +38,12 @@ public class DrinksMB implements Serializable{
     
     @PostConstruct
     public void init(){
-        listDrink=findDrinksbyCateg();
-        System.out.println("machin");
+        System.out.println("loll");
     }
     
     public ArrayList<Drink> findDrinksbyCateg()
     {     
-        FacesContext context=FacesContext.getCurrentInstance();
-        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        return drinkFacade.findDrinksbyCateg(Integer.valueOf(params.get("idCat")));
+        return drinkFacade.findDrinksbyCateg(idCat);
     }
     
     public ArrayList<Drink> getListDrink() {
@@ -54,5 +52,23 @@ public class DrinksMB implements Serializable{
 
     public void setListDrink(ArrayList<Drink> listDrink) {
         this.listDrink = listDrink;
+    }
+    
+    public Type getTypeChosen() {
+        return typeChosen;
+    }
+
+    public void setTypeChosen(Type typeChosen) {
+        this.typeChosen = typeChosen;
+    }
+    
+    public int getIdCat() {
+        return idCat;
+    }
+
+    public void setIdCat(int idCat) {
+        this.idCat = idCat;
+        listDrink=findDrinksbyCateg();
+        
     }
 }

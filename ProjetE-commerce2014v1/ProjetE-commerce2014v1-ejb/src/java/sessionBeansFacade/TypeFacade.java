@@ -5,8 +5,10 @@
  */
 package sessionBeansFacade;
 
+import entityBeans.LangType;
 import entityBeans.Type;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,8 @@ import javax.persistence.Query;
  */
 @Stateless
 public class TypeFacade extends AbstractFacade<Type> implements TypeFacadeLocal {
+    @EJB
+    private LanguageFacadeLocal languageFacade;
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
 
@@ -32,10 +36,13 @@ public class TypeFacade extends AbstractFacade<Type> implements TypeFacadeLocal 
     
     @Override
     public model.Type converterToModel(Type entity) {
-        return new model.Type(entity.getIdtype(), 
+        model.Type type = new model.Type(entity.getIdtype(), 
                 new model.Category(entity.getIdcategory().getIdcategory(), 
                         entity.getIdcategory().getDaterequired()));
-        
+        for (LangType langType : entity.getLangTypeCollection()) {
+            type.addLabel(languageFacade.converterToModel(langType.getLanguage()),langType.getLabel());
+        }
+        return type; 
     }
     
     @Override
@@ -57,6 +64,11 @@ public class TypeFacade extends AbstractFacade<Type> implements TypeFacadeLocal 
         });
         
         return arrayModelType;
+    }
+    
+    @Override
+    public model.Type findType(Object id){
+        return converterToModel(find(id));
     }
     
 }

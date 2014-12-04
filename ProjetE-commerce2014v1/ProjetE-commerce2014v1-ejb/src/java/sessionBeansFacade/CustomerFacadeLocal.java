@@ -12,7 +12,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Alexandre
+ * @author Alex
  */
 @Local
 public interface CustomerFacadeLocal {
@@ -31,6 +31,8 @@ public interface CustomerFacadeLocal {
 
     int count();
     
+    public model.Customer findByEmail(String email);
+    
     public void create(model.Customer customer);
     
     public void edit(model.Customer customer);
@@ -39,9 +41,7 @@ public interface CustomerFacadeLocal {
     
     public ArrayList<model.Customer> findAllCustomers();
     
-    public model.Customer findByEmail(String email);
-    
     public model.Customer converterToModel(Customer entity);
     
-    public Customer converterToEntity(model.Customer customer);
+    public Customer converterToEntity(model.Customer customer);   
 }

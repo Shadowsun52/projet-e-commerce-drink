@@ -7,12 +7,11 @@ package managedPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import model.Type;
 import sessionBeansFacade.TypeFacadeLocal;
 
 /**
@@ -31,10 +30,15 @@ public class TypeMB implements Serializable{
     public TypeMB() {
     }
     
-    public ArrayList<model.Type> getTypeByCateg(){
-        FacesContext context=FacesContext.getCurrentInstance();
-        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        return typeFacade.findByCateg(Integer.valueOf(params.get("idCat")));
+    public ArrayList<Type> getTypeByCateg(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        DrinksMB dm = (DrinksMB) context
+                .getApplication().getExpressionFactory()
+                .createValueExpression(context.getELContext(), 
+                        "#{drinksMB}", 
+                        DrinksMB.class)
+                .getValue(context.getELContext());
+        return typeFacade.findByCateg(dm.getIdCat());
     }
     
 }
