@@ -7,7 +7,6 @@ package managedPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -28,6 +27,8 @@ public class DrinksMB implements Serializable{
     private ArrayList<Drink> listDrink;
     private model.Type typeChosen;
     private int idCat;
+    private int lowPrice=80;
+    private int highPrice=130;
     
     
     /**
@@ -36,14 +37,19 @@ public class DrinksMB implements Serializable{
     public DrinksMB() {    
     }
     
-    @PostConstruct
-    public void init(){
-        System.out.println("loll");
-    }
-    
     public ArrayList<Drink> findDrinksbyCateg()
     {     
         return drinkFacade.findDrinksbyCateg(idCat);
+    }
+    
+    /*public ArrayList<Drink> findDrinks()
+    {     
+        return drinkFacade.findDrinks(idCat,typeChosen,lowPrice,highPrice);
+    }*/
+    
+    public void findDrinks()
+    {     
+        listDrink= drinkFacade.findDrinks(idCat,typeChosen,lowPrice,highPrice);
     }
     
     public ArrayList<Drink> getListDrink() {
@@ -70,5 +76,21 @@ public class DrinksMB implements Serializable{
         this.idCat = idCat;
         listDrink=findDrinksbyCateg();
         
+    }
+    
+    public int getLowPrice() {
+        return lowPrice;
+    }
+
+    public void setLowPrice(int lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public int getHighPrice() {
+        return highPrice;
+    }
+
+    public void setHighPrice(int highPrice) {
+        this.highPrice = highPrice;
     }
 }
