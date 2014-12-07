@@ -46,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Drink.findByCateg", query = "SELECT DISTINCT d FROM Drink d, Typedrink td, Type t WHERE d.iddrink=td.typedrinkPK.iddrink and td.typedrinkPK.idtype=t.idtype and t.idcategory.idcategory=:idcateg"),
     @NamedQuery(name = "Drink.findDrinks", query = "SELECT DISTINCT d FROM Drink d, Typedrink td, Type t "
             + "WHERE d.iddrink=td.typedrinkPK.iddrink and td.typedrinkPK.idtype=t.idtype "
-            + "and t.idcategory.idcategory=:idcateg and t.idtype=:idtype and d.currentprice between :lowvalue and :highvalue")})
+            + "and t.idcategory.idcategory=:idcateg and t.idtype=:idtype and d.currentprice between :lowvalue and :highvalue "
+            + "and d.percentagealcohol between :lowpercentage and :highpercentage")})
 public class Drink implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "drink")
     private Collection<Typedrink> typedrinkCollection;

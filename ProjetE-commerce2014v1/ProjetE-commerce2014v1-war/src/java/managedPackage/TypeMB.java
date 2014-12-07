@@ -25,7 +25,7 @@ public class TypeMB implements Serializable{
     private TypeFacadeLocal typeFacade;
 
     /**
-     * Creates a new instance of TypeMB
+     * Creates a ne w instance of TypeMB
      */
     public TypeMB() {
     }

@@ -64,13 +64,16 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
     }
     
     @Override
-    public ArrayList<model.Drink> findDrinks(Integer idCateg, model.Type type, int lowValue, int highValue){
+    public ArrayList<model.Drink> findDrinks(Integer idCateg, model.Type type, 
+            int lowValue, int highValue, double lowPercentage, double highPercentage){
         Query query;
         query=em.createNamedQuery("Drink.findDrinks");
         query.setParameter("idcateg", idCateg);
         query.setParameter("idtype", type.getId());
         query.setParameter("lowvalue", lowValue);
         query.setParameter("highvalue", highValue);
+        query.setParameter("lowpercentage", lowPercentage);
+        query.setParameter("highpercentage", highPercentage);
         ArrayList<entityBeans.Drink> listDrink = new ArrayList(query.getResultList());
 
         ArrayList<model.Drink> listModelDrink = new ArrayList();

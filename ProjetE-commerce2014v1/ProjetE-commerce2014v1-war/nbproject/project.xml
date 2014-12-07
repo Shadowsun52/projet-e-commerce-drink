@@ -10,7 +10,7 @@
                     <file>${reference.ProjetE-commerce2014v1-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${libs.CDI.classpath}</file>
+                    <file>${reference.ProjetE-commerce2014Library.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -18,11 +18,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.ProjetE-commerce2014Library.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${libs.CDI-api.classpath}</file>
+                    <file>${libs.CDI.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

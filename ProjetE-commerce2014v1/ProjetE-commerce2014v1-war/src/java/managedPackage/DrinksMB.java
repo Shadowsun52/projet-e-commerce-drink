@@ -27,8 +27,10 @@ public class DrinksMB implements Serializable{
     private ArrayList<Drink> listDrink;
     private model.Type typeChosen;
     private int idCat;
-    private int lowPrice=80;
-    private int highPrice=130;
+    private int lowPrice=15;
+    private int highPrice=25;
+    private int lowPercentage=40;
+    private int highPercentage=60;
     
     
     /**
@@ -42,17 +44,15 @@ public class DrinksMB implements Serializable{
         return drinkFacade.findDrinksbyCateg(idCat);
     }
     
-    /*public ArrayList<Drink> findDrinks()
-    {     
-        return drinkFacade.findDrinks(idCat,typeChosen,lowPrice,highPrice);
-    }*/
-    
     public void findDrinks()
     {     
-        listDrink= drinkFacade.findDrinks(idCat,typeChosen,lowPrice,highPrice);
+        listDrink = drinkFacade.findDrinks(idCat,typeChosen,lowPrice,
+                highPrice, lowPercentage, highPercentage);
     }
     
     public ArrayList<Drink> getListDrink() {
+        if(typeChosen!=null)
+            findDrinks();
         return listDrink;
     }
 
@@ -92,5 +92,21 @@ public class DrinksMB implements Serializable{
 
     public void setHighPrice(int highPrice) {
         this.highPrice = highPrice;
+    }
+    
+    public int getLowPercentage() {
+        return lowPercentage;
+    }
+
+    public void setLowPercentage(int lowPercentage) {
+        this.lowPercentage = lowPercentage;
+    }
+
+    public int getHighPercentage() {
+        return highPercentage;
+    }
+
+    public void setHighPercentage(int highPercentage) {
+        this.highPercentage = highPercentage;
     }
 }
