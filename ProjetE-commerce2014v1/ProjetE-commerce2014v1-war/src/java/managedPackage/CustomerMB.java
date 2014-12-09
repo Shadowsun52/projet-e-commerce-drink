@@ -19,7 +19,6 @@ import model.Encryption;
 import model.InfoConnexion;
 import model.Language;
 import sessionBeansFacade.CustomerFacadeLocal;
-import sessionBeansFacade.LanguageFacadeLocal;
 
 /**
  *
@@ -35,8 +34,6 @@ public class CustomerMB implements Serializable {
             "newpassword.xhtml?type=1";
     private static final String LINK_ERROR_EDITING = "newpassword.xhtml?type=0";
     
-    @EJB
-    private LanguageFacadeLocal languageFacade;
     @EJB
     private CustomerFacadeLocal customerFacade;
     
