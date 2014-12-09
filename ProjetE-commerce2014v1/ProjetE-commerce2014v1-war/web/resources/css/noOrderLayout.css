@@ -19,7 +19,7 @@
     font-weight: bold;
 }
 
-#main form *{
+#formSignUp *, #formConnection *{
     margin-top: 10px;
 }
 
@@ -50,15 +50,15 @@
     clear: both;
 }
 
-#main form select {
+#formSignUp select, #formConnection select {
     margin-right: 5px;
 }
 
-#main form select *{
+#formSignUp select *, #formConnection select *{
     margin:0;
 }
 
-#main input{
+#formSignUp input, #formConnection input{
     min-width: 150px;
     width: 90%;
     padding:4px;
@@ -101,7 +101,7 @@
     max-width: 126px;
 }
 
-#main form input[type="submit"]{
+#formSignUp input[type="submit"], #formConnection input[type="submit"]{
     width: 150px;
     height: 25px;
 }
@@ -123,6 +123,45 @@
 
 #error404 h2{
     text-align: center;
+}
+
+#formCaddy *{
+    margin-top: 0;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border: 1px solid #a8a8a8!important;
+}
+
+.ui-datatable-footer{
+    margin-top: 0px!important;
+}
+
+.commandRight{
+    float: right;
+    text-align: right;
+    margin: 5px 5px 0 0;
+}
+
+.commandRight p{
+    padding: 10px 5px 0 0;
+}
+
+.codePromo{
+    margin-top:-1px!important;
+}
+
+.bntCaddy{
+    padding:5px 0;
+}
+
+.cornerLeft{
+    margin: 10px  0 0 5px!important;
+}
+
+.amount{
+    display: inline-block;
+    width: 80px;
 }
 @media screen and (max-width: 762px) {
     .selectShort {

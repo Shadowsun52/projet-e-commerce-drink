@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./template/noOrderTemplate.xhtml">
+
+            <ui:define name="content">
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                                 type="preRenderView"/>
+                </c:if>
+                <h1><h:outputText value="#{msg.titleCaddy}"/></h1>
+                <c:if test="#{caddyMB.caddyIsEmpty()}">
+                    <h2><h:outputText value="#{msg.caddyIsEmpty}"/></h2>
+                </c:if>
+                <c:if test="#{!caddyMB.caddyIsEmpty()}">
+                <h:form id="formCaddy">
+                    <p:contextMenu for="orderTable" widgetVar="cMenu">  
+                        <p:menuitem value="Edit Cell" icon="ui-icon-search" ajax="true"
+                                    onclick="PF('cellCars').showCellEditor();return false;"/> 
+                        <p:menuitem value="Hide Menu" icon="ui-icon-close" 
+                                    onclick="PF('cMenu').hide()"/> 
+                    </p:contextMenu> 
+                    <p:dataTable  id="orderTable" var="drink" 
+                                    value="#{caddyMB.listCaddy}" editable="true" 
+                                    editMode="cell" tableStyleClass="orderTable">
+                        <p:column headerText="#{msg.orderItem}">
+                            <h:outputText value="#{drink.key.getLabel(
+                                                internationalizationManaged.currentLanguage)} "/>
+                            <h:commandLink value="[X]" action="#{caddyMB.deleteDrink(drink.key)}"/> 
+                        </p:column>
+                        <p:column headerText="#{msg.percentageAlcohol}">
+                            <h:outputText value="#{drink.key.percentageAlcohol}">
+                                <f:convertNumber minFractionDigits="1"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" %"/>
+                        </p:column>
+                        <p:column headerText="#{msg.prixUnit}">
+                            <h:outputText value="#{drink.key.currentPrice}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                        <p:column headerText="#{msg.orderQuantity}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{drink.value}"/> 
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{caddyMB.caddy[drink.key]}" >
+                                    <f:converter converterId="converterInteger"/>
+                                    <f:ajax event="blur" render="@form"/>
+                                </h:inputText>
+                            </f:facet>
+                        </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="#{msg.orderPrice}" id="test">
+                            <h:outputText value="#{caddyMB.sumline(drink.key)}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText> 
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                    </p:dataTable>
+                    <div class="commandRight">
+                        <p>
+                            <p:inputText id="codePromo" styleClass="codePromo"
+                                          
+                                         placeholder="#{msg.labelCodePromo}"/>
+                            <h:commandButton styleClass="bntCaddy" 
+                                             value="#{msg.addCodePromo}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.orderTotalPrice}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.sumCaddy()}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.tva}(#{customerMB.
+                                                   customer.address.country.tva}%):"/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.tvaCaddy(
+                                                   customerMB.customer)}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.totalPriceTva}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.sumCaddyWithTva(
+                                                   customerMB.customer)}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:commandButton value="#{msg.validCaddy}"
+                                             styleClass="bntCaddy" 
+                                             action="faces/order.xhtml"/>
+                        </p>
+                    </div>
+                    <h:commandButton class="leftBnt" value="#{msg.clearCaddy}"
+                                     styleClass="bntCaddy cornerLeft" 
+                                     action="#{caddyMB.clearCaddy()}"/>
+                </h:form>
+                </c:if>    
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

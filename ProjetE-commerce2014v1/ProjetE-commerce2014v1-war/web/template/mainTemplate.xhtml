@@ -107,6 +107,10 @@
                     <ui:insert name="content">Ici la partie perso des pages</ui:insert>
                 </section>
                 <section id="order">
+                    <c:if test="#{caddyMB.caddyIsEmpty()}">
+                        <h2><h:outputText value="#{msg.caddyIsEmpty}"/></h2>
+                    </c:if>
+                    <c:if test="#{!caddyMB.caddyIsEmpty()}">
                     <h:form id="form">
                         <p:contextMenu for="orderTable" widgetVar="cMenu">  
                             <p:menuitem value="Edit Cell" icon="ui-icon-search" ajax="true"
@@ -137,22 +141,24 @@
                             </p:column>
                             <p:column headerText="#{msg.orderPrice}" id="test">
                                 <h:outputText value="#{caddyMB.sumline(drink.key)}">
-                                    <f:convertNumber minFractionDigits="2"/>
+                                    <f:convertNumber minFractionDigits="2"
+                                                     maxFractionDigits="2"/>
                                 </h:outputText> 
                                 <h:outputText value=" &euro;"/>
                             </p:column>
                             <f:facet name="footer">
                                 <h:outputText value="#{msg.orderTotalPrice}: "/>
                                 <h:outputText id="total" value="#{caddyMB.sumCaddy()}">
-                                    <f:convertNumber minFractionDigits="2"/>
+                                    <f:convertNumber minFractionDigits="2"
+                                                     maxFractionDigits="2"/>
                                 </h:outputText> 
                                 <h:outputText value=" &euro;"/>
                             </f:facet>
                         </p:dataTable>
                     </h:form>
-                    <a href="#" id="linkToOrder">
-                        <h:outputText value="#{msg.goOrder}"/>
-                    </a>
+                    <h:link id="linkToOrder" value="#{msg.goOrder}" 
+                            outcome="caddy.xhtml"/>
+                    </c:if>
                 </section>
             </div>
         </div>

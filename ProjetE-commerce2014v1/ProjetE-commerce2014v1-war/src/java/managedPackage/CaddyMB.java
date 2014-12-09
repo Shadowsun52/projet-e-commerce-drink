@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.Customer;
 import model.Drink;
 import model.Language;
 
@@ -55,6 +56,14 @@ public class CaddyMB implements Serializable {
         caddy.remove(drink);
     }
     
+    public boolean caddyIsEmpty(){
+        return caddy.isEmpty();
+    }
+    
+    public void clearCaddy(){
+        caddy.clear();
+    }
+    
     public double sumline(Drink drink){
         return drink.getCurrentPrice()*caddy.get(drink);
     }
@@ -67,6 +76,13 @@ public class CaddyMB implements Serializable {
         return sum;
     }
     
+    public double tvaCaddy(Customer customer){
+        return sumCaddy()*customer.getAddress().getCountry().getTva()/100;
+    }
+    
+    public double sumCaddyWithTva(Customer customer){
+        return sumCaddy() + tvaCaddy(customer);
+    }
 //</editor-fold>   
     
 //<editor-fold defaultstate="collapsed" desc="getter and setter">

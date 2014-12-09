@@ -126,6 +126,18 @@ public class CustomerMB implements Serializable {
         customer.setChosenLanguage(language);
         customerFacade.edit(customer);
     }
+    
+    public void redirectionConnexion()throws IOException{
+        try{
+            previousPage = FacesContext.getCurrentInstance().getViewRoot()
+                    .getViewId();
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect("signin.xhtml");
+        }
+        catch(IOException e){
+            System.out.println("error redirect.");
+        }
+    }
 // </editor-fold>  
 
 // <editor-fold defaultstate="collapsed" desc="password Forgot">

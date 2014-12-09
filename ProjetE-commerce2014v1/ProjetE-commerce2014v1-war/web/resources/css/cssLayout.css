@@ -253,6 +253,7 @@ a:hover .discount_class{
 #orderTable td{
     width: 30%;
 }
+
 .orderTable th{
     color: black;
     background: none;
@@ -268,6 +269,10 @@ a:hover .discount_class{
 
 .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
     border-style: none!important;
+}
+
+.ui-state-default {
+    box-shadow: none!important;
 }
 
 #linkToOrder{
