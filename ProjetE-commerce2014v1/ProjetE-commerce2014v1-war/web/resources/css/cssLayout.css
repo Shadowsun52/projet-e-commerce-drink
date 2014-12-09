@@ -244,17 +244,30 @@ a:hover .discount_class{
     max-width: 300px;
 }
 
-#order td:first-child{
+#orderTable td:first-child{
     width: 60%;
     text-align: left;
+    font-size: 2em!important;
 }
 
-#order td:last-child{
+#orderTable td{
     width: 30%;
 }
-
-.lastRowOrder{
+.orderTable th{
+    color: black;
+    background: none;
     background-color: rgba(0,0,0,0.1);
+    text-shadow: none;
+}
+
+.ui-widget-header{
+    background: none!important;
+    background-color: rgba(0,0,0,0.1)!important;
+    text-shadow: none!important;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border-style: none!important;
 }
 
 #linkToOrder{
@@ -266,6 +279,7 @@ a:hover .discount_class{
     background-repeat: no-repeat;
     font-size: 0;
     padding: 5px;
+    float: right;
 }
 
 footer {

@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <f:view locale="#{internationalizationManaged.locale}">
     <f:loadBundle basename="languagePackage.lang" var="msg"/>
     <h:head>
@@ -97,7 +98,7 @@
                                  value="#{category.id}"/>
                     </h:link>
                 </li>
-            </c:forEach>
+                </c:forEach>
             </ul>
         </nav>
         <div id="background_main">
@@ -106,27 +107,49 @@
                     <ui:insert name="content">Ici la partie perso des pages</ui:insert>
                 </section>
                 <section id="order">
-                    <table>
-                        <tr>
-                            <th><h:outputText value="#{msg.orderItem}"/></th>
-                            <th><h:outputText value="#{msg.orderQuantity}"/></th>
-                            <th><h:outputText value="#{msg.orderPrice}"/></th>
-                        </tr>
-                        <tr>
-                            <td>Orval</td>
-                            <td>6</td>
-                            <td>12.60 &euro;</td>
-                        </tr>
-                        <tr>
-                            <td>Leffe blonde</td>
-                            <td>24</td>
-                            <td>40.80 &euro;</td>
-                        </tr>
-                        <tr class="lastRowOrder">
-                            <td colspan="2"><h:outputText value="#{msg.orderTotalPrice}"/></td>
-                            <td>53.40 &euro;</td>
-                        </tr>
-                    </table>
+                    <h:form id="form">
+                        <p:contextMenu for="orderTable" widgetVar="cMenu">  
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" ajax="true"
+                                        onclick="PF('cellCars').showCellEditor();return false;"/> 
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" 
+                                        onclick="PF('cMenu').hide()"/> 
+                        </p:contextMenu> 
+                        <p:dataTable  id="orderTable" var="drink" 
+                                      value="#{caddyMB.listCaddy}" editable="true" 
+                                      editMode="cell" tableStyleClass="orderTable">
+                            <p:column headerText="#{msg.orderItem}">
+                                <h:outputText value="#{drink.key.getLabel(
+                                                   internationalizationManaged.currentLanguage)} "/>
+                                <h:commandLink value="[X]" action="#{caddyMB.deleteDrink(drink.key)}"/> 
+                            </p:column>
+                            <p:column headerText="#{msg.orderQuantity}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{drink.value}"/> 
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:inputText value="#{caddyMB.caddy[drink.key]}" >
+                                        <f:converter converterId="converterInteger"/>
+                                        <f:ajax event="blur" render="@form"/>
+                                    </h:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="#{msg.orderPrice}" id="test">
+                                <h:outputText value="#{caddyMB.sumline(drink.key)}">
+                                    <f:convertNumber minFractionDigits="2"/>
+                                </h:outputText> 
+                                <h:outputText value=" &euro;"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <h:outputText value="#{msg.orderTotalPrice}: "/>
+                                <h:outputText id="total" value="#{caddyMB.sumCaddy()}">
+                                    <f:convertNumber minFractionDigits="2"/>
+                                </h:outputText> 
+                                <h:outputText value=" &euro;"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
                     <a href="#" id="linkToOrder">
                         <h:outputText value="#{msg.goOrder}"/>
                     </a>

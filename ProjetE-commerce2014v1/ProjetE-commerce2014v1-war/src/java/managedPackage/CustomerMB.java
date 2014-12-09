@@ -9,7 +9,6 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
@@ -82,7 +81,7 @@ public class CustomerMB implements Serializable {
         return im.getCurrentLanguage();
     }
 // </editor-fold>
-        
+
 // <editor-fold defaultstate="collapsed" desc="sign in">  
     public String connection(){
         customer = customerFacade.findByEmail(infoConnexion.getEmail());
@@ -131,7 +130,7 @@ public class CustomerMB implements Serializable {
         customerFacade.edit(customer);
     }
 // </editor-fold>  
-    
+
 // <editor-fold defaultstate="collapsed" desc="password Forgot">
     public void redirectError() throws IOException{
         try{
@@ -205,7 +204,7 @@ public class CustomerMB implements Serializable {
                 customer.getEmail() + customer.getPassword()));
     }
 // </editor-fold>
-    
+
 // <editor-fold defaultstate="collapsed" desc="getter & setter">
     /**
      * @return the customer
@@ -298,7 +297,7 @@ public class CustomerMB implements Serializable {
         this.key = key;
     }
 // </editor-fold>
-   
+
     private ResourceBundle getBundle(){
         return ResourceBundle.getBundle(BUNDLE_LOCALE, 
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
