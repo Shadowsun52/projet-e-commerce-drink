@@ -87,12 +87,14 @@ public class CustomerMB implements Serializable {
             infoConnexion.setIsconnected(true);
             infoConnexion.setErrorConnection(false);
             infoConnexion.setEmail("");
-            return previousPage;
+            if(currentPage().equals("/signin.xhtml"))
+                return previousPage;
+            return "";
         }
         else
         {
-            previousPage = FacesContext.getCurrentInstance().getViewRoot()
-                    .getViewId();
+            if(!currentPage().equals("/signin.xhtml"))
+                previousPage = currentPage();
             infoConnexion.setErrorConnection(true);
             return "signin";
         }
@@ -129,14 +131,17 @@ public class CustomerMB implements Serializable {
     
     public void redirectionConnexion()throws IOException{
         try{
-            previousPage = FacesContext.getCurrentInstance().getViewRoot()
-                    .getViewId();
+            previousPage = currentPage();
             FacesContext.getCurrentInstance().getExternalContext()
                     .redirect("signin.xhtml");
         }
         catch(IOException e){
             System.out.println("error redirect.");
         }
+    }
+    
+    public String currentPage(){
+        return FacesContext.getCurrentInstance().getViewRoot().getViewId();
     }
 // </editor-fold>  
 
