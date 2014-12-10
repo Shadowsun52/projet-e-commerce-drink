@@ -17,7 +17,7 @@
                     <h:form>
                        <h3>#{msg.typeBox}</h3>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="type" value="Types :" />
+                            <p:outputLabel for="type" value="Types : " />
                             <p:selectOneRadio id="type" value="#{drinksMB.typeChosen}" layout="grid" columns="3">
                                 <f:selectItems value="#{typeMB.getTypeByCateg()}" 
                                                var="type" itemLabel="#{type.getLabel(internationalizationManaged.currentLanguage)}" 
@@ -29,8 +29,9 @@
                          <h:panelGrid columns="1" style="margin-bottom: 10px">
                              <h:outputText id="displayRangePrice" 
                                            value="#{msg.sliderTextA}#{drinksMB.lowPrice}#{msg.sliderTextB}#{drinksMB.highPrice}" />
-                             <p:slider for="lowPrice, highPrice" maxValue="75" display="displayRangePrice" 
-                                       style="width: 400px" range="true" displayTemplate="#{msg.sliderTextA}{min}#{msg.sliderTextB}{max}" />
+                             <p:slider id="priceSlider" for="lowPrice, highPrice" maxValue="300" display="displayRangePrice" 
+                                       style="width: 400px" range="true" displayTemplate="#{msg.sliderTextA}{min}#{msg.sliderTextB}{max}">
+                             </p:slider>
                          </h:panelGrid>
                         <h:inputHidden id="lowPrice" value="#{drinksMB.lowPrice}" />
                         <h:inputHidden id="highPrice" value="#{drinksMB.highPrice}" />
@@ -39,35 +40,39 @@
                          <h:panelGrid columns="1" style="margin-bottom: 10px">
                              <h:outputText id="displayRangePercentage" 
                                            value="#{msg.sliderTextA}#{drinksMB.lowPercentage}#{msg.sliderTextB}#{drinksMB.highPercentage}" />
-                             <p:slider for="lowPercentage, highPercentage" maxValue="100" display="displayRangePercentage" 
-                                       style="width: 400px" range="true" displayTemplate="#{msg.sliderTextA}{min}#{msg.sliderTextB}{max}" />
+                             <p:slider id="alcoholSlider" for="lowPercentage, highPercentage" maxValue="100" display="displayRangePercentage" 
+                                       style="width: 400px" range="true" displayTemplate="#{msg.sliderTextA}{min}#{msg.sliderTextB}{max}" >
+                             </p:slider>
                          </h:panelGrid>
                         <h:inputHidden id="lowPercentage" value="#{drinksMB.lowPercentage}" />
                         <h:inputHidden id="highPercentage" value="#{drinksMB.highPercentage}" />
                         
                         <p:commandButton value="Submit" icon="ui-icon-check">
-                            <f:ajax execute="listDrinksScroller" render="listDrinksScroller" event="click"/>
+                            <f:ajax execute="type priceSlider alcoholSlider formDrinksScroller" render="formDrinksScroller" event="click"/>
                         </p:commandButton>
                     </h:form>
                 </section>
                 <section id="listDrinks">
-                    <h:form>
-                        <p:dataScroller id="listDrinksScroller" value="#{drinksMB.listDrink}" var="drink" 
+                    <h:form id="formDrinksScroller">
+                        <p:dataScroller value="#{drinksMB.listDrink}" var="drink" 
                                         chunkSize="10" mode="inline" scrollHeight="500">
                             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                 <p:graphicImage name="resources/images/search_icon.png"/>
 
                                 <p:outputPanel>
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value="Id:" />
-                                        <h:outputText value="#{drink.id}" />
-                                        
-                                        <h:outputText value="#{msg.priceDataScroll}" />
-                                        <h:outputText value="#{drink.currentPrice} euros" />
-                                        
-                                        <h:outputText value="#{msg.percAlcDataScroll}" />
-                                        <h:outputText value="#{drink.percentageAlcohol}%" />
-                                    </h:panelGrid>
+                                    <h:commandLink action="drink.xhtml">
+                                        <f:param id="idDrink" value="#{drink.id}"/>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputText value="#{msg.labelDrink}" />
+                                            <h:outputText value="#{drink.getLabel(internationalizationManaged.currentLanguage)}" />
+
+                                            <h:outputText value="#{msg.priceDataScroll}" />
+                                            <h:outputText value="#{drink.currentPrice} &euros;" />
+
+                                            <h:outputText value="#{msg.percAlcDataScroll}" />
+                                            <h:outputText value="#{drink.percentageAlcohol}%" />
+                                        </h:panelGrid>
+                                    </h:commandLink>
                                 </p:outputPanel>
                             </h:panelGrid>
                         </p:dataScroller>

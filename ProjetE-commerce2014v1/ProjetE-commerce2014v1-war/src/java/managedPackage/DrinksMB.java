@@ -27,12 +27,11 @@ public class DrinksMB implements Serializable{
     private ArrayList<Drink> listDrink;
     private model.Type typeChosen;
     private int idCat;
-    private int lowPrice=15;
+    private int lowPrice=0;
     private int highPrice=25;
-    private int lowPercentage=40;
-    private int highPercentage=60;
-    
-    
+    private int lowPercentage=0;
+    private int highPercentage=40;
+    private int idDrink;
     /**
      * Creates a new instance of DrinksMB
      */
@@ -109,4 +108,13 @@ public class DrinksMB implements Serializable{
     public void setHighPercentage(int highPercentage) {
         this.highPercentage = highPercentage;
     }
+    
+    public int getIdDrink() {
+        return idDrink;
+    }
+
+    public void setIdDrink(int idDrink) {
+        this.idDrink = idDrink;
+    }
+            
 }

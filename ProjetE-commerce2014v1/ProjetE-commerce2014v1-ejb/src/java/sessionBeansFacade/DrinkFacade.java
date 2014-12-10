@@ -6,7 +6,9 @@
 package sessionBeansFacade;
 
 import entityBeans.Drink;
+import entityBeans.LangDrink;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,8 @@ import javax.persistence.Query;
  */
 @Stateless
 public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLocal {
+    @EJB
+    private LanguageFacadeLocal languageFacade;
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
 
@@ -41,8 +45,12 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
 
     @Override
     public model.Drink converterToModel(Drink entity) {
-        return new model.Drink(entity.getIddrink(), entity.getCurrentprice().doubleValue(), 
+        model.Drink drink = new model.Drink(entity.getIddrink(), entity.getCurrentprice().doubleValue(), 
                 entity.getCapacity().doubleValue(), entity.getPercentagealcohol(), entity.getDatebottling());
+        for(LangDrink langDrink : entity.getLangDrinkCollection()){
+            drink.addLabel(languageFacade.converterToModel(langDrink.getLanguage()), langDrink.getLabel());
+        }
+        return drink;
     }
 
     @Override
