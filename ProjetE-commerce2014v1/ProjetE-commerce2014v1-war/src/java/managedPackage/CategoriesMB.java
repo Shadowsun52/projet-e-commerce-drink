@@ -22,6 +22,7 @@ import sessionBeansFacade.CategoryFacadeLocal;
 public class CategoriesMB {
     @EJB
     private CategoryFacadeLocal categoryFacade;
+    private int idCat; 
     
     private ArrayList<Category> categories;
     /**
@@ -46,5 +47,13 @@ public class CategoriesMB {
      */
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
+    }
+    
+    public int getIdCat() {
+        return idCat;
+    }
+
+    public void setIdCat(int idCat) {
+        this.idCat = idCat;
     }
 }

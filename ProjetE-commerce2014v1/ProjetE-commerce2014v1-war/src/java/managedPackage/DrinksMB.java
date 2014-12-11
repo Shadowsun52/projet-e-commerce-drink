@@ -44,9 +44,15 @@ public class DrinksMB implements Serializable{
     }
     
     public void findDrinks()
-    {     
-        listDrink = drinkFacade.findDrinks(idCat,typeChosen,lowPrice,
+    {   
+        if(typeChosen!=null)
+            listDrink = drinkFacade.findDrinks(idCat,typeChosen,lowPrice,
                 highPrice, lowPercentage, highPercentage);
+        else
+            listDrink = drinkFacade.findDrinksNoType(idCat,lowPrice,
+                highPrice, lowPercentage, highPercentage);
+            
+            
     }
     
     public ArrayList<Drink> getListDrink() {

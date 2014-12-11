@@ -42,4 +42,7 @@ public interface DrinkFacadeLocal {
     public ArrayList<model.Drink> findDrinks(Integer idCateg, model.Type type, 
             int lowValue, int highValue, double lowPercentage, double highPercentage);
     
+    public ArrayList<model.Drink> findDrinksNoType(Integer idCateg, int lowValue, 
+            int highValue, double lowPercentage, double highPercentage);
+    
 }
