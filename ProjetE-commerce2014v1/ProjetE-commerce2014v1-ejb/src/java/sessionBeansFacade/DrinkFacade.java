@@ -95,7 +95,7 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
     public ArrayList<model.Drink> findDrinksNoType(Integer idCateg, int lowValue, 
             int highValue, double lowPercentage, double highPercentage){
         Query query;
-        query=em.createNamedQuery("Drink.findDrinks");
+        query=em.createNamedQuery("Drink.findDrinksNoType");
         query.setParameter("idcateg", idCateg);
         query.setParameter("lowvalue", lowValue);
         query.setParameter("highvalue", highValue);

@@ -17,7 +17,7 @@
                     <h:form>
                        <h3>#{msg.typeBox}</h3>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="type" value="Types : " />
+                            <p:outputLabel for="type" value="Types : "/>
                             <p:selectOneRadio id="type" value="#{drinksMB.typeChosen}" layout="grid" columns="3">
                                 <f:selectItems value="#{typeMB.getTypeByCateg()}" 
                                                var="type" itemLabel="#{type.getLabel(internationalizationManaged.currentLanguage)}" 
