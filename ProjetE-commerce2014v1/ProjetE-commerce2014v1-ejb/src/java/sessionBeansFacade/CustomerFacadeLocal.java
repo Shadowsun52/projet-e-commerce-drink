@@ -13,7 +13,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Alexandre
+ * @author Alex
  */
 @Local
 public interface CustomerFacadeLocal {
@@ -39,8 +39,6 @@ public interface CustomerFacadeLocal {
     public model.Customer findCustomer(Object id);
     
     public ArrayList<model.Customer> findAllCustomers();
-    
-    public model.Customer findByEmail(String email);
     
     public model.Customer converterToModel(Customer entity);
     
