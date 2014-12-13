@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./template/noOrderTemplate.xhtml">
+            <ui:define name="content">
+                <c:if test="#{caddyMB.caddyIsEmpty()or caddyMB.delModChosen == null}">
+                    <f:event listener="#{customerMB.redirectError()}"
+                             type="preRenderView"/>
+                </c:if>
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                             type="preRenderView"/>
+                </c:if>
+                <h1><h:outputText value="#{msg.validOrder}"/></h1>
+                <div id="validOrder">
+                    <p:dataTable var="drink" value="#{caddyMB.listCaddy}"
+                                 tableStyleClass="orderTable">
+                         <p:column headerText="#{msg.orderItem}">
+                            <h:outputText value="#{drink.key.getLabel(
+                                                internationalizationManaged.currentLanguage)} "/>
+                        </p:column>
+                        <p:column headerText="#{msg.percentageAlcohol}">
+                            <h:outputText value="#{drink.key.percentageAlcohol}">
+                                <f:convertNumber minFractionDigits="1"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" %"/>
+                        </p:column>
+                        <p:column headerText="#{msg.prixUnit}">
+                            <h:outputText value="#{drink.key.currentPrice}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                        <p:column headerText="#{msg.orderQuantity}">
+                            <h:outputText value="#{drink.value}"/>
+                        </p:column>
+                        <p:column headerText="#{msg.orderPrice}" id="test">
+                            <h:outputText value="#{caddyMB.sumline(drink.key)}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText> 
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                    </p:dataTable>
+                    <article class="orderArticle">
+                        <h2><h:outputText value="#{msg.deliveryAddress}"/></h2>
+                        <p>
+                            <h:outputText value="#{customerMB.
+                                                   customer.address.nameStreet} n°
+                                          #{customerMB.customer.address.numStreet}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{customerMB.customer.address.
+                                                   postCode}, 
+                                          #{customerMB.customer.address.city}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{customerMB.customer.address.country.
+                                            getLabel(internationalizationManaged.
+                                            currentLanguage)}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.phoneOrder}"/>
+                            <h:outputText value="#{customerMB.customer.numphone}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.deliveryBy} 
+                                          #{caddyMB.delModChosen.getInfoDelMode(
+                                            internationalizationManaged.currentLanguage).label}"/>
+                        </p>
+                    </article>
+                    <article class="orderArticle textRight">
+                        <h2><h:outputText value="#{msg.infoPrice}"/></h2>
+                        <p>
+                            <h:outputText value="#{msg.orderTotalPrice}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.sumCaddy()}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.tva}(#{customerMB.
+                                                   customer.address.country.tva}%):"/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.tvaCaddy(
+                                                   customerMB.customer)}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.priceDelMode}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.delModChosen.
+                                                       currentpostalcharges}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.totalPrice}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{caddyMB.sumOrder(
+                                                   customerMB.customer)}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                    </article>
+                    <h:form id="formValidOrder">
+                        <h:commandButton value="#{msg.bntCancel}"
+                                         action="index.xhtml"
+                                         class="bntMargin"/>
+                        <h:commandButton value="#{msg.bntValid}" 
+                                         action="orderEnd.xhtml" 
+                                         class="bntMargin"/>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

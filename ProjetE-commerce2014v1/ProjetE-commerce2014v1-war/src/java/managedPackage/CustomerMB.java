@@ -67,7 +67,7 @@ public class CustomerMB implements Serializable {
         }
     }
     
-        private Language findLanguageCurrent() {
+    private Language findLanguageCurrent() {
         FacesContext context = FacesContext.getCurrentInstance();
         InternationalizationManaged im = (InternationalizationManaged) context
                 .getApplication().getExpressionFactory()
@@ -77,7 +77,7 @@ public class CustomerMB implements Serializable {
                 .getValue(context.getELContext());
         return im.getCurrentLanguage();
     }
-// </editor-fold>
+//</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="sign in">  
     public String connection(){

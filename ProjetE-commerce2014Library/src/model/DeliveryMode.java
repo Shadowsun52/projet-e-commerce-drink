@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class DeliveryMode implements Serializable{
     private Integer id;
     private Double currentpostalcharges;
-    private HashMap<Language,String> hashLabel;
+    private HashMap<Language,InfoDelMode> hashLabel;
 
     public DeliveryMode() {
     }
@@ -58,22 +58,22 @@ public class DeliveryMode implements Serializable{
     /**
      * @return the hashLabel
      */
-    public HashMap<Language,String> getHashLabel() {
+    public HashMap<Language,InfoDelMode> getHashLabel() {
         return hashLabel;
     }
 
     /**
      * @param hashLabel the hashLabel to set
      */
-    public void setHashLabel(HashMap<Language,String> hashLabel) {
+    public void setHashLabel(HashMap<Language,InfoDelMode> hashLabel) {
         this.hashLabel = hashLabel;
     }
     
-    public void addLabel(Language language, String label){
-        this.hashLabel.put(language, label);
+    public void addInfoDelMode(Language language, InfoDelMode infoDelMode){
+        this.hashLabel.put(language, infoDelMode);
     }
     
-    public String getLabel(Language language) {
+    public InfoDelMode getInfoDelMode(Language language) {
         return hashLabel.get(language);
     }
 // </editor-fold>

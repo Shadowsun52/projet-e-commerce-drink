@@ -41,6 +41,10 @@ a:link:hover, a:visited:hover  {
   text-decoration : none;
 }
 
+input[type="submit"]{
+    padding:5px 0;
+}
+
 input[type="submit"]:hover{
     cursor: pointer;
 }
@@ -61,3 +65,4 @@ input[type="submit"]:hover{
     display: inline-block;
     padding-left: 20px;
 }
+

@@ -84,6 +84,22 @@ public class CaddyMB implements Serializable {
     public double sumCaddyWithTva(Customer customer){
         return sumCaddy() + tvaCaddy(customer);
     }
+    
+    public double sumOrder(Customer customer){
+        return sumCaddyWithTva(customer) + delModChosen.getCurrentpostalcharges();
+    }
+    
+    public String saveOrder() {
+        try{
+            
+            return "orderEnd";
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            return "error";
+        }
+    }
 //</editor-fold>   
     
 //<editor-fold defaultstate="collapsed" desc="getter and setter">

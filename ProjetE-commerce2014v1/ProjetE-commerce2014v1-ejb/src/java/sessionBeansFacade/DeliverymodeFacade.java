@@ -7,12 +7,19 @@ package sessionBeansFacade;
 
 import entityBeans.Deliverymode;
 import entityBeans.LangDelmode;
+import entityBeans.LangDelmodePK;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.DeliveryMode;
+import model.InfoDelMode;
+import model.Language;
 
 /**
  *
@@ -34,18 +41,22 @@ public class DeliverymodeFacade extends AbstractFacade<Deliverymode> implements 
         super(Deliverymode.class);
     }
 
+//<editor-fold defaultstate="collapsed" desc="Converter">
     @Override
     public model.DeliveryMode converterToModel(Deliverymode entity) {
         model.DeliveryMode deliveryMode = new DeliveryMode(
                 entity.getIddeliverymode(), 
                 entity.getCurrentpostalcharges().doubleValue());
         for(LangDelmode langDM : entity.getLangDelmodeCollection()){
-            deliveryMode.addLabel(languageFacade.
-                    converterToModel(langDM.getLanguage()), langDM.getLabel());
+            deliveryMode.addInfoDelMode(languageFacade.
+                    converterToModel(langDM.getLanguage()), 
+                    new InfoDelMode(langDM.getLabel(), langDM.getDescription()));
         }
         return deliveryMode;
     }
-
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="CRUD">   
     @Override
     public model.DeliveryMode findDeliveryMode(Object id) {
         return converterToModel(find(id));
@@ -59,5 +70,5 @@ public class DeliverymodeFacade extends AbstractFacade<Deliverymode> implements 
         });
         return listDeliveryModes;
     }
-    
+//</editor-fold>
 }

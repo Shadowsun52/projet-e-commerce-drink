@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./template/noOrderTemplate.xhtml">
+
+            <ui:define name="content">
+                <c:if test="#{caddyMB.caddyIsEmpty()}">
+                    <f:event listener="#{customerMB.redirectError()}"
+                             type="preRenderView"/>
+                </c:if>
+                 <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                                 type="preRenderView"/>
+                </c:if>
+                <h1><h:outputText value="#{msg.validOrderPart1}"/></h1>
+                <h:form class="formOrder">
+                    <article class="orderArticle">
+                        <h2><h:outputText value="#{msg.validOrderAddress}"/></h2>
+                        <p>
+                            <h:outputText value="#{customerMB.
+                                                   customer.address.nameStreet} n°
+                                          #{customerMB.customer.address.numStreet}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{customerMB.customer.address.
+                                                   postCode}, 
+                                          #{customerMB.customer.address.city}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{customerMB.customer.address.country.
+                                            getLabel(internationalizationManaged.
+                                            currentLanguage)}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.phoneOrder}"/>
+                            <h:outputText value="#{customerMB.customer.numphone}"/>
+                        </p>
+                        <p>
+                            <h:link value="#{msg.modifyAddressOrder}" 
+                                    outcome="faces/modifyAddress.xhtml"/>
+                        </p>
+                    </article>
+                    <article class="orderArticle">
+                        <h2><h:outputText value="#{msg.modeDeliveryOrder}"/></h2>
+                        <p:selectOneRadio id="deliveryMode" class="radioDelMode" 
+                                          layout="grid" columns="1"
+                                          required="true" 
+                                          requiredMessage="#{msg.delModeRequired}"
+                                          value="#{caddyMB.delModChosen}">
+                            <f:selectItems var="deliveryMode"
+                                           value="#{deliveryModeMB.listDeliveryModes}" 
+                                           itemValue="#{deliveryMode}"
+                                           itemLabel="#{deliveryMode.getInfoDelMode(internationalizationManaged.currentLanguage).label} (#{deliveryMode.currentpostalcharges}&euro;)"/>
+                        </p:selectOneRadio>
+                    </article>
+                    <br/>
+                    <h:commandButton value="#{msg.bntValid}" 
+                                     action="orderValid.xhtml"/>
+                    <span class="errorMessage">
+                        <h:message id="errorDelMode" for="deliveryMode"/>
+                    </span>
+                </h:form>
+            </ui:define>    
+
+        </ui:composition>
+
+    </body>
+</html>
