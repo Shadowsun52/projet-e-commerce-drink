@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import model.Customer;
+import model.DeliveryMode;
 import model.Drink;
 import model.Language;
 
@@ -26,7 +27,7 @@ import model.Language;
 public class CaddyMB implements Serializable {
 
     private HashMap<Drink,Integer> caddy;
-
+    private DeliveryMode delModChosen;
     /**
      * Creates a new instance of CaddyMB
      */
@@ -102,6 +103,20 @@ public class CaddyMB implements Serializable {
     
     public List<Entry<Drink,Integer>> getListCaddy(){
         return new ArrayList(caddy.entrySet());
+    }
+    
+    /**
+     * @return the delModChosen
+     */
+    public DeliveryMode getDelModChosen() {
+        return delModChosen;
+    }
+
+    /**
+     * @param delModChosen the delModChosen to set
+     */
+    public void setDelModChosen(DeliveryMode delModChosen) {
+        this.delModChosen = delModChosen;
     }
 //</editor-fold>   
 

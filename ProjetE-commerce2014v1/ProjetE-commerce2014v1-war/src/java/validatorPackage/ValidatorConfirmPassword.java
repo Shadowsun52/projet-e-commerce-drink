@@ -29,7 +29,7 @@ public class ValidatorConfirmPassword extends ValidatorMultiFields{
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         confirmPassword = (String)value;
-        password = getField(context, component, PASSWORD_FIELD);
+        password = getField(component, PASSWORD_FIELD);
         if(!password.equals(confirmPassword)){
             throw new ValidatorException(
                     new FacesMessage(linkToBundle(context).getString(ERROR_MESSAGE)));

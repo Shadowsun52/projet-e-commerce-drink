@@ -19,7 +19,7 @@ import javax.faces.validator.Validator;
 public abstract class ValidatorMultiFields implements Validator{
     private static final String BUNDLE_LOCALE = "languagePackage.lang";
     
-    protected String getField(FacesContext context, UIComponent component, String nameComponent){
+    protected String getField(UIComponent component, String nameComponent){
             UIInput componentField  =(UIInput) component.getAttributes().get(nameComponent);
             return (String) (componentField.getSubmittedValue() == null ? 
                     componentField.getValue() : componentField.getSubmittedValue());

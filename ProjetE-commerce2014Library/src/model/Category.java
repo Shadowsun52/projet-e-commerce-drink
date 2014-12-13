@@ -75,8 +75,4 @@ public class Category implements Serializable{
     public String getLabel(Language language) {
         return hashLabel.get(language);
     }
-    
-//    public String getLabel(Language language) {
-//        return hashLabel.get(language.);
-//    }
 }

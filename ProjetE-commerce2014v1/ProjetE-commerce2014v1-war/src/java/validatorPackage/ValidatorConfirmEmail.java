@@ -26,7 +26,7 @@ public class ValidatorConfirmEmail extends ValidatorMultiFields{
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         confirmEmail = (String)value;
-        email = getField(context, component, EMAIL_FIELD);
+        email = getField(component, EMAIL_FIELD);
         if(!email.equals(confirmEmail)){
             throw new ValidatorException(
                     new FacesMessage(linkToBundle(context).getString(ERROR_MESSAGE)));

@@ -163,6 +163,29 @@
     display: inline-block;
     width: 80px;
 }
+
+.formOrder{
+    font-size: 1em!important;
+    font-weight: normal!important;
+}
+
+.formOrder article{
+    min-height: 200px;
+    width: 200px;
+    vertical-align: top;
+    border: solid 2px rgb(72,118,255);
+    border-radius: 5px;
+    padding: 10px 0 0 10px;
+}
+
+.formOrder article p{
+    margin-top: 5px;
+}
+
+.formOrder input[type="submit"]{
+    display: inline-block;
+    margin-left: 25px;
+}
 @media screen and (max-width: 762px) {
     .selectShort {
         display: block;
