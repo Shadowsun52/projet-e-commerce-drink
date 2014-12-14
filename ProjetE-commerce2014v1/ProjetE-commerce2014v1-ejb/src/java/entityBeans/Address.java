@@ -34,7 +34,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Address.findByNamestreet", query = "SELECT a FROM Address a WHERE a.namestreet = :namestreet"),
     @NamedQuery(name = "Address.findByNumstreet", query = "SELECT a FROM Address a WHERE a.numstreet = :numstreet"),
     @NamedQuery(name = "Address.findByPostcode", query = "SELECT a FROM Address a WHERE a.postcode = :postcode"),
-    @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")})
+    @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city"),
+    @NamedQuery(name = "Address.findAddress", query = "SELECT a FROM Address a "
+            + "WHERE a.idaddress = :idaddress AND a.namestreet = :namestreet "
+            + "AND a.numstreet = :numstreet AND a.postcode = :postcode "
+            + "AND a.city = :city AND a.idcountry = :idcountry")})
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

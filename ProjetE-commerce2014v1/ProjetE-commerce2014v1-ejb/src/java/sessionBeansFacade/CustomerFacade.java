@@ -24,7 +24,7 @@ import model.Encryption;
  * @author Alexandre
  */
 @Stateless
-public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {  
+public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {   
     private static final String PATCH_PAGE_NEW_PW = "http://localhost:8080/" 
             +"ProjetE-commerce2014v1-war/faces/newpassword.xhtml";
     private static final String SIGN_UP_SUBJECT = "signUpEmailSubject";
@@ -38,6 +38,8 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
     private AddressFacadeLocal addressFacade;
     @EJB
     private LanguageFacadeLocal languageFacade;
+    @EJB
+    private OrderTableFacadeLocal orderTableFacade;
     
     @PersistenceContext(unitName = "ProjetE-commerce2014v1-ejbPU")
     private EntityManager em;
@@ -102,6 +104,22 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         return "<h1>" + bundle.getString(SIGN_UP_SUBJECT) + "</h1><p>" 
                 + bundle.getString(SIGN_UP_BODY1) + " " 
                 + email + "</p><p>" + bundle.getString(SIGN_UP_BODY2) + "</p>";
+    }
+    
+    @Override
+    public void ModifyAddress(model.Customer customer, model.Address newAddress) {
+        if(!addressFacade.AddressExist(newAddress, customer.getId()))
+        {
+            Address oldAddress = addressFacade.converterToEntity(customer.getAddress());
+            customer.setAddress(newAddress);
+            edit(customer);
+            deleteOrphanAddress(oldAddress);
+        }
+    }
+    
+    private void deleteOrphanAddress(Address address){
+        if(!orderTableFacade.OrderUsingAddress(address))
+            addressFacade.remove(address);
     }
 // </editor-fold>
     

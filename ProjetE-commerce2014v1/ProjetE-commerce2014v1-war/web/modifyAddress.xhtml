@@ -2,14 +2,125 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
         <ui:composition template="./template/noOrderTemplate.xhtml">
 
             <ui:define name="content">
-                content 
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                                 type="preRenderView"/>
+                </c:if>
+                <f:event listener="#{customerMB.initNewAddress()}" 
+                                 type="preRenderView"/>
+                <h1><h:outputText value="#{msg.modifyAddress}"/></h1>
+                <h:form id="formSignUp">
+                    <div class="partSignUp">
+                        <div id="div_name_street" class="float_left">
+                            <h:outputLabel value="#{msg.formNameStreet}:"
+                                           for="nameStreet"/><br/>
+                            <h:inputText id="nameStreet" class="inputLong"
+                                         value="#{customerMB.newAddress.nameStreet}"
+                                         required="true"
+                                         requiredMessage="#{msg.nameStreetRequired}">
+                                <f:ajax render="errorNameStreet" event="blur"/>
+                            </h:inputText>
+                        </div>
+                        <div class="float_left">
+                            <h:outputLabel value="#{msg.formNbStreet}:"
+                                           for="nbStreet"/><br/>
+                            <h:inputText id="nbStreet" class="inputShorter" 
+                                         value="#{customerMB.newAddress.numStreet}"
+                                         required="true"
+                                         requiredMessage="#{msg.nbStreetRequired}">
+                                <f:ajax render="errorNbStreet" event="blur"/>
+                            </h:inputText>
+                        </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message id="errorNameStreet" for="nameStreet"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message id="errorNbStreet" for="nbStreet"/>
+                            </span>
+                        </div>
+                        <p class="after_float">
+                            <h:outputLabel value="#{msg.formCountry}:"
+                                           for="country"/><br/>
+                            <h:selectOneMenu id="country"
+                                             class="selectLong"
+                                             value="#{customerMB.newAddress.country}">
+                                <f:selectItems value="#{countryMB.countries}"
+                                               var="country"
+                                               itemValue="#{country}"
+                                               itemLabel="#{country.getLabel(internationalizationManaged.currentLanguage)}"/>
+                                <f:ajax render="errorCountry" event="blur"/>
+                            </h:selectOneMenu>
+                            <span class="errorMessage">
+                                <h:message id="errorCountry" for="country"/>
+                            </span>
+                        </p>
+                        <div class="float_left">
+                            <h:outputLabel value="#{msg.formPostCode}:"
+                                           for="postCode"/><br/>
+                            <h:inputText id="postCode" class="inputShort"
+                                         value="#{customerMB.newAddress.postCode}"
+                                         required="true"
+                                         requiredMessage="#{msg.postCodeRequired}"
+                                         validatorMessage="#{msg.postCodeError}">
+                                <f:ajax render="errorPostCode" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^(\d{4,5})|([a-zA-Z]{1,2}\d[a-zA-Z0-9]? \d[a-zA-Z]{2})$"/>
+                            </h:inputText>
+                        </div>
+                        <div class="float_left">
+                            <h:outputLabel value="#{msg.formCity}:"
+                                           for="city"/><br/>
+                            <h:inputText id="city" class="inputShort"
+                                         value="#{customerMB.newAddress.city}"
+                                         required="true"
+                                         requiredMessage="#{msg.cityRequired}"
+                                         validatorMessage="#{msg.cityNoNumber}">
+                                <f:ajax render="errorCity" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^[a-zA-z-]+$"/>
+                            </h:inputText>
+                        </div>
+                        <div class="float_error">
+                            <span class="errorMessage">
+                                <h:message id="errorPostCode" for="postCode"/>
+                            </span>
+                            <span class="errorMessage">
+                                <h:message id="errorCity" for="city"/>
+                            </span>
+                        </div>
+                        <p class="after_float">
+                            <h:outputLabel value="#{msg.formNumTel}:"
+                                           for="numTel"/><br/>
+                            <h:inputText id="numTel" class="inputLong"
+                                         value="#{customerMB.customer.numphone}"
+                                         required="true"
+                                         requiredMessage="#{msg.numTelRequired}"
+                                         validatorMessage="#{msg.numTelError}">
+                                <f:ajax render="errorNumTel" event="blur"/>
+                                <f:validateRegex 
+                                    pattern="^((0|\+32 ?)|((0|\+33 ?)\d[-.\/ ]?))\d{2}([-.\/ ]?\d{2}){3}+$"/>
+                            </h:inputText>
+                            <span class="errorMessage">
+                                <h:message id="errorNumTel" for="numTel"/>
+                            </span>
+                        </p>
+                    </div>
+                    <h:commandButton value="#{msg.bntCancel}" immediate="true"
+                                     action="#{customerMB.cancelModify()}"/>
+                    <h:commandButton value="#{msg.bntModifyAddress}" 
+                                     class="bntMargin"
+                                     action="#{customerMB.modifyAddress()}"/>
+                </h:form>
             </ui:define>
 
         </ui:composition>

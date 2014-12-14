@@ -42,4 +42,6 @@ public interface AddressFacadeLocal {
     public model.Address findAddress(Object id);
     
     public ArrayList<model.Address> findAllAddress();
+    
+    public boolean AddressExist(model.Address address, Integer id);
 }

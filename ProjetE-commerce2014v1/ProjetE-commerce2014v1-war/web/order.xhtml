@@ -16,7 +16,7 @@
                     <f:event listener="#{customerMB.redirectError()}"
                              type="preRenderView"/>
                 </c:if>
-                 <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
                     <f:event listener="#{customerMB.redirectionConnexion()}" 
                                  type="preRenderView"/>
                 </c:if>
@@ -45,7 +45,7 @@
                         </p>
                         <p>
                             <h:link value="#{msg.modifyAddressOrder}" 
-                                    outcome="faces/modifyAddress.xhtml"/>
+                                    outcome="#{customerMB.navNewAddress()}"/>
                         </p>
                     </article>
                     <article class="orderArticle">
@@ -62,6 +62,8 @@
                         </p:selectOneRadio>
                     </article>
                     <br/>
+                    <h:commandButton value="#{msg.bntCancel}" immediate="true"
+                                         action="caddy.xhtml"/>
                     <h:commandButton value="#{msg.bntValid}" 
                                      action="orderValid.xhtml"/>
                     <span class="errorMessage">

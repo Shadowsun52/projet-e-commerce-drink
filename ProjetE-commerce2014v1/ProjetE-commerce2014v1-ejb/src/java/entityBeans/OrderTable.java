@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "OrderTable.findByNumorder", query = "SELECT o FROM OrderTable o WHERE o.numorder = :numorder"),
     @NamedQuery(name = "OrderTable.findByValidationdate", query = "SELECT o FROM OrderTable o WHERE o.validationdate = :validationdate"),
     @NamedQuery(name = "OrderTable.findByPaymentdate", query = "SELECT o FROM OrderTable o WHERE o.paymentdate = :paymentdate"),
-    @NamedQuery(name = "OrderTable.findByPostalcharges", query = "SELECT o FROM OrderTable o WHERE o.postalcharges = :postalcharges")})
+    @NamedQuery(name = "OrderTable.findByPostalcharges", query = "SELECT o FROM OrderTable o WHERE o.postalcharges = :postalcharges"),
+    @NamedQuery(name = "OrderTable.findByDelAddress", query = "SELECT o FROM OrderTable o WHERE o.delAddress = :delAddress")})
 public class OrderTable implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

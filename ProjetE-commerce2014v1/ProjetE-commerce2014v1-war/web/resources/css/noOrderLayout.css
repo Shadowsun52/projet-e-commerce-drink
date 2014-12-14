@@ -172,6 +172,7 @@
 .formOrder, .orderArticle{
     font-size: 1em!important;
     font-weight: normal!important;
+    margin: 10px auto;
     max-width: 500px;
     min-width: 100px;
 }

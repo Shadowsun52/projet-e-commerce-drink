@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -73,5 +75,23 @@ public class AddressFacade extends AbstractFacade<Address> implements AddressFac
         });
         return listAddress;
     }
-    
+
+    @Override
+    public boolean AddressExist(model.Address address, Integer id) {
+        try {
+            Query query = em.createNamedQuery("Address.findAddress");
+            query.setParameter("idaddress", id);
+            query.setParameter("namestreet", address.getNameStreet());
+            query.setParameter("numstreet", address.getNumStreet());
+            query.setParameter("postcode", address.getPostCode());
+            query.setParameter("city", address.getCity());
+            query.setParameter("idcountry", countryFacade.converterToEntity(
+                    address.getCountry()));
+            query.getSingleResult();
+            return true;
+        }
+        catch(NoResultException e){
+            return false;
+        }
+    }
 }

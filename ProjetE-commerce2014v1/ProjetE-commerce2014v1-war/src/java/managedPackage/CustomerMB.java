@@ -39,8 +39,10 @@ public class CustomerMB implements Serializable {
     
     private Customer customer; 
     private InfoConnexion infoConnexion;
+    private Address newAddress;
     private String previousPage;
     private String newPassword;
+    private String newPhone;
     private String email;
     private String key;
     
@@ -219,6 +221,31 @@ public class CustomerMB implements Serializable {
     }
 // </editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="Change Address">
+    public String navNewAddress(){
+        previousPage = currentPage();
+        return "modifyAddress";
+    }
+    
+    public void initNewAddress(){
+        newAddress = new Address(null, customer.getAddress().getNameStreet(), 
+                customer.getAddress().getNumStreet(), 
+                customer.getAddress().getPostCode(), 
+                customer.getAddress().getCity(), 
+                customer.getAddress().getCountry());
+        newPhone = customer.getNumphone();
+    }
+    
+    public String cancelModify(){
+        return previousPage;
+    }
+    
+    public String modifyAddress(){
+        customerFacade.ModifyAddress(customer, newAddress);
+        return previousPage;
+    }
+//</editor-fold>
+    
 // <editor-fold defaultstate="collapsed" desc="getter & setter">
     /**
      * @return the customer
@@ -309,6 +336,34 @@ public class CustomerMB implements Serializable {
      */
     public void setKey(String key) {
         this.key = key;
+    }
+    
+    /**
+     * @return the newAddress
+     */
+    public Address getNewAddress() {
+        return newAddress;
+    }
+
+    /**
+     * @param newAddress the newAddress to set
+     */
+    public void setNewAddress(Address newAddress) {
+        this.newAddress = newAddress;
+    }
+
+    /**
+     * @return the newPhone
+     */
+    public String getNewPhone() {
+        return newPhone;
+    }
+
+    /**
+     * @param newPhone the newPhone to set
+     */
+    public void setNewPhone(String newPhone) {
+        this.newPhone = newPhone;
     }
 // </editor-fold>
 
