@@ -7,19 +7,13 @@ package sessionBeansFacade;
 
 import entityBeans.Deliverymode;
 import entityBeans.LangDelmode;
-import entityBeans.LangDelmodePK;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.DeliveryMode;
 import model.InfoDelMode;
-import model.Language;
 
 /**
  *

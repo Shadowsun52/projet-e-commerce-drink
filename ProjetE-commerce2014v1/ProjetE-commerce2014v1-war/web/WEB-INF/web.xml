@@ -22,10 +22,10 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
     <ejb-local-ref>
-        <ejb-ref-name>CustomerFacade</ejb-ref-name>
+        <ejb-ref-name>LocalityFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.CustomerFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
+        <local>sessionBeansFacade.LocalityFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#LocalityFacade</ejb-link>
     </ejb-local-ref>
     <ejb-local-ref>
         <ejb-ref-name>CountryFacade</ejb-ref-name>
@@ -38,11 +38,5 @@
         <ejb-ref-type>Session</ejb-ref-type>
         <local>sessionBeansFacade.LanguageFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#LanguageFacade</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>DeliverymodeFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.DeliverymodeFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#DeliverymodeFacade</ejb-link>
     </ejb-local-ref>
 </web-app>

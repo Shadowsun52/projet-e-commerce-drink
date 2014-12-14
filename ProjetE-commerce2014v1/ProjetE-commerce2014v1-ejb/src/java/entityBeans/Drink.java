@@ -42,8 +42,19 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Drink.findByCurrentprice", query = "SELECT d FROM Drink d WHERE d.currentprice = :currentprice"),
     @NamedQuery(name = "Drink.findByCapacity", query = "SELECT d FROM Drink d WHERE d.capacity = :capacity"),
     @NamedQuery(name = "Drink.findByPercentagealcohol", query = "SELECT d FROM Drink d WHERE d.percentagealcohol = :percentagealcohol"),
-    @NamedQuery(name = "Drink.findByDatebottling", query = "SELECT d FROM Drink d WHERE d.datebottling = :datebottling")})
+    @NamedQuery(name = "Drink.findByDatebottling", query = "SELECT d FROM Drink d WHERE d.datebottling = :datebottling"),
+    @NamedQuery(name = "Drink.findByCateg", query = "SELECT DISTINCT d FROM Drink d, Typedrink td, Type t WHERE d.iddrink=td.typedrinkPK.iddrink and td.typedrinkPK.idtype=t.idtype and t.idcategory.idcategory=:idcateg"),
+    @NamedQuery(name = "Drink.findDrinks", query = "SELECT DISTINCT d FROM Drink d, Typedrink td, Type t "
+            + "WHERE d.iddrink=td.typedrinkPK.iddrink and td.typedrinkPK.idtype=t.idtype "
+            + "and t.idcategory.idcategory=:idcateg and t.idtype=:idtype and d.currentprice between :lowvalue and :highvalue "
+            + "and d.percentagealcohol between :lowpercentage and :highpercentage"),
+    @NamedQuery(name = "Drink.findDrinksNoType", query = "SELECT DISTINCT d FROM Drink d, Typedrink td, Type t "
+            + "WHERE d.iddrink=td.typedrinkPK.iddrink and td.typedrinkPK.idtype=t.idtype "
+            + "and t.idcategory.idcategory=:idcateg and d.currentprice between :lowvalue and :highvalue "
+            + "and d.percentagealcohol between :lowpercentage and :highpercentage")})
 public class Drink implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "drink")
+    private Collection<Typedrink> typedrinkCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -191,6 +202,15 @@ public class Drink implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Drink[ iddrink=" + iddrink + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Typedrink> getTypedrinkCollection() {
+        return typedrinkCollection;
+    }
+
+    public void setTypedrinkCollection(Collection<Typedrink> typedrinkCollection) {
+        this.typedrinkCollection = typedrinkCollection;
     }
     
 }

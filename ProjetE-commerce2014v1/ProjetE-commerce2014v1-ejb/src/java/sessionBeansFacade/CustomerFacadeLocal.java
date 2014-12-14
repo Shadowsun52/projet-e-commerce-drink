@@ -32,6 +32,8 @@ public interface CustomerFacadeLocal {
 
     int count();
     
+    public model.Customer findByEmail(String email);
+            
     public void create(model.Customer customer, ResourceBundle bundle) throws Exception;
     
     public void edit(model.Customer customer);
@@ -39,8 +41,6 @@ public interface CustomerFacadeLocal {
     public model.Customer findCustomer(Object id);
     
     public ArrayList<model.Customer> findAllCustomers();
-    
-    public model.Customer findByEmail(String email);
     
     public model.Customer converterToModel(Customer entity);
     
