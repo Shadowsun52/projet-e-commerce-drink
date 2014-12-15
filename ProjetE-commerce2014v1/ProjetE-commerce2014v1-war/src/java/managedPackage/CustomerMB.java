@@ -9,7 +9,6 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;

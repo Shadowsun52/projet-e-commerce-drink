@@ -45,4 +45,6 @@ public interface CustomerFacadeLocal {
     public Customer converterToEntity(model.Customer customer);
     
     public void sendEmailForNewPassword(ResourceBundle bundle, String email) throws Exception;
+    
+    public model.Customer findByEmail(String email);
 }

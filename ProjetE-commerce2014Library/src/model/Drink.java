@@ -19,6 +19,7 @@ public class Drink {
     private short percentageAlcohol;
     private Date dateBottling;
     private HashMap<Language,String> hashLabel;
+    private HashMap<Language,String> hashDescription;
 
     public Drink() {
     }
@@ -30,6 +31,7 @@ public class Drink {
         this.percentageAlcohol = percentageAlcohol;
         this.dateBottling = dateBottling;
         this.hashLabel=new HashMap<>();
+        this.hashDescription=new HashMap<>();
     }
 
     /**
@@ -122,5 +124,21 @@ public class Drink {
     
     public String getLabel(Language language) {
         return hashLabel.get(language);
+    }
+    
+    public HashMap<Language, String> getHashDescription() {
+        return hashDescription;
+    }
+
+    public void setHashDescription(HashMap<Language, String> hashDescription) {
+        this.hashDescription = hashDescription;
+    }
+    
+    public void addDescription(Language language, String description){
+        this.hashDescription.put(language, description);
+    }
+    
+    public String getDescription(Language language) {
+        return hashDescription.get(language);
     }
 }

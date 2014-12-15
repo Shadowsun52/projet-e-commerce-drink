@@ -2,16 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:viewParam name="idDrink" value="#{drinksMB.idDrink}"/>
+        <f:viewParam name="singleDrink" value="#{drinksMB.singleDrink}"/>
+        <f:viewParam name="idCat" value="#{drinksMB.idCat}"/>
     </f:metadata>
     <body>
 
         <ui:composition template="./template/mainTemplate.xhtml">
 
             <ui:define name="content">
-                boire c'est bien
+                <h1><h:outputText value="#{drinksMB.findSingleDrink().getLabel(internationalizationManaged.currentLanguage)}"/></h1>
+                <section id="detailsSingleDrink">
+                        <p:graphicImage name="resources/images/search_icon.png"/>
+                            <h:outputText value="#{drinksMB.findSingleDrink().getDescription(internationalizationManaged.currentLanguage)}"/>
+                            <h:outputText value="#{drinksMB.findSingleDrink().currentPrice} euros"/>
+                    <form>
+                        <input type="number" name="nbDrinkInput" value="#{drinksMB.nbDrinks}"/>
+                        
+                            <p:spinner id="nbDrinkSpinner" value="#{drinksMB.nbDrinks}">
+                                <p:ajax update="nbDrinkSpinnerValue" process="@this"/>
+                            </p:spinner>
+                            <h:outputText id="nbDrinkSpinnerValue" value="#{drinksMB.nbDrinks}" />
+                        
+                        <p:commandButton value="#{msg.addCart}"/>
+                        
+                        <p:commandButton value="#{msg.goBack}" action="category.xhtml">
+                            <f:param name="idCat" value="#{drinksMB.idCat}"/>
+                        </p:commandButton>
+                    </form>    
+                </section>
+                    
             </ui:define>
 
         </ui:composition>

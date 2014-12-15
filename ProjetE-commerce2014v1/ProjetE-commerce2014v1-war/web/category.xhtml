@@ -14,7 +14,7 @@
 
             <ui:define name="content">
                 <section id="searchOptions">
-                    <h:form>
+                    <h:form id="criteriaForm">
                        <h3>#{msg.typeBox}</h3>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                             <p:outputLabel for="type" value="Types : "/>
@@ -47,8 +47,11 @@
                         <h:inputHidden id="lowPercentage" value="#{drinksMB.lowPercentage}" />
                         <h:inputHidden id="highPercentage" value="#{drinksMB.highPercentage}" />
                         
-                        <p:commandButton value="Submit" icon="ui-icon-check">
+                        <p:commandButton value="#{msg.submit}" icon="ui-icon-check">
                             <f:ajax execute="type priceSlider alcoholSlider formDrinksScroller" render="formDrinksScroller" event="click"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{msg.reset}" action="#{drinksMB.resetCriterias()}">
+                            <f:ajax render="criteriaForm" event="click"/>
                         </p:commandButton>
                     </h:form>
                 </section>
@@ -58,22 +61,20 @@
                                         chunkSize="10" mode="inline" scrollHeight="500">
                             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                 <p:graphicImage name="resources/images/search_icon.png"/>
+                                <h:link outcome="drink.xhtml">
+                                    <f:param name="singleDrink" value="#{drink.id}"/>
+                                    <f:param name="idCat" value="#{drinksMB.idCat}"/>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="#{msg.labelDrink}" />
+                                        <h:outputText value="#{drink.getLabel(internationalizationManaged.currentLanguage)}" />
 
-                                <p:outputPanel>
-                                    <h:commandLink action="drink.xhtml">
-                                        <f:param id="idDrink" value="#{drink.id}"/>
-                                        <h:panelGrid columns="2" cellpadding="5">
-                                            <h:outputText value="#{msg.labelDrink}" />
-                                            <h:outputText value="#{drink.getLabel(internationalizationManaged.currentLanguage)}" />
+                                        <h:outputText value="#{msg.priceDataScroll}" />
+                                        <h:outputText value="#{drink.currentPrice} euros" />
 
-                                            <h:outputText value="#{msg.priceDataScroll}" />
-                                            <h:outputText value="#{drink.currentPrice} &euros;" />
-
-                                            <h:outputText value="#{msg.percAlcDataScroll}" />
-                                            <h:outputText value="#{drink.percentageAlcohol}%" />
-                                        </h:panelGrid>
-                                    </h:commandLink>
-                                </p:outputPanel>
+                                        <h:outputText value="#{msg.percAlcDataScroll}" />
+                                        <h:outputText value="#{drink.percentageAlcohol}%" />
+                                    </h:panelGrid>
+                                </h:link>
                             </h:panelGrid>
                         </p:dataScroller>
                     </h:form>

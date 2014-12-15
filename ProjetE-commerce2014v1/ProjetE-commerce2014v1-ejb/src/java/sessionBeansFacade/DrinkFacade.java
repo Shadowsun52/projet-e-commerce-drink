@@ -49,6 +49,7 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
                 entity.getCapacity().doubleValue(), entity.getPercentagealcohol(), entity.getDatebottling());
         for(LangDrink langDrink : entity.getLangDrinkCollection()){
             drink.addLabel(languageFacade.converterToModel(langDrink.getLanguage()), langDrink.getLabel());
+            drink.addDescription(languageFacade.converterToModel(langDrink.getLanguage()), langDrink.getDescription());
         }
         return drink;
     }
@@ -108,6 +109,12 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
             listModelDrink.add(converterToModel(drink));
         });
         return listModelDrink;
+    }
+    
+    @Override
+    public model.Drink findSingleDrink(Integer idDrink)
+    {
+        return converterToModel(find(idDrink));
     }
     
 }
