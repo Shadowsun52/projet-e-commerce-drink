@@ -66,10 +66,10 @@
                                     <f:param name="idCat" value="#{drinksMB.idCat}"/>
                                     <h:panelGrid columns="2" cellpadding="5">
                                         <h:outputText value="#{msg.labelDrink}" />
-                                        <h:outputText value="#{drink.getLabel(internationalizationManaged.currentLanguage)}" />
+                                        <h:outputText value="#{drink.getText(internationalizationManaged.currentLanguage).label}" />
 
                                         <h:outputText value="#{msg.priceDataScroll}" />
-                                        <h:outputText value="#{drink.currentPrice} euros" />
+                                        <h:outputText value="#{drink.currentPrice} &euro;" />
 
                                         <h:outputText value="#{msg.percAlcDataScroll}" />
                                         <h:outputText value="#{drink.percentageAlcohol}%" />

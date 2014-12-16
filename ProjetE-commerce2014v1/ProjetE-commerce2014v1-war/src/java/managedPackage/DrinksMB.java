@@ -67,6 +67,10 @@ public class DrinksMB implements Serializable{
         highPercentage=40;
     }
     
+    public double processedPrice(double priceDrink){
+        return nbDrinks*priceDrink;
+    }
+    
     public ArrayList<Drink> getListDrink() {
         findDrinks();
         return listDrink;

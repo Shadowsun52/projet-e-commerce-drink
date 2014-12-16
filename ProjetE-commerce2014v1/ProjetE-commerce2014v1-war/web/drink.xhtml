@@ -14,25 +14,26 @@
         <ui:composition template="./template/mainTemplate.xhtml">
 
             <ui:define name="content">
-                <h1><h:outputText value="#{drinksMB.findSingleDrink().getLabel(internationalizationManaged.currentLanguage)}"/></h1>
+                <h1><h:outputText value="#{drinksMB.findSingleDrink().getText(internationalizationManaged.currentLanguage).label}"/></h1>
                 <section id="detailsSingleDrink">
                         <p:graphicImage name="resources/images/search_icon.png"/>
-                            <h:outputText value="#{drinksMB.findSingleDrink().getDescription(internationalizationManaged.currentLanguage)}"/>
-                            <h:outputText value="#{drinksMB.findSingleDrink().currentPrice} euros"/>
-                    <form>
-                        <input type="number" name="nbDrinkInput" value="#{drinksMB.nbDrinks}"/>
-                        
-                            <p:spinner id="nbDrinkSpinner" value="#{drinksMB.nbDrinks}">
+                        <h:outputText value="#{drinksMB.findSingleDrink().getText(internationalizationManaged.currentLanguage).description}"/>
+                            <h:outputText value="#{drinksMB.findSingleDrink().currentPrice} &euro;"/>
+                    <h:form>
+                            <p:spinner id="nbDrinkSpinner" value="#{drinksMB.nbDrinks}" min="0">
                                 <p:ajax update="nbDrinkSpinnerValue" process="@this"/>
                             </p:spinner>
-                            <h:outputText id="nbDrinkSpinnerValue" value="#{drinksMB.nbDrinks}" />
+                        <h:outputText id="nbDrinkSpinnerValue" value="#{drinksMB.processedPrice(drinksMB.findSingleDrink().currentPrice)}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </h:outputText>
+                        <h:outputText  value="&euro;"/>
                         
                         <p:commandButton value="#{msg.addCart}"/>
                         
                         <p:commandButton value="#{msg.goBack}" action="category.xhtml">
                             <f:param name="idCat" value="#{drinksMB.idCat}"/>
                         </p:commandButton>
-                    </form>    
+                    </h:form>    
                 </section>
                     
             </ui:define>

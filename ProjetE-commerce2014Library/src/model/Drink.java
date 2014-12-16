@@ -18,8 +18,7 @@ public class Drink {
     private double capacity;
     private short percentageAlcohol;
     private Date dateBottling;
-    private HashMap<Language,String> hashLabel;
-    private HashMap<Language,String> hashDescription;
+    private HashMap<Language,InfoText> hashText;
 
     public Drink() {
     }
@@ -30,8 +29,7 @@ public class Drink {
         this.capacity = capacity;
         this.percentageAlcohol = percentageAlcohol;
         this.dateBottling = dateBottling;
-        this.hashLabel=new HashMap<>();
-        this.hashDescription=new HashMap<>();
+        this.hashText=new HashMap<>();
     }
 
     /**
@@ -107,38 +105,22 @@ public class Drink {
     /**
      * @return the hashLabel
      */
-    public HashMap<Language,String> getHashLabel() {
-        return hashLabel;
+    public HashMap<Language,InfoText> getHashText() {
+        return hashText;
     }
 
     /**
-     * @param hashLabel the hashLabel to set
+     * @param hashText the hashLabel to set
      */
-    public void setHashLabel(HashMap<Language,String> hashLabel) {
-        this.hashLabel = hashLabel;
+    public void setHashText(HashMap<Language,InfoText> hashText) {
+        this.hashText = hashText;
     }
     
-    public void addLabel(Language language, String label){
-        this.hashLabel.put(language, label);
+    public void addText(Language language, String label, String description){
+        this.hashText.put(language, new InfoText(label,description));
     }
     
-    public String getLabel(Language language) {
-        return hashLabel.get(language);
-    }
-    
-    public HashMap<Language, String> getHashDescription() {
-        return hashDescription;
-    }
-
-    public void setHashDescription(HashMap<Language, String> hashDescription) {
-        this.hashDescription = hashDescription;
-    }
-    
-    public void addDescription(Language language, String description){
-        this.hashDescription.put(language, description);
-    }
-    
-    public String getDescription(Language language) {
-        return hashDescription.get(language);
+    public InfoText getText(Language language) {
+        return hashText.get(language);
     }
 }
