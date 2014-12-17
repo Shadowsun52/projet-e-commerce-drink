@@ -35,6 +35,8 @@ public interface DrinkFacadeLocal {
     
     public model.Drink converterToModel(Drink entity);
     
+    public Drink converterToEntity(model.Drink drink);
+    
     public ArrayList<model.Drink> findAllDrinks();
     
     public ArrayList<model.Drink> findDrinksbyCateg(Integer idCateg);

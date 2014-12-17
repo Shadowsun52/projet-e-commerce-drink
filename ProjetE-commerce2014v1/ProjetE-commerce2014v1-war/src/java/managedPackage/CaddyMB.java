@@ -9,14 +9,21 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import model.Customer;
 import model.DeliveryMode;
 import model.Drink;
 import model.Language;
+import model.LineOrder;
+import model.Order;
+import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
  *
@@ -25,6 +32,12 @@ import model.Language;
 @Named(value = "caddyMB")
 @SessionScoped
 public class CaddyMB implements Serializable {
+    private static final String BUNDLE_LOCALE = "languagePackage.lang";
+    private static final String PAGE_ORDER_VALID = "orderEnd";
+    private static final String PAGE_ORDER_ERROR = "orderError";
+    
+    @EJB
+    private OrderTableFacadeLocal orderTableFacade;
 
     private HashMap<Drink,Integer> caddy;
     private DeliveryMode delModChosen;
@@ -33,7 +46,7 @@ public class CaddyMB implements Serializable {
      */
     public CaddyMB() {
         caddy = new HashMap();
-        //valeur test
+//////////valeur test///////////////////////////////////////////////////////////
         Drink d = new Drink(10, 2.1, .33, (short)6, null);
         d.addLabel(new Language(10, "Francais", "", "fr"), "Orval");
         d.addLabel(new Language(11, "English","", "en"), "Orval");
@@ -89,18 +102,49 @@ public class CaddyMB implements Serializable {
         return sumCaddyWithTva(customer) + delModChosen.getCurrentpostalcharges();
     }
     
+//</editor-fold>   
+    
+//<editor-fold defaultstate="collapsed" desc="Order">
     public String saveOrder() {
         try{
-            
-            return "orderEnd";
+            Order order = createModelOrder();
+            orderTableFacade.create(order, getBundle());
+            delModChosen = null;
+            clearCaddy();
+            return PAGE_ORDER_VALID;
         }
         catch(Exception e)
         {
             System.out.println(e);
-            return "error";
+            return PAGE_ORDER_ERROR;
         }
     }
-//</editor-fold>   
+    
+    private Order createModelOrder(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        CustomerMB customerMB = (CustomerMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{customerMB}", 
+                                CustomerMB.class)
+                        .getValue(context.getELContext());
+        Customer customer = customerMB.getCustomer();
+        Order order = new Order(null, new Date(), new Date(), 
+                delModChosen.getCurrentpostalcharges(), delModChosen, 
+                customer.getAddress(), customer);
+        order.setLines(converterToLineOrder());
+        return order;
+    }
+    
+    private ArrayList<LineOrder> converterToLineOrder(){
+        ArrayList<LineOrder> lines = new ArrayList();
+        caddy.forEach((drink,quantity) -> {
+            lines.add(new LineOrder(drink, quantity.shortValue(), 
+                    drink.getCurrentPrice()));
+        });
+        return lines;
+    }
+//</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="getter and setter">
     /**
@@ -136,4 +180,8 @@ public class CaddyMB implements Serializable {
     }
 //</editor-fold>   
 
+    private ResourceBundle getBundle(){
+        return ResourceBundle.getBundle(BUNDLE_LOCALE, 
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    }
 }

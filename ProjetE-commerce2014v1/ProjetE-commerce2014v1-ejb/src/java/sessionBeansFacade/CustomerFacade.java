@@ -27,6 +27,7 @@ import model.Encryption;
 public class CustomerFacade extends AbstractFacade<Customer> implements CustomerFacadeLocal {   
     private static final String PATCH_PAGE_NEW_PW = "http://localhost:8080/" 
             +"ProjetE-commerce2014v1-war/faces/newpassword.xhtml";
+    private static final String INTRO_SUBJECT ="EmailIntroSubject";
     private static final String SIGN_UP_SUBJECT = "signUpEmailSubject";
     private static final String SIGN_UP_BODY1 = "signUpEmailBody1";
     private static final String SIGN_UP_BODY2 = "signUpEmailBody2";
@@ -77,7 +78,7 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         entity.setIdaddress(address);
         create(entity);
         EmailSender.sendEmail(customer.getEmail(), 
-                bundle.getString(SIGN_UP_SUBJECT), 
+                createSubjectEmail(SIGN_UP_SUBJECT, bundle), 
                 createBodyForEmailSignUp(bundle, customer.getEmail()));
     }
 
@@ -104,6 +105,10 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         return "<h1>" + bundle.getString(SIGN_UP_SUBJECT) + "</h1><p>" 
                 + bundle.getString(SIGN_UP_BODY1) + " " 
                 + email + "</p><p>" + bundle.getString(SIGN_UP_BODY2) + "</p>";
+    }
+    
+    private String createSubjectEmail(String part2,ResourceBundle bundle){
+        return bundle.getString(INTRO_SUBJECT) + bundle.getString(part2);
     }
     
     @Override
@@ -165,7 +170,8 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
                 + bundle.getString(FORGOT_PW_BODY) +"<p><a href=\"" 
                 + createLinkNewPassword(customer) + "\">" 
                 + bundle.getString(FORGOT_PW_LINK) + "</a></p>";
-        EmailSender.sendEmail(email, bundle.getString(FORGOT_PW_SUBJECT), body);
+        EmailSender.sendEmail(email, 
+                createSubjectEmail(FORGOT_PW_SUBJECT, bundle), body);
     }
     
     private String createLinkNewPassword(model.Customer customer){

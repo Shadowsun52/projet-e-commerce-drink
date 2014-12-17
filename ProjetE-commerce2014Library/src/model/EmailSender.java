@@ -5,9 +5,11 @@
  */
 package model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -31,8 +33,8 @@ public class EmailSender {
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
     }
    
-    public static void sendEmail(String emailFrom, String subject, 
-            String message) throws Exception{
+    public static void sendEmail(String emailFrom, String subject, String message) 
+            throws MessagingException, UnsupportedEncodingException{
         Authenticator auth = new Authenticator() {       
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -45,7 +47,8 @@ public class EmailSender {
     }
     
     private static void send(Session session, String toEmail, 
-            String subject, String body) throws Exception{
+            String subject, String body) throws MessagingException, 
+            UnsupportedEncodingException{
           MimeMessage msg = new MimeMessage(session);
           //set message headers
           msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

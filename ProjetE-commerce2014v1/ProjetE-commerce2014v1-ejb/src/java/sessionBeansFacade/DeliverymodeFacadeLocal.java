@@ -33,6 +33,8 @@ public interface DeliverymodeFacadeLocal {
     
     public model.DeliveryMode converterToModel(Deliverymode entity);
     
+    public Deliverymode converterToEntity(model.DeliveryMode delMode);
+    
     public model.DeliveryMode findDeliveryMode(Object id);
     
     public ArrayList<model.DeliveryMode> findAllDeliveryMode();
