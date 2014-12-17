@@ -31,8 +31,9 @@ public class DrinksMB implements Serializable{
     private int highPrice=25;
     private int lowPercentage=0;
     private int highPercentage=40;
-    private int singleDrink;
     private int nbDrinks;
+    private Drink singleDrink;
+
     /**
      * Creates a new instance of DrinksMB
      */
@@ -52,19 +53,6 @@ public class DrinksMB implements Serializable{
         else
             listDrink = drinkFacade.findDrinksNoType(idCat,lowPrice,
                 highPrice, lowPercentage, highPercentage);     
-    }
-    
-    public Drink findSingleDrink()
-    {
-        return drinkFacade.findSingleDrink(singleDrink);
-    }
-    
-    public void resetCriterias(){
-        typeChosen=null;
-        lowPrice=0;
-        highPrice=25;
-        lowPercentage=0;
-        highPercentage=40;
     }
     
     public double processedPrice(double priceDrink){
@@ -130,19 +118,19 @@ public class DrinksMB implements Serializable{
         this.highPercentage = highPercentage;
     }
     
-    public int getSingleDrink() {
-        return singleDrink;
-    }
-
-    public void setSingleDrink(int singleDrink) {
-        this.singleDrink = singleDrink;
-    }
-    
     public int getNbDrinks() {
         return nbDrinks;
     }
 
     public void setNbDrinks(int nbDrinks) {
         this.nbDrinks = nbDrinks;
+    }
+      
+    public Drink getSingleDrink() {
+        return singleDrink;
+    }
+
+    public void setSingleDrink(Drink singleDrink) {
+        this.singleDrink = singleDrink;
     }
 }
