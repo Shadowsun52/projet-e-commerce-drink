@@ -8,6 +8,7 @@ package managedPackage;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class CaddyMB implements Serializable {
     @EJB
     private OrderTableFacadeLocal orderTableFacade;
 
-    private HashMap<Drink,Integer> caddy;
+    private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
     /**
      * Creates a new instance of CaddyMB
@@ -50,21 +51,21 @@ public class CaddyMB implements Serializable {
         Drink d = new Drink(10, 2.1, .33, (short)6, null);
         d.addLabel(new Language(10, "Francais", "", "fr"), "Orval");
         d.addLabel(new Language(11, "English","", "en"), "Orval");
-        caddy.put(d, 6);
+        caddy.put(d, new BigDecimal(6));
         
         Drink d2 = new Drink(11, 1.7, .33, (short)5, null);
         d2.addLabel(new Language(10, "Francais", "", "fr"), "Leffe");
         d2.addLabel(new Language(11, "English","", "en"), "Leffe");
-        caddy.put(d2, 24);           
+        caddy.put(d2, new BigDecimal(24));  
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">
-    public void addDrink(Drink drink, int quantity){
-        if(caddy.containsKey(drink))
-            caddy.put(drink, caddy.get(drink) + quantity);
-        else
-            caddy.put(drink, quantity);
-    }
+//    public void addDrink(Drink drink, int quantity){
+//        if(caddy.containsKey(drink))
+//            caddy.put(drink, caddy.get(drink) + quantity);
+//        else
+//            caddy.put(drink, quantity);
+//    }
     
     public void deleteDrink(Drink drink){
         caddy.remove(drink);
@@ -79,12 +80,12 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumline(Drink drink){
-        return drink.getCurrentPrice()*caddy.get(drink);
+        return drink.getCurrentPrice()*caddy.get(drink).doubleValue();
     }
     
     public double sumCaddy(){
         double sum = 0.;
-        for (Map.Entry<Drink, Integer> drink : caddy.entrySet()) {
+        for (Map.Entry<Drink, BigDecimal> drink : caddy.entrySet()) {
             sum += sumline(drink.getKey());
         }
         return sum;
@@ -150,14 +151,14 @@ public class CaddyMB implements Serializable {
     /**
      * @return the caddy
      */
-    public HashMap<Drink,Integer> getCaddy() {
+    public HashMap<Drink,BigDecimal> getCaddy() {
         return caddy;
     }
 
     /**
      * @param caddy the caddy to set
      */
-    public void setCaddy(HashMap<Drink,Integer> caddy) {
+    public void setCaddy(HashMap<Drink,BigDecimal> caddy) {
         this.caddy = caddy;
     }
     
