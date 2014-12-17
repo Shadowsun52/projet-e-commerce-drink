@@ -39,4 +39,10 @@
         <local>sessionBeansFacade.LanguageFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#LanguageFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>OrderTableFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.OrderTableFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#OrderTableFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

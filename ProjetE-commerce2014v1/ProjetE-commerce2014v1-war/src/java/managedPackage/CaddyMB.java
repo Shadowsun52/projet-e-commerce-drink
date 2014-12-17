@@ -60,12 +60,12 @@ public class CaddyMB implements Serializable {
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">
-//    public void addDrink(Drink drink, int quantity){
-//        if(caddy.containsKey(drink))
-//            caddy.put(drink, caddy.get(drink) + quantity);
-//        else
-//            caddy.put(drink, quantity);
-//    }
+    public void addDrink(Drink drink, int quantity){
+        if(caddy.containsKey(drink))
+            caddy.put(drink, new BigDecimal(caddy.get(drink).intValue() + quantity));
+        else
+            caddy.put(drink, new BigDecimal(quantity));
+    }
     
     public void deleteDrink(Drink drink){
         caddy.remove(drink);

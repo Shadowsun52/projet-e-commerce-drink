@@ -45,7 +45,7 @@ public interface OrderTableFacadeLocal {
     
     public Order findOrder(Object numOrder);
     
-    public ArrayList<Order> findByCustomer(Customer customer) throws Exception;
+    public ArrayList<Order> findByCustomer(Integer customerId) throws Exception;
     
     public void create(Order order, ResourceBundle bundle) throws Exception;
 }

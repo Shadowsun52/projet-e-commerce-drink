@@ -30,7 +30,7 @@ import model.Order;
 @Stateless
 public class OrderTableFacade extends AbstractFacade<OrderTable> implements OrderTableFacadeLocal {
     private static final String PATCH_SITE = "http://localhost:8080/" 
-            +"ProjetE-commerce2014v1-war";
+            +"ProjetE-commerce2014v1-war/faces/yourAccountxhtml";
     private static final String INTRO_SUBJECT = "EmailIntroSubject";
     private static final String ORDER_SUBJECT="orderSubject";
     private static final String ORDER_SUBJECT2="orderSubject2";
@@ -88,10 +88,10 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
     }
 
     @Override
-    public ArrayList<Order> findByCustomer(Customer customer)throws Exception{
+    public ArrayList<Order> findByCustomer(Integer customerId)throws Exception{
         try{
             Query query = em.createNamedQuery("OrderTable.findByCustomer");
-            query.setParameter("idcustomer", customer);
+            query.setParameter("idcustomer", customerId);
             ArrayList<Order> listOrders = new ArrayList();
             query.getResultList().stream().forEach((order) ->{
                 listOrders.add(converterToModel((OrderTable)order));
