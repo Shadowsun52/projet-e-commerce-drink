@@ -31,8 +31,8 @@ public class DrinksMB implements Serializable{
     private int highPrice=25;
     private int lowPercentage=0;
     private int highPercentage=40;
+    private int nbDrinks;
     private Drink singleDrink;
-
 
     /**
      * Creates a new instance of DrinksMB
@@ -55,12 +55,8 @@ public class DrinksMB implements Serializable{
                 highPrice, lowPercentage, highPercentage);     
     }
     
-    public void resetCriterias(){
-        typeChosen=null;
-        lowPrice=0;
-        highPrice=25;
-        lowPercentage=0;
-        highPercentage=40;
+    public double processedPrice(double priceDrink){
+        return nbDrinks*priceDrink;
     }
     
     public ArrayList<Drink> getListDrink() {
@@ -122,6 +118,14 @@ public class DrinksMB implements Serializable{
         this.highPercentage = highPercentage;
     }
     
+    public int getNbDrinks() {
+        return nbDrinks;
+    }
+
+    public void setNbDrinks(int nbDrinks) {
+        this.nbDrinks = nbDrinks;
+    }
+      
     public Drink getSingleDrink() {
         return singleDrink;
     }

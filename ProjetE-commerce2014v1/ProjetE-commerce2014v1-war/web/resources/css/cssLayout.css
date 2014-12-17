@@ -287,6 +287,65 @@ a:hover .discount_class{
     float: right;
 }
 
+#imageSingleDrink{
+    display: inline-block;
+    float: left;
+}
+
+#singleDrinkDescDiv{
+    min-height: 100px;
+}
+
+#imageSingleDrink{
+    height: 250px;
+    width: 140px;
+    margin : 10px 10px 0 0;
+}
+
+#imgDrinksScroller{
+    height: 90px;
+    width: 70px;
+}
+
+#singleDrinkDescDiv{
+    font-size: 1.5em;
+    margin : 20px 0 10px 10px;
+}
+
+#priceSingDrink{
+    font-size: 1.5em;
+    margin : 10px 0 10px 10px;
+}
+
+#titleSingDrink{
+    margin : 0 0 10px 0;
+}
+
+#criteriaForm{
+    vertical-align: top;
+    display : inline-block;
+}
+
+#panPriceSlider{
+    margin-bottom: 10px;
+}
+
+#formDrinksScroller{
+    display : inline-block;
+    min-width: 380px;
+}
+
+.bntDrinks{
+    min-width: 150px;
+    max-width: 385px;
+    padding:4px;
+    border: 1px solid rgb(200,200,200)!important; 
+    box-shadow: none!important;
+    border-radius: 0px!important;
+    margin : 10px 0 10px 0;
+    
+}
+
 footer {
     background-color: #c2dfef;
     border-spacing: 15px;

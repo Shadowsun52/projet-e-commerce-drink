@@ -1,17 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam name="singleDrink" value="#{drinksMB.singleDrink}"/>
+        <f:viewParam name="idCat" value="#{drinksMB.idCat}"/>
+    </f:metadata>
+    
     <body>
-
         <ui:composition template="./template/mainTemplate.xhtml">
 
             <ui:define name="content">
-                boire c'est bien
+                <h1><h:outputText id="titleSingDrink" value="#{drinksMB.singleDrink.getText(internationalizationManaged.currentLanguage).label}"/></h1>
+                
+                <img id="imageSingleDrink" src="./resources/images/#{drinksMB.singleDrink.id}.jpg"/>
+                
+                <div id="singleDrinkDiv">
+                    <p><div id="singleDrinkDescDiv"><h:outputText value="#{drinksMB.singleDrink.getText(internationalizationManaged.currentLanguage).description}"/></div></p>
+                    
+                    <p><h:outputText id="priceSingDrink" value="#{msg.priceSingDrink}#{drinksMB.singleDrink.currentPrice} &euro;"/></p>
+                    
+                    <h:form id="formSingleDrink">
+                        <p:spinner id="nbDrinkSpinner" value="#{drinksMB.nbDrinks}" min="0" max="100000">
+                            <p:ajax update="nbDrinkSpinnerValue" process="@this"/>
+                        </p:spinner>
+                        <h:outputText  value="#{msg.totalSpinnerDrink}"/>
+                        <h:outputText id="nbDrinkSpinnerValue" value="#{drinksMB.processedPrice(drinksMB.singleDrink.currentPrice)}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </h:outputText>
+                        <h:outputText  value="&euro;"/>
+
+                        <p><h:commandButton id="buttCartDrink" class="bntDrinks" value="#{msg.addCart}"/></p>
+
+                        <p><h:link id="linkSingleDrink" class="bntDrinks" value="#{msg.goBack}" outcome="category.xhtml">
+                            <f:param name="idCat" value="#{drinksMB.idCat}"/>
+                        </h:link></p>
+                    </h:form>
+                </div>                    
             </ui:define>
-
+            
         </ui:composition>
-
     </body>
 </html>
