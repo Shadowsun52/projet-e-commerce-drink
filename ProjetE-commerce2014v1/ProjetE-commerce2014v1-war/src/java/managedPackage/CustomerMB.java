@@ -60,6 +60,7 @@ public class CustomerMB implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="sign up">
     public String signUp(){
         try{
+            testNumPhone();
             customer.setChosenLanguage(findLanguageCurrent());
             customerFacade.create(customer, getBundle());
             return "endsignup";
@@ -69,6 +70,11 @@ public class CustomerMB implements Serializable {
             System.out.println(e);
             return "error";
         }
+    }
+    
+    public void testNumPhone(){
+        if(customer.getNumphone().equals(""))
+            customer.setNumphone(null);
     }
     
     private Language findLanguageCurrent() {

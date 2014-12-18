@@ -195,12 +195,9 @@
                                            for="numTel"/><br/>
                             <h:inputText id="numTel" class="inputLong"
                                          value="#{customerMB.customer.numphone}"
-                                         required="true"
-                                         requiredMessage="#{msg.numTelRequired}"
                                          validatorMessage="#{msg.numTelError}">
                                 <f:ajax render="errorNumTel" event="blur"/>
-                                <f:validateRegex 
-                                    pattern="^((0|\+32 ?)|((0|\+33 ?)\d[-.\/ ]?))\d{2}([-.\/ ]?\d{2}){3}+$"/>
+                                <f:validator validatorId="validatorPhone"/>
                             </h:inputText>
                             <span class="errorMessage">
                                 <h:message id="errorNumTel" for="numTel"/>

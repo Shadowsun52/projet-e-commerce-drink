@@ -35,8 +35,6 @@ public class searchMB implements Serializable {
     }
     
     public String goToSearchDrink(Language lang){
-        if(Pattern.matches("^.*o.*$", "chouffe"))
-                System.out.println("lol");
         listSearchDrink = drinkFacade.findSearchedDrink(stringResearched, lang);
         
         return "searchPage";
