@@ -68,7 +68,6 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 16)
     @Column(name = "NUMPHONE")
     private String numphone;

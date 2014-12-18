@@ -23,7 +23,7 @@ import model.Drink;
 import model.Language;
 import model.LineOrder;
 import model.Order;
-import session.MathBusiness;
+import business.MathBusiness;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**

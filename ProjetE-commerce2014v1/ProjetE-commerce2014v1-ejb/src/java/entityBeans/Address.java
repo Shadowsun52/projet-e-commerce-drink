@@ -6,7 +6,9 @@
 package entityBeans;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "AND a.numstreet = :numstreet AND a.postcode = :postcode "
             + "AND a.city = :city AND a.idcountry = :idcountry")})
 public class Address implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaddress")
+    private Collection<Customer> customerCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -156,6 +162,15 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Address[ idaddress=" + idaddress + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
+    }
+
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
     }
     
 }

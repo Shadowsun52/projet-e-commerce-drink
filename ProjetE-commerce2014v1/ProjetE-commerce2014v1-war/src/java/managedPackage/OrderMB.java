@@ -14,7 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import model.LineOrder;
 import model.Order;
-import session.MathBusiness;
+import business.MathBusiness;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
