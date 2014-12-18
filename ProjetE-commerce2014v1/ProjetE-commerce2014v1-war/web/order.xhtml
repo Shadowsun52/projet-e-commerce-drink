@@ -58,7 +58,7 @@
                             <f:selectItems var="deliveryMode"
                                            value="#{deliveryModeMB.listDeliveryModes}" 
                                            itemValue="#{deliveryMode}"
-                                           itemLabel="#{deliveryMode.getInfoDelMode(internationalizationManaged.currentLanguage).label} (#{deliveryMode.currentpostalcharges}&euro;)"/>
+                                           itemLabel="#{deliveryMode.getInfoText(internationalizationManaged.currentLanguage).label} (#{deliveryMode.currentpostalcharges}&euro;)"/>
                         </p:selectOneRadio>
                     </article>
                     <br/>

@@ -57,7 +57,8 @@
                             </f:facet>
                             <f:facet name="input">
                                 <h:inputText value="#{caddyMB.caddy[drink.key]}" >
-                                    <f:converter converterId="converterInteger"/>
+                                    <f:validator validatorId="validatorNumber"/>
+                                    <f:convertNumber/>
                                     <f:ajax event="blur" render="@form"/>
                                 </h:inputText>
                             </f:facet>

@@ -202,6 +202,20 @@
 .bntMargin{
     margin-left: 10px;
 }
+
+.leftMarginOrder{
+    margin-left: 25px;
+}
+.previewOrder{
+    margin: 10px 5px 5px;
+    border-bottom: solid 1px black;
+    display: block;
+}
+
+.largeMargin p{
+    margin-top: 25px;
+}
+
 @media screen and (max-width: 762px) {
     .selectShort {
         display: block;

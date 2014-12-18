@@ -39,16 +39,18 @@
                                            .currentLanguage.slogan}"/>
                 </h2>
                 <h:form id="search">
-                    <h:inputText/>
-                    <h:commandButton value="#{msg.search}" />
+                    <h:inputText id="inputSearch" value="#{searchMB.stringResearched}"/>
+                    <h:commandButton value="#{msg.search}" 
+                                     action="#{searchMB.goToSearchDrink(internationalizationManaged.currentLanguage)}"/>
                 </h:form>
                 <div id="connexion">
                     <c:choose>
                         <c:when test="#{customerMB.infoConnexion.isconnected}">
-                            <a id="showConnexionBox" href="#">#{msg.yourAccount}</a>
+                            <a id="showConnexionBox" href="#">#{customerMB.customer.lastname} #{customerMB.customer.name}</a>
                             <div id="form_connexion" class="connected">
-                                <h:link value="#{msg.paramAccount}" outcome="editcustomer.xhtml"/>
                                 <h:form>
+                                        <h:commandLink value="#{msg.yourAccount}" 
+                                        action="#{orderMB.navigateToYourAccount(customerMB.customer.id)}"/>
                                     <p>
                                         <h:commandButton value="#{msg.signOut}" 
                                                          action="#{customerMB.deconnection()}"/>

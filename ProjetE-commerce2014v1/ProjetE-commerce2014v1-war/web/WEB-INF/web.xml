@@ -28,25 +28,7 @@
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#LocalityFacade</ejb-link>
     </ejb-local-ref>
     <ejb-local-ref>
-        <ejb-ref-name>CustomerFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.CustomerFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>CustomerFacade1</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.CustomerFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
         <ejb-ref-name>CountryFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.CountryFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CountryFacade</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>CountryFacade1</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
         <local>sessionBeansFacade.CountryFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#CountryFacade</ejb-link>
@@ -58,15 +40,9 @@
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#LanguageFacade</ejb-link>
     </ejb-local-ref>
     <ejb-local-ref>
-        <ejb-ref-name>CustomerFacade2</ejb-ref-name>
+        <ejb-ref-name>OrderTableFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.CustomerFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#CustomerFacade</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>DrinkFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local>sessionBeansFacade.DrinkFacadeLocal</local>
-        <ejb-link>ProjetE-commerce2014v1-ejb.jar#DrinkFacade</ejb-link>
+        <local>sessionBeansFacade.OrderTableFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#OrderTableFacade</ejb-link>
     </ejb-local-ref>
 </web-app>

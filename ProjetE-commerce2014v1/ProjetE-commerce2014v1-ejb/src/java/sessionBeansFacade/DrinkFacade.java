@@ -7,13 +7,19 @@ package sessionBeansFacade;
 
 import entityBeans.Drink;
 import entityBeans.LangDrink;
+import entityBeans.LangDrinkPK;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.InfoText;
 import model.Language;
 
 /**
@@ -56,6 +62,27 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
         return drink;
     }
 
+    @Override
+    public Drink converterToEntity(model.Drink drink){
+        Drink entity = new Drink(drink.getId(), 
+                new BigDecimal(drink.getCurrentPrice()), 
+                new BigDecimal(drink.getCapacity()), 
+                drink.getPercentageAlcohol());
+        entity.setLangDrinkCollection(getAllInfo(drink.getHashText(), 
+                drink.getId()));
+        return entity;
+    }
+    
+    private Collection<LangDrink> getAllInfo(
+            HashMap<Language,InfoText> hashText, Integer id) {
+        Collection<LangDrink> infoText = new ArrayList();
+        for (Map.Entry<Language, InfoText> info : hashText.entrySet()) {
+            infoText.add(new LangDrink(new LangDrinkPK(id, info.getKey().getId()),
+                    info.getValue().getLabel(), info.getValue().getDescription()));
+        }
+        return infoText;
+    }
+    
     @Override
     public ArrayList<model.Drink> findAllDrinks() {
         ArrayList<model.Drink> listDrink = new ArrayList();

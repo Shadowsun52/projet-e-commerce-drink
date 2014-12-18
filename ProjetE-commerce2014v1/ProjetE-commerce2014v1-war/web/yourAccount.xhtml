@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./template/noOrderTemplate.xhtml">
+
+            <ui:define name="content">
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                                 type="preRenderView"/>
+                </c:if>
+                <h:form class="formOrder">
+                    <h1><h:outputText value="#{msg.yourAccount}"/></h1>
+                    <h:commandButton value="#{msg.signOut}" 
+                                     action="#{customerMB.deconnectionToIndex()}"/>
+                    <br/>
+                    <article class="orderArticle largeMargin">
+                        <h2><h:outputText value="#{msg.profile}"/></h2>
+                        <p>
+                            <h:link value="#{msg.modifyEmail}"
+                                    outcome="modifyEmail.xhtml"/>
+                        </p>
+                        <p>
+                            <h:link value="#{msg.modifyPassword}"
+                                    outcome="modifyPassword.xhtml"/>
+                        </p>
+                        <p>
+                            <h:link value="#{msg.modifyAddressOrder}" 
+                                    outcome="#{customerMB.navNewAddress()}"/>
+                        </p>
+                    </article>
+                    <article class="orderArticle">
+                        <h2><h:outputText value="#{msg.yourOrders}"/></h2>
+                        <c:forEach  items="#{orderMB.orders}" var="order">
+                            <h:commandLink class="previewOrder" 
+                                           action="#{orderMB.showOrder(order)}">
+                                <h3>
+                                    <h:outputText 
+                                        value="#{msg.order} #{order.numOrder}"/>
+                                </h3>
+                                <p>
+                                    <h:outputText value="#{msg.orderValidDate}"/> 
+                                    <h:outputText value="#{order.validationDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                    </h:outputText>
+                                </p>
+                            </h:commandLink>
+                        </c:forEach>
+                    </article>                
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -2,50 +2,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./template/noOrderTemplate.xhtml">
+
             <ui:define name="content">
-                <c:if test="#{caddyMB.caddyIsEmpty()or caddyMB.delModChosen == null}">
-                    <f:event listener="#{customerMB.redirectError()}"
-                             type="preRenderView"/>
-                </c:if>
                 <c:if test="#{!customerMB.infoConnexion.isconnected}">
                     <f:event listener="#{customerMB.redirectionConnexion()}" 
                              type="preRenderView"/>
                 </c:if>
-                <h1><h:outputText value="#{msg.validOrder}"/></h1>
+                <c:if test="#{orderMB.orderIsEmpty()}">
+                    <f:event listener="#{orderMB.redirectionYourAccount()}" 
+                             type="preRenderView"/>
+                </c:if>
+                <h1>
+                    <h:outputText 
+                        value="#{msg.order} #{orderMB.orderSelected.numOrder}"/>
+                </h1>
+                <p class="leftMarginOrder">
+                    <h:outputText value="#{msg.orderValidDate}"/>
+                    <h:outputText value="#{orderMB.orderSelected.validationDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                </p>
                 <div id="validOrder">
-                    <p:dataTable var="drink" value="#{caddyMB.listCaddy}"
+                    <p:dataTable var="line" value="#{orderMB.orderSelected.lines}"
                                  tableStyleClass="orderTable">
                          <p:column headerText="#{msg.orderItem}">
-                            <h:outputText value="#{drink.key.getText(
+                             <h:outputText value="#{line.drink.getText(
                                                 internationalizationManaged.currentLanguage).getLabel()} "/>
                         </p:column>
                         <p:column headerText="#{msg.percentageAlcohol}">
-                            <h:outputText value="#{drink.key.percentageAlcohol}">
+                            <h:outputText value="#{line.drink.percentageAlcohol}">
                                 <f:convertNumber minFractionDigits="1"
                                                  maxFractionDigits="2"/>
                             </h:outputText>
                             <h:outputText value=" %"/>
                         </p:column>
                         <p:column headerText="#{msg.prixUnit}">
-                            <h:outputText value="#{drink.key.currentPrice}">
+                            <h:outputText value="#{line.price}">
                                 <f:convertNumber minFractionDigits="2"
                                                  maxFractionDigits="2"/>
                             </h:outputText>
                             <h:outputText value=" &euro;"/>
                         </p:column>
                         <p:column headerText="#{msg.orderQuantity}">
-                            <h:outputText value="#{drink.value}"/>
+                            <h:outputText value="#{line.quantity}"/>
                         </p:column>
                         <p:column headerText="#{msg.orderPrice}" id="test">
-                            <h:outputText value="#{caddyMB.sumline(drink.key)}">
+                            <h:outputText value="#{orderMB.sumline(line)}">
                                 <f:convertNumber minFractionDigits="2"
                                                  maxFractionDigits="2"/>
                             </h:outputText> 
@@ -55,19 +65,22 @@
                     <article class="orderArticle">
                         <h2><h:outputText value="#{msg.deliveryAddress}"/></h2>
                         <p>
-                            <h:outputText value="#{customerMB.customer.
-                                                   address.nameStreet} n°
-                                          #{customerMB.customer.address.numStreet}"/>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.nameStreet} n°
+                                          #{orderMB.orderSelected.
+                                            delAddress.numStreet}"/>
                         </p>
                         <p>
-                            <h:outputText value="#{customerMB.customer.address.
-                                                   postCode}, 
-                                          #{customerMB.customer.address.city}"/>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.postCode}, 
+                                          #{orderMB.orderSelected.
+                                            delAddress.city}"/>
                         </p>
                         <p>
-                            <h:outputText value="#{customerMB.customer.address.country.
-                                            getLabel(internationalizationManaged.
-                                            currentLanguage)}"/>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.country.getLabel(
+                                                    internationalizationManaged.
+                                                    currentLanguage)}"/>
                         </p>
                         <p>
                             <h:outputText value="#{msg.phoneOrder}"/>
@@ -75,8 +88,9 @@
                         </p>
                         <p>
                             <h:outputText value="#{msg.deliveryBy} 
-                                          #{caddyMB.delModChosen.getInfoText(
-                                            internationalizationManaged.currentLanguage).label}"/>
+                                          #{orderMB.orderSelected.deliveryMode.
+                                            getInfoText(internationalizationManaged.
+                                            currentLanguage).label}"/>
                         </p>
                     </article>
                     <article class="orderArticle textRight">
@@ -84,7 +98,7 @@
                         <p>
                             <h:outputText value="#{msg.orderTotalPrice}: "/>
                             <span class="amount">
-                                <h:outputText value="#{caddyMB.sumCaddy()}">
+                                <h:outputText value="#{orderMB.sumOrder()}">
                                 <f:convertNumber minFractionDigits="2"
                                                  maxFractionDigits="2"/>
                             </h:outputText>
@@ -95,8 +109,7 @@
                             <h:outputText value="#{msg.tva}(#{customerMB.
                                                    customer.address.country.tva}%):"/>
                             <span class="amount">
-                                <h:outputText value="#{caddyMB.tvaCaddy(
-                                                   customerMB.customer)}">
+                                <h:outputText value="#{orderMB.tva()}">
                                 <f:convertNumber minFractionDigits="2" 
                                                  maxFractionDigits="2"/>
                                 </h:outputText>
@@ -106,8 +119,8 @@
                         <p>
                             <h:outputText value="#{msg.priceDelMode}: "/>
                             <span class="amount">
-                                <h:outputText value="#{caddyMB.delModChosen.
-                                                       currentpostalcharges}">
+                                <h:outputText value="#{orderMB.orderSelected.
+                                                       postalcharges}">
                                 <f:convertNumber minFractionDigits="2" 
                                                  maxFractionDigits="2"/>
                                 </h:outputText>
@@ -117,8 +130,7 @@
                         <p>
                             <h:outputText value="#{msg.totalPrice}: "/>
                             <span class="amount">
-                                <h:outputText value="#{caddyMB.sumOrder(
-                                                   customerMB.customer)}">
+                                <h:outputText value="#{orderMB.sumTotal()}">
                                 <f:convertNumber minFractionDigits="2" 
                                                  maxFractionDigits="2"/>
                                 </h:outputText>
@@ -126,16 +138,14 @@
                             <h:outputText value=" &euro;"/>
                         </p>
                     </article>
-                    <h:form id="formValidOrder">
-                        <h:commandButton value="#{msg.bntBack}"
-                                         action="order.xhtml"
-                                         class="bntMargin"/>
-                        <h:commandButton value="#{msg.bntValid}" 
-                                         action="#{caddyMB.saveOrder()}" 
-                                         class="bntMargin"/>
+                    <h:form>
+                        <h:commandButton value="#{msg.backAccount}" 
+                                         action="yourAccount.xhtml"
+                                         styleClass="leftMarginOrder"/>
                     </h:form>
                 </div>
             </ui:define>
+
         </ui:composition>
 
     </body>

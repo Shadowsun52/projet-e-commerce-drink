@@ -108,6 +108,11 @@ public class CustomerMB implements Serializable {
         customer = new Customer();
     }
         
+    public String deconnectionToIndex(){
+        deconnection();
+        return "index";
+    }
+    
     private boolean infoConnectionCorrect() {
         String passwordProtected = Encryption.encryption(
                 infoConnexion.getPassword());

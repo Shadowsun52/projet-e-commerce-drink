@@ -31,7 +31,7 @@ public class DrinksMB implements Serializable{
     private int highPrice=25;
     private int lowPercentage=0;
     private int highPercentage=40;
-    private int nbDrinks;
+    private int nbDrinks=1;
     private Drink singleDrink;
 
     /**

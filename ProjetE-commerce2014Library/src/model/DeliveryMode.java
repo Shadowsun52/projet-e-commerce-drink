@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class DeliveryMode implements Serializable{
     private Integer id;
     private Double currentpostalcharges;
-    private HashMap<Language,InfoDelMode> hashLabel;
+    private HashMap<Language,InfoText> hashText;
 
     public DeliveryMode() {
     }
@@ -23,7 +23,7 @@ public class DeliveryMode implements Serializable{
     public DeliveryMode(int id, double currentpostalcharges) {
         this.id = id;
         this.currentpostalcharges = currentpostalcharges;
-        this.hashLabel = new HashMap();
+        this.hashText = new HashMap();
     }
 
 // <editor-fold defaultstate="collapsed" desc="getter & setter"> 
@@ -56,25 +56,25 @@ public class DeliveryMode implements Serializable{
     }
 
     /**
-     * @return the hashLabel
+     * @return the hashText
      */
-    public HashMap<Language,InfoDelMode> getHashLabel() {
-        return hashLabel;
+    public HashMap<Language,InfoText> getHashText() {
+        return hashText;
     }
 
     /**
-     * @param hashLabel the hashLabel to set
+     * @param hashText the hashText to set
      */
-    public void setHashLabel(HashMap<Language,InfoDelMode> hashLabel) {
-        this.hashLabel = hashLabel;
+    public void setHashText(HashMap<Language,InfoText> hashText) {
+        this.hashText = hashText;
     }
     
-    public void addInfoDelMode(Language language, InfoDelMode infoDelMode){
-        this.hashLabel.put(language, infoDelMode);
+    public void addInfoText(Language language, InfoText infoText){
+        this.hashText.put(language, infoText);
     }
     
-    public InfoDelMode getInfoDelMode(Language language) {
-        return hashLabel.get(language);
+    public InfoText getInfoText(Language language) {
+        return hashText.get(language);
     }
 // </editor-fold>
     
