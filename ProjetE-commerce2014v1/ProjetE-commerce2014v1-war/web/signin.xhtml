@@ -11,6 +11,10 @@
         <ui:composition template="./template/noOrderTemplate.xhtml">
 
             <ui:define name="content">
+                <c:if test="#{customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionIndex()}" 
+                             type="preRenderView"/>
+                </c:if>
                 <h1><h:outputText value="#{msg.signIn}"/></h1>
                 <h:form id="formConnection">   
                     <div class="partSignUp">

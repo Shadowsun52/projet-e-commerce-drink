@@ -33,6 +33,8 @@ public class CustomerMB implements Serializable {
     private static final String LINK_PASSWORD_EDITED = 
             "newpassword.xhtml?type=1";
     private static final String LINK_ERROR_EDITING = "newpassword.xhtml?type=0";
+    private static final String PAGE_SIGN_IN = "signin.xhtml";
+    private static final String PAGE_INDEX = "index.xhtml";
     
     @EJB
     private CustomerFacadeLocal customerFacade;
@@ -140,7 +142,17 @@ public class CustomerMB implements Serializable {
         try{
             previousPage = currentPage();
             FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect("signin.xhtml");
+                    .redirect(PAGE_SIGN_IN);
+        }
+        catch(IOException e){
+            System.out.println("error redirect.");
+        }
+    }
+    
+    public void redirectionIndex()throws IOException{
+        try{
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect(PAGE_INDEX);
         }
         catch(IOException e){
             System.out.println("error redirect.");

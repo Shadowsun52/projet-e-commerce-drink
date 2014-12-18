@@ -5,6 +5,7 @@
  */
 package managedPackage;
 
+import business.MathBusiness;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -24,6 +25,7 @@ public class DrinksMB implements Serializable{
     @EJB
     private DrinkFacadeLocal drinkFacade;
     
+    private final MathBusiness math = new MathBusiness();
     private ArrayList<Drink> listDrink;
     private model.Type typeChosen;
     private int idCat;
@@ -31,7 +33,7 @@ public class DrinksMB implements Serializable{
     private int highPrice=25;
     private int lowPercentage=0;
     private int highPercentage=40;
-    private int nbDrinks=1;
+    private short nbDrinks=1;
     private Drink singleDrink;
 
     /**
@@ -56,7 +58,7 @@ public class DrinksMB implements Serializable{
     }
     
     public double processedPrice(double priceDrink){
-        return nbDrinks*priceDrink;
+        return math.sumline(priceDrink, nbDrinks);
     }
     
     public ArrayList<Drink> getListDrink() {
@@ -118,11 +120,11 @@ public class DrinksMB implements Serializable{
         this.highPercentage = highPercentage;
     }
     
-    public int getNbDrinks() {
+    public short getNbDrinks() {
         return nbDrinks;
     }
 
-    public void setNbDrinks(int nbDrinks) {
+    public void setNbDrinks(short nbDrinks) {
         this.nbDrinks = nbDrinks;
     }
       
