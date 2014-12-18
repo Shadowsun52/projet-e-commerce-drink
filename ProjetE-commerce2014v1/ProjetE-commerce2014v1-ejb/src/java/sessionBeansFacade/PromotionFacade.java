@@ -9,11 +9,15 @@ import entityBeans.LangPromotion;
 import entityBeans.LangPromotionPK;
 import entityBeans.Promotion;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import model.Language;
 
 /**
@@ -99,19 +103,39 @@ public class PromotionFacade extends AbstractFacade<Promotion> implements Promot
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Getter & Setter">
+//<editor-fold defaultstate="collapsed" desc="CRUD">
     @Override
     public ArrayList<model.Promotion> findAllPromotions() {
         ArrayList<model.Promotion> promotions = new ArrayList<>();
-        findAll().stream().forEach((promotion)->{
-            promotions.add(converterToModel(promotion));
-        });
-        return promotions;
+        try {
+            Query query = em.createNamedQuery("Promotion.findAllActif");
+            query.setParameter("now", new Date(), TemporalType.DATE);
+            query.getResultList().stream().forEach((promotion)->{
+                promotions.add(converterToModel((Promotion)promotion));
+            });
+            return promotions;
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
 
     @Override
     public model.Promotion findPromotion(Object id) {
         return converterToModel(find(id));
+    }
+    
+    @Override
+    public model.Promotion findByCodePromo(String codePromo) {
+        Query query = em.createNamedQuery("Promotion.findByCodepromo");
+        query.setParameter("codepromo", codePromo);
+        query.setParameter("now", new Date(), TemporalType.DATE);
+        ArrayList<Promotion> promotion = new ArrayList<>(query.getResultList());
+        if(promotion.size() > 0)
+            return converterToModel(promotion.get(0));
+        else
+            return null;
+       
     }
 //</editor-fold>
 }

@@ -142,4 +142,20 @@ public class MathBusiness {
         for(; !lines.get(i).getDrink().equals(drink); i++);
         return (int)lines.get(i).getQuantity();
     }
+    
+    public Integer allDrinkQuantity(HashMap<Drink, BigDecimal> caddy){
+        Integer sumQuantity = 0;
+        for (Map.Entry<Drink, BigDecimal> entrySet : caddy.entrySet()) {
+            sumQuantity += entrySet.getValue().intValue();
+        }
+        return sumQuantity;
+    }
+    
+    public Integer allDrinkQuantity(ArrayList<LineOrder> lines){
+        Integer sumQuantity = 0;
+        for (LineOrder line : lines) {
+            sumQuantity += line.getQuantity();
+        }
+        return sumQuantity;
+    }
 }

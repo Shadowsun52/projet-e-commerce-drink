@@ -41,12 +41,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Promotion.findByIdpromotion", query = "SELECT p FROM Promotion p WHERE p.idpromotion = :idpromotion"),
     @NamedQuery(name = "Promotion.findByDatestart", query = "SELECT p FROM Promotion p WHERE p.datestart = :datestart"),
     @NamedQuery(name = "Promotion.findByDateend", query = "SELECT p FROM Promotion p WHERE p.dateend = :dateend"),
-    @NamedQuery(name = "Promotion.findByCodepromo", query = "SELECT p FROM Promotion p WHERE p.codepromo = :codepromo"),
+    @NamedQuery(name = "Promotion.findByCodepromo", query = "SELECT p FROM Promotion p WHERE p.codepromo = :codepromo and p.datestart < :now AND p.dateend > :now"),
     @NamedQuery(name = "Promotion.findByPromoUnique", query = "SELECT p FROM Promotion p WHERE p.promoUnique = :promoUnique"),
     @NamedQuery(name = "Promotion.findByTypediscount", query = "SELECT p FROM Promotion p WHERE p.typediscount = :typediscount"),
     @NamedQuery(name = "Promotion.findByPercentagediscount", query = "SELECT p FROM Promotion p WHERE p.percentagediscount = :percentagediscount"),
     @NamedQuery(name = "Promotion.findByAmountdiscount", query = "SELECT p FROM Promotion p WHERE p.amountdiscount = :amountdiscount"),
-    @NamedQuery(name = "Promotion.findByMinquantity", query = "SELECT p FROM Promotion p WHERE p.minquantity = :minquantity")})
+    @NamedQuery(name = "Promotion.findByMinquantity", query = "SELECT p FROM Promotion p WHERE p.minquantity = :minquantity"),
+    @NamedQuery(name = "Promotion.findAllActif", query = "SELECT p FROM Promotion p WHERE p.datestart < :now AND p.dateend > :now")})
 public class Promotion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
     private Collection<LangPromotion> langPromotionCollection;

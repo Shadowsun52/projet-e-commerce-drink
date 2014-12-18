@@ -82,7 +82,7 @@
                                 <h:outputText value="#{promotion.value.getPercentageDiscount()}%"/>
                         </p:column>
                         <p:column style="width: 18%">
-                            <h:outputText value="#{orderMB.DiscountPromotion(promotion.value)}">
+                            <h:outputText value="#{CaddyMB.DiscountPromotion(promotion.value)}">
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <h:outputText value=" &euro;"/>
@@ -91,8 +91,10 @@
                     <div class="commandRight">
                         <p>
                             <p:inputText id="codePromo" styleClass="codePromo"
-                                          
-                                         placeholder="#{msg.labelCodePromo}"/>
+                                         value="#{caddyMB.codePromotion}"
+                                         placeholder="#{msg.labelCodePromo}">
+                                <f:validator validatorId="validatorCodePromo"/>
+                            </p:inputText>
                             <h:commandButton styleClass="bntCaddy" 
                                              value="#{msg.addCodePromo}"/>
                         </p>
@@ -134,6 +136,10 @@
                                              styleClass="bntCaddy" 
                                              action="faces/order.xhtml"/>
                         </p>
+                        <span class="errorMessage">
+                                <h:message id="errorCodePromo"
+                                           for="codePromo" />
+                        </span>
                     </div>
                     <h:commandButton class="leftBnt" value="#{msg.clearCaddy}"
                                      styleClass="bntCaddy cornerLeft" 

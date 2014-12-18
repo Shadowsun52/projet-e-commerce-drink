@@ -45,4 +45,10 @@
         <local>sessionBeansFacade.OrderTableFacadeLocal</local>
         <ejb-link>ProjetE-commerce2014v1-ejb.jar#OrderTableFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>PromotionFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessionBeansFacade.PromotionFacadeLocal</local>
+        <ejb-link>ProjetE-commerce2014v1-ejb.jar#PromotionFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

@@ -102,6 +102,10 @@ public class OrderMB implements Serializable {
     public double sumTotal(){
         return math.sumTotalOrder(orderSelected);
     }
+    
+    public Integer allQuantity(){
+        return math.allDrinkQuantity(orderSelected.getLines());
+    }
 //</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="getter & setter">

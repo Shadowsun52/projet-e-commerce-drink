@@ -25,6 +25,7 @@ import model.Order;
 import business.MathBusiness;
 import model.Promotion;
 import sessionBeansFacade.OrderTableFacadeLocal;
+import sessionBeansFacade.PromotionFacadeLocal;
 
 /**
  *
@@ -39,11 +40,14 @@ public class CaddyMB implements Serializable {
     
     @EJB
     private OrderTableFacadeLocal orderTableFacade;
-
+    @EJB
+    private PromotionFacadeLocal promotionFacade;
+    
     private final MathBusiness math = new MathBusiness();
     private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
     private HashMap<Drink,Promotion> promotions;
+    private String codePromotion;
     /**
      * Creates a new instance of CaddyMB
      */
@@ -150,6 +154,15 @@ public class CaddyMB implements Serializable {
         return math.discountPromotion(promotion, 
                 caddy.get(promotion.getDrink()).intValue());
     }
+    
+    public Integer allQuantity(){
+        return math.allDrinkQuantity(caddy);
+    }
+    
+    public void addPromoCode(){
+//        Promotion promotion = promotionFacade.findByCodePromo(codePromotion);
+//        promotions.put(promotion, null)
+    }
 //</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="Order">
@@ -252,6 +265,20 @@ public class CaddyMB implements Serializable {
     
     public List<Entry<Drink,Promotion>> getListPromotion(){
         return new ArrayList(promotions.entrySet());
+    }
+    
+    /**
+     * @return the codePromotion
+     */
+    public String getCodePromotion() {
+        return codePromotion;
+    }
+
+    /**
+     * @param codePromotion the codePromotion to set
+     */
+    public void setCodePromotion(String codePromotion) {
+        this.codePromotion = codePromotion;
     }
 //</editor-fold>   
 

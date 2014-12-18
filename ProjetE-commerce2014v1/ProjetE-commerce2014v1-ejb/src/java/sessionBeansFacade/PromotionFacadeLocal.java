@@ -38,4 +38,6 @@ public interface PromotionFacadeLocal {
     public ArrayList<model.Promotion> findAllPromotions();
     
     public model.Promotion findPromotion(Object id);
+    
+    public model.Promotion findByCodePromo(String codePromo);
 }
