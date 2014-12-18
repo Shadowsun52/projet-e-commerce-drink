@@ -122,6 +122,12 @@ public class CustomerFacade extends AbstractFacade<Customer> implements Customer
         }
     }
     
+    @Override
+    public void ModifyMail(model.Customer customer, String mail) {
+        customer.setEmail(mail);
+        edit(customer);
+    }
+    
     private void deleteOrphanAddress(Address address){
         if(!orderTableFacade.OrderUsingAddress(address))
             addressFacade.remove(address);

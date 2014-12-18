@@ -1,14 +1,66 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./template/noOrderTemplate.xhtml">
 
             <ui:define name="content">
-                content
+                <h1><h:outputText value="#{msg.modifyEmailTitle}"/></h1>
+                <h:outputLabel value="#{msg.oldEmail}:" for="oldMail"/><br/>
+                <h:inputText id="oldMail" class="inputLong"
+                             maxlength="70" value="#{customerMB.customer.email}"
+                             disabled="true">
+                </h:inputText> 
+                
+                <h:form id="formSignUp">
+                    <div class="partSignUp">
+                        <p>
+                            <h:outputLabel value="#{msg.formNewEmail}:" 
+                                           for="inputEmail"/><br/>
+                            <h:inputText id="inputEmail" class="inputLong"
+                                         maxlength="70" 
+                                         value="#{customerMB.newEmail}"
+                                         binding="#{composantEmail}"
+                                         required="true"
+                                         requiredMessage="#{msg.emailRequired}">
+                                <f:ajax execute="inputEmail confirmEmail" 
+                                        render="errorEmail errorConfirmEmail" 
+                                        event="blur"/>
+                                <f:validator validatorId="validatorEmail"/>
+                            </h:inputText>
+                            <span class="errorMessage">
+                                <h:message id="errorEmail" for="inputEmail"/>
+                            </span>
+                        </p>
+                        <p>
+                            <h:outputLabel value="#{msg.formConfirmNewEmail}:"
+                                           for="confirmEmail"/><br/>
+                            <h:inputText id="confirmEmail" class="inputLong" 
+                                         maxlength="70" required="true"
+                                     requiredMessage="#{msg.confirmEmailRequired}">
+                                <f:ajax execute="confirmEmail inputEmail" 
+                                        render="errorConfirmEmail" 
+                                        event="blur"/>
+                                <f:attribute name="composantEmail" 
+                                             value="#{composantEmail}"/>
+                                <f:validator validatorId="validatorConfirmEmail"/>
+                            </h:inputText>
+                            <span class="errorMessage">
+                                <h:message id="errorConfirmEmail" for="confirmEmail"/>
+                            </span>
+                        </p>
+                    </div>
+                    <h:commandButton value="#{msg.bntCancel}" immediate="true"
+                                     action="#{customerMB.cancelModify()}"/>
+                    <h:commandButton value="#{msg.bntModifyMail}" 
+                                     class="bntMargin"
+                                     action="#{customerMB.modifyMail()}"/>
+                </h:form>
             </ui:define>
 
         </ui:composition>

@@ -35,6 +35,10 @@ public class CustomerMB implements Serializable {
     private static final String LINK_ERROR_EDITING = "newpassword.xhtml?type=0";
     private static final String PAGE_SIGN_IN = "signin.xhtml";
     private static final String PAGE_INDEX = "index.xhtml";
+    private static final String LINK_PASSWORD_MODIFIED = 
+            "modifiedPassword.xhtml";
+    private static final String LINK_PASSWORD_MODIFIED_FAIL = 
+            "modifiedPasswordFail.xhtml";
     
     @EJB
     private CustomerFacadeLocal customerFacade;
@@ -44,10 +48,12 @@ public class CustomerMB implements Serializable {
     private Address newAddress;
     private String previousPage;
     private String newPassword;
+    private String oldPassword;
     private String newPhone;
     private String email;
     private String key;
-    
+    private String newEmail;
+
     /**
      * Creates a new instance of CustomerMB
      */
@@ -202,6 +208,9 @@ public class CustomerMB implements Serializable {
     public boolean test(){
         return true;
     }
+    
+    
+    
     public void changePassword(){
         try {
             Customer cust = customerFacade.findByEmail(email);
@@ -267,12 +276,40 @@ public class CustomerMB implements Serializable {
         customerFacade.ModifyAddress(customer, newAddress);
         return previousPage;
     }
+    
+    public String modifyMail(){
+        customerFacade.ModifyMail(customer, newEmail);
+        newEmail=null;
+        return previousPage;
+    }
+    
+    public void modifyPassword(){
+        
+        String passwordProtected = Encryption.encryption(
+                oldPassword);
+        if(passwordProtected.equals(customer.getPassword())){
+            try {
+                customer.setPassword(Encryption.encryption(newPassword));
+                customerFacade.edit(customer);
+                navigationWithParam(LINK_PASSWORD_MODIFIED);
+            }
+            catch(Exception e){
+                navigationWithParam(LINK_ERROR_EDITING);
+            }
+            oldPassword=null;
+            newPassword=null;
+        }
+        else
+            navigationWithParam(LINK_PASSWORD_MODIFIED_FAIL);
+    }
 //</editor-fold>
     
 // <editor-fold defaultstate="collapsed" desc="getter & setter">
     /**
      * @return the customer
      */
+    
+    
     public Customer getCustomer() {
         return customer;
     }
@@ -387,6 +424,22 @@ public class CustomerMB implements Serializable {
      */
     public void setNewPhone(String newPhone) {
         this.newPhone = newPhone;
+    }
+    
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+    
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 // </editor-fold>
 

@@ -49,4 +49,6 @@ public interface CustomerFacadeLocal {
     public void sendEmailForNewPassword(ResourceBundle bundle, String email) throws Exception;
     
     public void ModifyAddress(model.Customer customer, model.Address newAddress);
+    
+    public void ModifyMail(model.Customer customer, String mail);
 }
