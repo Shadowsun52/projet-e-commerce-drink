@@ -77,8 +77,10 @@ public class PromotionFacade extends AbstractFacade<Promotion> implements Promot
     private Promotion fillPromotionEntity(Promotion entity, model.Promotion promotion){
         entity.setAmountdiscount(promotion.getAmountDiscount());
         entity.setCodepromo(promotion.getCodePromo());
-        entity.setIdcategory(categoryFacade.converterToEntity(promotion.getCategory()));
-        entity.setIddrink(drinkFacade.converterToEntity(promotion.getDrink()));
+        entity.setIdcategory((promotion.getCategory() == null) ? null :
+                categoryFacade.converterToEntity(promotion.getCategory()));
+        entity.setIddrink((promotion.getDrink() == null) ? null : 
+                drinkFacade.converterToEntity(promotion.getDrink()));
         entity.setMinquantity(promotion.getMinQuantity());
         entity.setPercentagediscount(promotion.getMinQuantity());
         entity.setLangPromotionCollection(

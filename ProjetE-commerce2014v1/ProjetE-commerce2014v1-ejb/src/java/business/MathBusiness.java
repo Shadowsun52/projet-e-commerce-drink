@@ -54,19 +54,17 @@ public class MathBusiness {
         return value*(1-(promotion.getPercentageDiscount()/100.));
     }
     
-    public double sumCaddy(HashMap<Drink, Promotion> promotions,
-            HashMap<Drink, BigDecimal> caddy){
-        double sum = sumCaddy(caddy);
-        sum += discountPromotions(promotions, caddy);
-        return sum;
-    }
-    
     public double sumCaddy(HashMap<Drink, BigDecimal> caddy){
         double sum = 0.;
         for (Map.Entry<Drink, BigDecimal> drink : caddy.entrySet()) {
             sum += sumline(drink.getKey(), drink.getValue().shortValue());
         }
         return sum;
+    }
+    
+    public double sumCaddy(HashMap<Drink, Promotion> promotions,
+            HashMap<Drink, BigDecimal> caddy){
+        return sumCaddy(caddy) + discountPromotions(promotions, caddy);
     }
     
     public double sumCaddy(ArrayList<LineOrder> lines){
@@ -77,12 +75,18 @@ public class MathBusiness {
         return sum;
     }
     
+    public double sumCaddy(Order order){
+        return sumCaddy(order.getLines()) 
+                + discountPromotions(order.getPromotions(), order.getLines());
+    }
+    
     public double tva(HashMap<Drink, BigDecimal> caddy, Customer customer){
         return sumCaddy(caddy)*customer.getAddress().getCountry().getTva()/100;
     }
     
-    public double tva(ArrayList<LineOrder> lines, Customer customer){
-        return sumCaddy(lines)*customer.getAddress().getCountry().getTva()/100;
+    public double tva(Order order){
+        return sumCaddy(order.getLines())
+                *order.getCustomer().getAddress().getCountry().getTva()/100;
     }
     
     public double sumWithTva(HashMap<Drink, Promotion> promotions,
@@ -90,9 +94,8 @@ public class MathBusiness {
         return sumCaddy(promotions, caddy) + tva(caddy, customer);
     }
     
-    public double sumWithTva(ArrayList<LineOrder> lines,
-            Customer customer){
-        return sumCaddy(lines) + tva(lines, customer);
+    public double sumWithTva(Order order){
+        return sumCaddy(order) + tva(order);
     }
     
     public double sumTotalOrder(HashMap<Drink, Promotion> promotions,
@@ -103,8 +106,7 @@ public class MathBusiness {
     }
     
     public double sumTotalOrder(Order order){
-        return sumWithTva(order.getLines(), order.getCustomer()) 
-                + order.getPostalcharges();
+        return sumWithTva(order) + order.getPostalcharges();
     }
     
     public double discountPromotion(Promotion promotion, Integer quantity){
@@ -122,5 +124,22 @@ public class MathBusiness {
             sum += discountPromotion(promotion.getValue(), caddy.get(promotion.getKey()).intValue());
         }
         return sum;
+    }
+    
+    public double discountPromotions(ArrayList<Promotion> promotions, 
+            ArrayList<LineOrder> lines){
+        double sum = 0.;
+        for (Promotion promotion : promotions) {
+            sum += discountPromotion(promotion, 
+                    findQuantityForDrink(lines, promotion.getDrink()));
+        }
+        return sum;
+    }
+    
+    @SuppressWarnings("empty-statement")
+    private Integer findQuantityForDrink(ArrayList<LineOrder> lines, Drink drink){
+        int i = 0;
+        for(; !lines.get(i).getDrink().equals(drink); i++);
+        return (int)lines.get(i).getQuantity();
     }
 }

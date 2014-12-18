@@ -181,6 +181,7 @@ public class CaddyMB implements Serializable {
                 delModChosen.getCurrentpostalcharges(), delModChosen, 
                 customer.getAddress(), customer);
         order.setLines(converterToLineOrder());
+        order.setPromotions(savePromotionUsing());
         return order;
     }
     
@@ -191,6 +192,14 @@ public class CaddyMB implements Serializable {
                     drink.getCurrentPrice()));
         });
         return lines;
+    }
+    
+    private ArrayList<Promotion> savePromotionUsing(){
+        ArrayList<Promotion> promotionsList = new ArrayList<>();
+        promotions.forEach((drink, promotion) -> {
+            promotionsList.add(promotion);
+        });
+        return promotionsList;
     }
 //</editor-fold>
     
