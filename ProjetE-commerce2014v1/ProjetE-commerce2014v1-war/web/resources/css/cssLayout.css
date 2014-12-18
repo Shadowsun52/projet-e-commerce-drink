@@ -191,6 +191,12 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
     overflow: hidden;
 }
 
+#main h1{
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
 #content {
     width: 67%;
     //background-color: #dddddd;
@@ -237,7 +243,6 @@ a:hover .discount_class{
 }
 
 .discount_class img{
-    background-color: purple;
     display: block;
     width: 200px;
     height: 250px;
@@ -246,6 +251,18 @@ a:hover .discount_class{
 
 .discount_class h3{
     position: relative;
+}
+
+#promotionCat{
+    text-align: center;
+    color: rgb(230,0,0);
+    font-style: italic;
+}
+
+#promotionDrink{
+    color: rgb(230,0,0);
+    font-style: italic;
+    font-size: 1.5em;
 }
 
 #order {

@@ -48,4 +48,12 @@ public class CategoriesMB {
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
     }
+    
+    public Category getCategory(Integer id){
+        for (Category category : categories) {
+            if(category.getId().equals(id))
+                return category;
+        }
+        return null;
+    }
 }

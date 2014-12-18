@@ -37,6 +37,11 @@
                                             <h:outputText value="#{promotion.percentageDiscount} %"/>
                                         </c:if>
                                     </h2>
+                                    <c:if test="#{promotion.codePromo != null}">
+                                        <p>
+                                            <h:outputText value="#{msg.codePromoIndex} #{promotion.codePromo}"/>
+                                        </p>
+                                    </c:if>
                                 </h:link>
                             </c:when>
                             <c:when test="#{promotion.isCategoryPromotion()}">

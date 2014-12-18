@@ -9,9 +9,11 @@ import business.MathBusiness;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import model.Drink;
+import model.Promotion;
 import model.Type;
 import sessionBeansFacade.DrinkFacadeLocal;
 
@@ -35,7 +37,8 @@ public class DrinksMB implements Serializable{
     private int highPercentage=40;
     private short nbDrinks=1;
     private Drink singleDrink;
-
+    private Promotion promotionDrink;
+    
     /**
      * Creates a new instance of DrinksMB
      */
@@ -58,7 +61,7 @@ public class DrinksMB implements Serializable{
     }
     
     public double processedPrice(double priceDrink){
-        return math.sumline(priceDrink, nbDrinks);
+        return math.sumWithPromotion(priceDrink, nbDrinks, promotionDrink);
     }
     
     public ArrayList<Drink> getListDrink() {
@@ -134,5 +137,27 @@ public class DrinksMB implements Serializable{
 
     public void setSingleDrink(Drink singleDrink) {
         this.singleDrink = singleDrink;
+        FacesContext context = FacesContext.getCurrentInstance();
+         PromotionMB promotionMB = (PromotionMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{promotionMB}", 
+                                PromotionMB.class)
+                        .getValue(context.getELContext());
+         promotionDrink = promotionMB.promotionForDrink(singleDrink);
+    }
+
+    /**
+     * @return the promotionDrink
+     */
+    public Promotion getPromotionDrink() {
+        return promotionDrink;
+    }
+
+    /**
+     * @param promotionDrink the promotionDrink to set
+     */
+    public void setPromotionDrink(Promotion promotionDrink) {
+        this.promotionDrink = promotionDrink;
     }
 }

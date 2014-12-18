@@ -21,7 +21,21 @@
                 
                 <div id="singleDrinkDiv">
                     <p><div id="singleDrinkDescDiv"><h:outputText value="#{drinksMB.singleDrink.getText(internationalizationManaged.currentLanguage).description}"/></div></p>
-                    
+                    <c:if test="#{drinksMB.promotionDrink != null}">
+                        <p id="promotionDrink">- <c:if test="#{drinksMB.promotionDrink.typeDiscount == 'A'}">
+                            <h:outputText value="#{drinksMB.promotionDrink.amountDiscount}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" &euro;"/>
+                        </c:if>
+                        <c:if test="#{drinksMB.promotionDrink.typeDiscount == 'P'}">
+                            <h:outputText value="#{drinksMB.promotionDrink.percentageDiscount} %"/>
+                        </c:if></p>
+                        <c:if test="#{drinksMB.promotionDrink.minQuantity != null}">
+                            <h:outputText value="#{msg.minDrinkPromo} #{drinksMB.promotionDrink.minQuantity}"/>
+                        </c:if>
+                    </c:if>
                     <p><h:outputText id="priceSingDrink" value="#{msg.priceSingDrink}#{drinksMB.singleDrink.currentPrice} &euro;"/></p>
                     
                     <h:form id="formSingleDrink">

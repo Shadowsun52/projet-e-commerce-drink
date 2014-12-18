@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import model.Drink;
 import model.Promotion;
 import sessionBeansFacade.PromotionFacadeLocal;
 
@@ -37,6 +38,30 @@ public class PromotionMB implements Serializable {
     public void init(){
         promotions = promotionFacade.findAllPromotions();
     } 
+    
+    public Promotion promotionForCategory(Integer idCat){
+        for (Promotion promotion : promotions) {
+            if(isGoodCategory(promotion, idCat))
+                return promotion;
+        }
+        return null;
+    }
+    
+    private boolean isGoodCategory(Promotion promotion, Integer idCat){
+        return promotion.getCategory() != null && promotion.getCategory().getId().equals(idCat);
+    }
+    
+    public Promotion promotionForDrink(Drink drink){
+        for (Promotion promotion : promotions) {
+            if(isGoodDrink(promotion, drink))
+                return promotion;
+        }
+        return null;
+    }
+    
+    private boolean isGoodDrink(Promotion promotion, Drink drink){
+        return promotion.getDrink() != null && promotion.getDrink().equals(drink);
+    }
     
 //<editor-fold defaultstate="collapsed" desc="Getter & Setter">
     /**

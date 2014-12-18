@@ -15,8 +15,8 @@ import java.util.HashMap;
  * @author Alexandre
  */
 public class Promotion implements Serializable{
-    private static final Character TYPE_AMOUNT = 'A';
-    private static final Character TYPE_PERCENTAGE = 'P';
+    public static final Character TYPE_AMOUNT = 'A';
+    public static final Character TYPE_PERCENTAGE = 'P';
     public static final int TYPE_PROMO_DRINK = 0;
     public static final int TYPE_PROMO_CATEGORY = 1;
     public static final int TYPE_PROMO_GENERAL = 2;

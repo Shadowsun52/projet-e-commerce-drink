@@ -14,6 +14,7 @@ import model.DeliveryMode;
 import model.Drink;
 import model.LineOrder;
 import model.Order;
+import model.Promotion;
 
 /**
  *
@@ -30,6 +31,27 @@ public class MathBusiness {
     
     public double sumline(double unitPrice, short quantity){
         return unitPrice*quantity;
+    }
+    
+    public double sumWithPromotion(double unitPrice, short quantity, 
+            Promotion promotion){
+        if(promotion != null && minQuantitySelected(promotion.getMinQuantity(), quantity))
+        {
+            if(promotion.getTypeDiscount().equals(Promotion.TYPE_AMOUNT))
+                return sumline(unitPrice, quantity) 
+                        - promotion.getAmountDiscount().doubleValue();
+
+            return substractPromoPercentage(promotion, sumline(unitPrice, quantity));
+        }
+        return sumline(unitPrice, quantity);
+    }
+    
+    private boolean minQuantitySelected(Short min, short quantity){
+        return min == null || quantity >= min;
+    }
+    
+    public double substractPromoPercentage(Promotion promotion, double value){
+        return value*(1-(promotion.getPercentageDiscount()/100.));
     }
     
     public double sumCaddy(HashMap<Drink, BigDecimal> caddy){

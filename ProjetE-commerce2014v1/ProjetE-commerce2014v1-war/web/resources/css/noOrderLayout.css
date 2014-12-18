@@ -8,10 +8,6 @@
     border-radius: 5px;
 }
 
-#main h1{
-    text-align: center;
-    font-size: 2em;
-}
 #formSignUp, #validOrder, #formConnection, #formCaddy{
     width: 95%;
     margin: 20px auto 0 auto;
