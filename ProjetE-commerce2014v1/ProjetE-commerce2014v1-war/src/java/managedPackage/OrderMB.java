@@ -5,13 +5,16 @@
  */
 package managedPackage;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
-import model.Customer;
+import javax.faces.context.FacesContext;
+import model.LineOrder;
 import model.Order;
+import session.MathBusiness;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
@@ -23,6 +26,8 @@ import sessionBeansFacade.OrderTableFacadeLocal;
 public class OrderMB implements Serializable {
     @EJB
     private OrderTableFacadeLocal orderTableFacade;
+    
+    private final MathBusiness math = new MathBusiness();
     private ArrayList<Order> orders;
     private Order orderSelected;
     
@@ -45,7 +50,7 @@ public class OrderMB implements Serializable {
         }
         
     }
-    
+//<editor-fold defaultstate="collapsed" desc="view">
     public void loadOrderForCustomer(Integer customerId) throws Exception{
         orders = orderTableFacade.findByCustomer(customerId);
     }
@@ -54,6 +59,42 @@ public class OrderMB implements Serializable {
         orderSelected = order;
         return "viewOrder";  
     }
+    
+    public boolean orderIsEmpty(){
+        return orderSelected == null || orderSelected.getNumOrder() == null;
+    }
+    
+    public void redirectionYourAccount()throws IOException{
+        try{
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect("yourAccount.xhtml");
+        }
+        catch(IOException e){
+            System.out.println("error redirect.");
+        }
+    }
+    
+    public double sumline(LineOrder line){
+        return math.sumline(line.getPrice(), line.getQuantity());
+    }
+    
+    public double sumOrder(){
+        return math.sumCaddy(orderSelected.getLines());
+    }
+    
+    public double tva(){
+        return math.tva(orderSelected.getLines(), orderSelected.getCustomer());
+    }
+    
+    public double sumWithTva(){
+        return math.sumWithTva(orderSelected.getLines(), 
+                orderSelected.getCustomer());
+    }
+    
+    public double sumTotal(){
+        return math.sumTotalOrder(orderSelected);
+    }
+//</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="getter & setter">
     /**

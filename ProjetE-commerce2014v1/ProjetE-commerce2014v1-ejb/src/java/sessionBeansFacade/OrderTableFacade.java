@@ -154,12 +154,12 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
                 deliverymodeFacade.converterToModel(entity.getIddeliverymode()), 
                 addressFacade.converterToModel(entity.getDelAddress()), 
                 customerFacade.converterToModel(entity.getIdcustomer()));
-        entity.getLineOrderCollection().stream().forEach((lineOrder)->{
-            order.getLines().add(lineOrderFacade.converterToModel(lineOrder));    
-        });
+        for (LineOrder lineOrder : entity.getLineOrderCollection()) {
+            order.getLines().add(lineOrderFacade.converterToModel(lineOrder)); 
+        }
         return order;
     }
-
+    
     @Override
     public OrderTable converterToEntity(Order order) {
         OrderTable entity = new OrderTable(order.getNumOrder(), 

@@ -203,9 +203,13 @@
     margin-left: 10px;
 }
 
+.leftMarginOrder{
+    margin-left: 25px;
+}
 .previewOrder{
     margin: 10px 5px 0;
     border-bottom: solid 1px black;
+    display: block;
 }
 
 .largeMargin p{

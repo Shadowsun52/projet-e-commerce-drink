@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -24,6 +23,7 @@ import model.Drink;
 import model.Language;
 import model.LineOrder;
 import model.Order;
+import session.MathBusiness;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
@@ -40,6 +40,7 @@ public class CaddyMB implements Serializable {
     @EJB
     private OrderTableFacadeLocal orderTableFacade;
 
+    private final MathBusiness math = new MathBusiness();
     private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
     /**
@@ -48,12 +49,12 @@ public class CaddyMB implements Serializable {
     public CaddyMB() {
         caddy = new HashMap();
 //////////valeur test///////////////////////////////////////////////////////////
-        Drink d = new Drink(10, 2.1, .33, (short)6, null);
+        Drink d = new Drink(12, 2.1, .33, (short)6, null);
         d.addLabel(new Language(10, "Francais", "", "fr"), "Orval");
         d.addLabel(new Language(11, "English","", "en"), "Orval");
         caddy.put(d, new BigDecimal(6));
         
-        Drink d2 = new Drink(11, 1.7, .33, (short)5, null);
+        Drink d2 = new Drink(13, 1.7, .33, (short)5, null);
         d2.addLabel(new Language(10, "Francais", "", "fr"), "Leffe");
         d2.addLabel(new Language(11, "English","", "en"), "Leffe");
         caddy.put(d2, new BigDecimal(24));  
@@ -80,27 +81,23 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumline(Drink drink){
-        return drink.getCurrentPrice()*caddy.get(drink).doubleValue();
+        return math.sumline(drink, caddy.get(drink).shortValue());
     }
     
     public double sumCaddy(){
-        double sum = 0.;
-        for (Map.Entry<Drink, BigDecimal> drink : caddy.entrySet()) {
-            sum += sumline(drink.getKey());
-        }
-        return sum;
+        return math.sumCaddy(caddy);
     }
     
     public double tvaCaddy(Customer customer){
-        return sumCaddy()*customer.getAddress().getCountry().getTva()/100;
+        return math.tva(caddy, customer);
     }
     
     public double sumCaddyWithTva(Customer customer){
-        return sumCaddy() + tvaCaddy(customer);
+        return math.sumWithTva(caddy, customer);
     }
     
     public double sumOrder(Customer customer){
-        return sumCaddyWithTva(customer) + delModChosen.getCurrentpostalcharges();
+        return math.sumTotalOrder(caddy, customer, delModChosen);
     }
     
 //</editor-fold>   

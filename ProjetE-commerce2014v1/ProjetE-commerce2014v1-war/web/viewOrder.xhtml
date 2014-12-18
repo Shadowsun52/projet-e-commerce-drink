@@ -1,14 +1,149 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./template/noOrderTemplate.xhtml">
 
             <ui:define name="content">
-                content
+                <c:if test="#{!customerMB.infoConnexion.isconnected}">
+                    <f:event listener="#{customerMB.redirectionConnexion()}" 
+                             type="preRenderView"/>
+                </c:if>
+                <c:if test="#{orderMB.orderIsEmpty()}">
+                    <f:event listener="#{orderMB.redirectionYourAccount()}" 
+                             type="preRenderView"/>
+                </c:if>
+                <h1>
+                    <h:outputText 
+                        value="#{msg.order} #{orderMB.orderSelected.numOrder}"/>
+                </h1>
+                <p class="leftMarginOrder">
+                    <h:outputText value="#{msg.orderValidDate}"/>
+                    <h:outputText value="#{orderMB.orderSelected.validationDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                </p>
+                <div id="validOrder">
+                    <p:dataTable var="line" value="#{orderMB.orderSelected.lines}"
+                                 tableStyleClass="orderTable">
+                         <p:column headerText="#{msg.orderItem}">
+                             <h:outputText value="#{line.drink.getLabel(
+                                                internationalizationManaged.currentLanguage)} "/>
+                        </p:column>
+                        <p:column headerText="#{msg.percentageAlcohol}">
+                            <h:outputText value="#{line.drink.percentageAlcohol}">
+                                <f:convertNumber minFractionDigits="1"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" %"/>
+                        </p:column>
+                        <p:column headerText="#{msg.prixUnit}">
+                            <h:outputText value="#{line.price}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                        <p:column headerText="#{msg.orderQuantity}">
+                            <h:outputText value="#{line.quantity}"/>
+                        </p:column>
+                        <p:column headerText="#{msg.orderPrice}" id="test">
+                            <h:outputText value="#{orderMB.sumline(line)}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText> 
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                    </p:dataTable>
+                    <article class="orderArticle">
+                        <h2><h:outputText value="#{msg.deliveryAddress}"/></h2>
+                        <p>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.nameStreet} n°
+                                          #{orderMB.orderSelected.
+                                            delAddress.numStreet}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.postCode}, 
+                                          #{orderMB.orderSelected.
+                                            delAddress.city}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{orderMB.orderSelected.
+                                                   delAddress.country.getLabel(
+                                                    internationalizationManaged.
+                                                    currentLanguage)}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.phoneOrder}"/>
+                            <h:outputText value="#{customerMB.customer.numphone}"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.deliveryBy} 
+                                          #{orderMB.orderSelected.deliveryMode.
+                                            getInfoDelMode(internationalizationManaged.
+                                            currentLanguage).label}"/>
+                        </p>
+                    </article>
+                    <article class="orderArticle textRight">
+                        <h2><h:outputText value="#{msg.infoPrice}"/></h2>
+                        <p>
+                            <h:outputText value="#{msg.orderTotalPrice}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{orderMB.sumOrder()}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.tva}(#{customerMB.
+                                                   customer.address.country.tva}%):"/>
+                            <span class="amount">
+                                <h:outputText value="#{orderMB.tva()}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.priceDelMode}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{orderMB.orderSelected.
+                                                       postalcharges}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                        <p>
+                            <h:outputText value="#{msg.totalPrice}: "/>
+                            <span class="amount">
+                                <h:outputText value="#{orderMB.sumTotal()}">
+                                <f:convertNumber minFractionDigits="2" 
+                                                 maxFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <h:outputText value=" &euro;"/>
+                        </p>
+                    </article>
+                    <h:form>
+                        <h:commandButton value="#{msg.backAccount}" 
+                                         action="yourAccount.xhtml"
+                                         styleClass="leftMarginOrder"/>
+                    </h:form>
+                </div>
             </ui:define>
 
         </ui:composition>
