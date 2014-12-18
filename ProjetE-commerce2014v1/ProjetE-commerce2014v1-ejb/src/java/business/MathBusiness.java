@@ -54,6 +54,13 @@ public class MathBusiness {
         return value*(1-(promotion.getPercentageDiscount()/100.));
     }
     
+    public double sumCaddy(HashMap<Drink, Promotion> promotions,
+            HashMap<Drink, BigDecimal> caddy){
+        double sum = sumCaddy(caddy);
+        sum += discountPromotions(promotions, caddy);
+        return sum;
+    }
+    
     public double sumCaddy(HashMap<Drink, BigDecimal> caddy){
         double sum = 0.;
         for (Map.Entry<Drink, BigDecimal> drink : caddy.entrySet()) {
@@ -78,9 +85,9 @@ public class MathBusiness {
         return sumCaddy(lines)*customer.getAddress().getCountry().getTva()/100;
     }
     
-    public double sumWithTva(HashMap<Drink, BigDecimal> caddy,
-            Customer customer){
-        return sumCaddy(caddy) + tva(caddy, customer);
+    public double sumWithTva(HashMap<Drink, Promotion> promotions,
+            HashMap<Drink, BigDecimal> caddy, Customer customer){
+        return sumCaddy(promotions, caddy) + tva(caddy, customer);
     }
     
     public double sumWithTva(ArrayList<LineOrder> lines,
@@ -88,13 +95,32 @@ public class MathBusiness {
         return sumCaddy(lines) + tva(lines, customer);
     }
     
-    public double sumTotalOrder(HashMap<Drink, BigDecimal> caddy, Customer customer, 
+    public double sumTotalOrder(HashMap<Drink, Promotion> promotions,
+            HashMap<Drink, BigDecimal> caddy, Customer customer, 
             DeliveryMode delmode){
-        return sumWithTva(caddy, customer) + delmode.getCurrentpostalcharges();
+        return sumWithTva(promotions,caddy, customer) 
+                + delmode.getCurrentpostalcharges();
     }
     
     public double sumTotalOrder(Order order){
         return sumWithTva(order.getLines(), order.getCustomer()) 
                 + order.getPostalcharges();
+    }
+    
+    public double discountPromotion(Promotion promotion, Integer quantity){
+        if(promotion.getTypeDiscount().equals(Promotion.TYPE_PERCENTAGE))
+            return -promotion.getDrink().getCurrentPrice()*
+                    (promotion.getPercentageDiscount()/100.)*quantity;
+        else
+            return -promotion.getAmountDiscount().doubleValue();
+    }
+    
+    public double discountPromotions(HashMap<Drink, Promotion> promotions, 
+            HashMap<Drink, BigDecimal> caddy){
+        double sum = 0.;
+        for (Map.Entry<Drink, Promotion> promotion : promotions.entrySet()) {
+            sum += discountPromotion(promotion.getValue(), caddy.get(promotion.getKey()).intValue());
+        }
+        return sum;
     }
 }

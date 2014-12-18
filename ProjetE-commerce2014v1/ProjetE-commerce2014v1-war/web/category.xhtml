@@ -15,21 +15,6 @@
 
             <ui:define name="content">
                 <h1><h:outputText value="#{categoryMB.getCategory(drinksMB.idCat).getLabel(internationalizationManaged.currentLanguage)}"/></h1>
-                <c:if test="#{promotionMB.promotionForCategory(drinksMB.idCat) != null}">
-                    <h2 id="promotionCat">-
-                        <c:if test="#{promotionMB.promotionForCategory(drinksMB.idCat).typeDiscount == 'A'}">
-                            <h:outputText value="#{promotionMB.promotionForCategory(drinksMB.idCat).amountDiscount}">
-                                <f:convertNumber minFractionDigits="2"
-                                                 maxFractionDigits="2"/>
-                            </h:outputText>
-                            <h:outputText value=" &euro;"/>
-                        </c:if>
-                        <c:if test="#{promotionMB.promotionForCategory(drinksMB.idCat).typeDiscount == 'P'}">
-                            <h:outputText value="#{promotionMB.promotionForCategory(drinksMB.idCat).percentageDiscount} %"/>
-                        </c:if>
-                        <h:outputText value=" #{msg.onAllCategory}"/>
-                    </h2>
-                </c:if>
                 <h:form id="criteriaForm">
                    
                     <h3>#{msg.typeBox}</h3>

@@ -45,27 +45,6 @@
                                 </h:link>
                             </c:when>
                             <c:when test="#{promotion.isCategoryPromotion()}">
-                                <h:link outcome="category.xhtml" 
-                                        class="discount_class">
-                                    <f:param name="idCat" value="#{promotion.category.id}"/>
-                                    <h1>
-                                        <h:outputText value="#{promotion.getMessage(internationalizationManaged.currentLanguage)}"/>
-                                    </h1>
-                                    <img src="./resources/images/promo#{promotion.id}.jpg" 
-                                         alt="promo - #{promotion.id}"/>
-                                    <h2>-
-                                        <c:if test="#{promotion.typeDiscount == 'A'}">
-                                            <h:outputText value="#{promotion.amountDiscount}">
-                                                <f:convertNumber minFractionDigits="2"
-                                                                 maxFractionDigits="2"/>
-                                            </h:outputText>
-                                            <h:outputText value=" &euro;"/>
-                                        </c:if>
-                                        <c:if test="#{promotion.typeDiscount == 'P'}">
-                                            <h:outputText value="#{promotion.percentageDiscount} %"/>
-                                        </c:if>
-                                    </h2>
-                                </h:link>
                             </c:when>
                             <c:otherwise>
                                 <div class="discount_class">
@@ -84,6 +63,11 @@
                                             <h:outputText value="#{promotion.percentageDiscount} %"/>
                                         </c:if>
                                     </h2>
+                                    <c:if test="#{promotion.codePromo != null}">
+                                        <p>
+                                            <h:outputText value="#{msg.codePromoIndex} #{promotion.codePromo}"/>
+                                        </p>
+                                    </c:if>
                                 </div>
                             </c:otherwise>
                         </c:choose>

@@ -20,10 +20,10 @@ import javax.faces.context.FacesContext;
 import model.Customer;
 import model.DeliveryMode;
 import model.Drink;
-import model.Language;
 import model.LineOrder;
 import model.Order;
 import business.MathBusiness;
+import model.Promotion;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
@@ -43,23 +43,28 @@ public class CaddyMB implements Serializable {
     private final MathBusiness math = new MathBusiness();
     private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
+    private HashMap<Drink,Promotion> promotions;
     /**
      * Creates a new instance of CaddyMB
      */
     public CaddyMB() {
-        caddy = new HashMap();       
+        caddy = new HashMap(); 
+        promotions = new HashMap<>();
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">
-    public void addDrink(Drink drink, int quantity){
+    public void addDrink(Drink drink, int quantity, Promotion promoDrink){
         if(caddy.containsKey(drink))
             caddy.put(drink, new BigDecimal(caddy.get(drink).intValue() + quantity));
-        else
+        else{
             caddy.put(drink, new BigDecimal(quantity));
+        }
+        AddPromoIfExist(drink, caddy.get(drink).intValue());
     }
     
     public void deleteDrink(Drink drink){
         caddy.remove(drink);
+        promotions.remove(drink);
     }
     
     public boolean caddyIsEmpty(){
@@ -67,6 +72,7 @@ public class CaddyMB implements Serializable {
     }
     
     public void clearCaddy(){
+        getPromotions().clear();
         caddy.clear();
     }
     
@@ -75,7 +81,7 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumCaddy(){
-        return math.sumCaddy(caddy);
+        return math.sumCaddy(promotions,caddy);
     }
     
     public double tvaCaddy(Customer customer){
@@ -83,14 +89,68 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumCaddyWithTva(Customer customer){
-        return math.sumWithTva(caddy, customer);
+        return math.sumWithTva(promotions, caddy, customer);
     }
     
     public double sumOrder(Customer customer){
-        return math.sumTotalOrder(caddy, customer, delModChosen);
+        return math.sumTotalOrder(promotions, caddy, customer, delModChosen);
     }
     
 //</editor-fold>   
+    
+//<editor-fold defaultstate="collapsed" desc="Promotion">
+    
+    private void AddPromoIfExist(Drink drink, Integer quantity){
+        readAllPromotions().stream().forEach((promotion)->{
+            if(promotion.getDrink() != null && promotion.getDrink().equals(drink))
+                if(PrerequisAddPromotion(promotion, quantity))
+                    promotions.put(drink,promotion);                    
+        });
+    }
+    
+    private ArrayList<Promotion> readAllPromotions (){
+        FacesContext context = FacesContext.getCurrentInstance();
+        PromotionMB promotionMB = (PromotionMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{promotionMB}", 
+                                PromotionMB.class)
+                        .getValue(context.getELContext());
+        return promotionMB.getPromotions();
+    }
+    
+    private boolean PrerequisAddPromotion(Promotion promoDrink, int quantity) {
+        if(promoDrink.getCodePromo() != null)
+            return false;
+        
+        if(promotionActif(promoDrink))
+            return promoDrink.getMinQuantity() == null || quantity >= promoDrink.getMinQuantity();
+        else
+            return false;
+    }
+    
+    private boolean promotionActif(Promotion promoDrink){
+        Date now = new Date();
+        return now.compareTo(promoDrink.getDateStart()) >= 0 && now.compareTo(promoDrink.getDateEnd()) <= 0;
+    }
+    
+    public void promotionMinQuantityOk(Drink drink){
+        if(promotions.containsKey(drink))
+            if(!(promotions.get(drink).getMinQuantity() == null 
+                || caddy.get(drink).intValue() >= promotions.get(drink).getMinQuantity()))
+            promotions.remove(drink);
+    }
+    
+    public void UpdatePromotion(Drink drink){
+        AddPromoIfExist(drink, caddy.get(drink).intValue());
+        promotionMinQuantityOk(drink);
+    }
+    
+    public double DiscountPromotion(Promotion promotion){
+        return math.discountPromotion(promotion, 
+                caddy.get(promotion.getDrink()).intValue());
+    }
+//</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="Order">
     public String saveOrder() {
@@ -165,6 +225,24 @@ public class CaddyMB implements Serializable {
      */
     public void setDelModChosen(DeliveryMode delModChosen) {
         this.delModChosen = delModChosen;
+    }
+    
+    /**
+     * @return the promotions
+     */
+    public HashMap<Drink,Promotion> getPromotions() {
+        return promotions;
+    }
+
+    /**
+     * @param promotions the promotions to set
+     */
+    public void setPromotions(HashMap<Drink,Promotion> promotions) {
+        this.promotions = promotions;
+    }
+    
+    public List<Entry<Drink,Promotion>> getListPromotion(){
+        return new ArrayList(promotions.entrySet());
     }
 //</editor-fold>   
 

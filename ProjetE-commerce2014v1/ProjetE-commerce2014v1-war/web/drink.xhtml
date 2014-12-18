@@ -48,7 +48,8 @@
                         </h:outputText>
                         <h:outputText  value="&euro;"/>
 
-                        <p><h:commandButton id="buttCartDrink" class="bntDrinks" value="#{msg.addCart}" action="#{caddyMB.addDrink(drinksMB.singleDrink, drinksMB.nbDrinks)}"/></p>
+                        <p><h:commandButton id="buttCartDrink" class="bntDrinks" value="#{msg.addCart}" 
+                                            action="#{caddyMB.addDrink(drinksMB.singleDrink, drinksMB.nbDrinks, drinksMB.promotionDrink)}"/></p>
 
                         <p>
                             <c:choose>
