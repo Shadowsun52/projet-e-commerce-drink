@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:metadata>
         <f:viewParam name="singleDrink" value="#{drinksMB.singleDrink}"/>
         <f:viewParam name="idCat" value="#{drinksMB.idCat}"/>
@@ -33,11 +34,20 @@
                         </h:outputText>
                         <h:outputText  value="&euro;"/>
 
-                        <p><h:commandButton id="buttCartDrink" class="bntDrinks" value="#{msg.addCart}"/></p>
+                        <p><h:commandButton id="buttCartDrink" class="bntDrinks" value="#{msg.addCart}" action="#{caddyMB.addDrink(drinksMB.singleDrink, drinksMB.nbDrinks)}"/></p>
 
-                        <p><h:link id="linkSingleDrink" class="bntDrinks" value="#{msg.goBack}" outcome="category.xhtml">
-                            <f:param name="idCat" value="#{drinksMB.idCat}"/>
-                        </h:link></p>
+                        <p>
+                            <c:choose>
+                                <c:when test="#{drinksMB.idCat eq 0}"> 
+                                    <h:link class="bntDrinks" value="#{msg.goBack}" outcome="searchPage.xhtml"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <h:link id="linkSingleDrink" class="bntDrinks" value="#{msg.goBack}" outcome="category.xhtml">
+                                        <f:param name="idCat" value="#{drinksMB.idCat}"/>
+                                    </h:link>
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
                     </h:form>
                 </div>                    
             </ui:define>

@@ -4,14 +4,15 @@
 * and open the template in the editor.
 */
 package model;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 /**
 *
 * @author Alex
 */
-public class Drink {
-    private int id;
+public class Drink implements Serializable{
+    private Integer id;
     private double currentPrice;
     private double capacity;
     private short percentageAlcohol;
@@ -33,14 +34,14 @@ public class Drink {
     /**
     * @return the id
     */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
     /**
     * @param id the id to set
     */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     
@@ -120,5 +121,28 @@ public class Drink {
     
     public InfoText getText(Language language) {
         return hashText.get(language);
+    }
+    
+    @Override
+    public int hashCode() {        
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Drink)) {
+            return false;
+        }
+        Drink other = (Drink) object;
+        return !((this.id == null && other.id != null) || 
+                (this.id != null && !this.id.equals(other.id)));
+    }
+
+    @Override
+    public String toString() {
+        return "model.Drink[ id=" + id + " ]";
     }
 }

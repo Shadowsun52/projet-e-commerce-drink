@@ -32,8 +32,8 @@
                                     value="#{caddyMB.listCaddy}" editable="true" 
                                     editMode="cell" tableStyleClass="orderTable">
                         <p:column headerText="#{msg.orderItem}">
-                            <h:outputText value="#{drink.key.getLabel(
-                                                internationalizationManaged.currentLanguage)} "/>
+                            <h:outputText value="#{drink.key.getText(
+                                                internationalizationManaged.currentLanguage).getLabel()} "/>
                             <h:commandLink value="[X]" action="#{caddyMB.deleteDrink(drink.key)}"/> 
                         </p:column>
                         <p:column headerText="#{msg.percentageAlcohol}">

@@ -9,6 +9,7 @@ import entityBeans.Drink;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
+import model.Language;
 
 /**
  *
@@ -46,5 +47,7 @@ public interface DrinkFacadeLocal {
             int highValue, double lowPercentage, double highPercentage);
     
     public model.Drink findSingleDrink(Integer idDrink);
+    
+    public ArrayList<model.Drink> findSearchedDrink(String stringSearched, Language lang);
     
 }

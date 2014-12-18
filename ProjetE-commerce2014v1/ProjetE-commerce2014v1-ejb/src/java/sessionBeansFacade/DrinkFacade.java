@@ -8,11 +8,13 @@ package sessionBeansFacade;
 import entityBeans.Drink;
 import entityBeans.LangDrink;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.Language;
 
 /**
  *
@@ -117,4 +119,22 @@ public class DrinkFacade extends AbstractFacade<Drink> implements DrinkFacadeLoc
         return converterToModel(find(idDrink));
     }
     
+    @Override
+    public ArrayList<model.Drink> findSearchedDrink(String stringSearched, Language lang){
+        Query query;
+        query=em.createNamedQuery("Drink.findAll");
+        
+        ArrayList<model.Drink> listModelDrink = new ArrayList();
+        query.getResultList().stream().forEach((drink) -> {
+            listModelDrink.add(converterToModel((Drink)drink));
+        });
+        
+        ArrayList<model.Drink> listSearchedDrink = new ArrayList();
+        listModelDrink.stream().forEach((drink) -> {
+            if(Pattern.matches(("^.*"+stringSearched+".*$").toUpperCase(), drink.getText(lang).getLabel().toUpperCase()))
+                listSearchedDrink.add(drink);
+        });
+        
+        return listSearchedDrink;
+    }
 }

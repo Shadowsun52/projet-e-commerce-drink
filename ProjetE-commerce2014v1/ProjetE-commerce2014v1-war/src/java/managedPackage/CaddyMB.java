@@ -32,17 +32,7 @@ public class CaddyMB implements Serializable {
      * Creates a new instance of CaddyMB
      */
     public CaddyMB() {
-        caddy = new HashMap();
-        //valeur test
-        Drink d = new Drink(10, 2.1, .33, (short)6, null);
-        d.addLabel(new Language(10, "Francais", "", "fr"), "Orval");
-        d.addLabel(new Language(11, "English","", "en"), "Orval");
-        caddy.put(d, 6);
-        
-        Drink d2 = new Drink(11, 1.7, .33, (short)5, null);
-        d2.addLabel(new Language(10, "Francais", "", "fr"), "Leffe");
-        d2.addLabel(new Language(11, "English","", "en"), "Leffe");
-        caddy.put(d2, 24);           
+        caddy = new HashMap();       
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">

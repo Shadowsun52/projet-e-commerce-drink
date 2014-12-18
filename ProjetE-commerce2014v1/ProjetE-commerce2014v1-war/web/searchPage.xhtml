@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./template/mainTemplate.xhtml">
+
+            <ui:define name="content">
+                <h1>#{msg.titleSearchPage}</h1>
+                <h:form id="searchSearchPage">
+                    <h:inputText id="inputSearchSearchPage" value="#{searchMB.stringResearched}"/>
+                    <h:commandButton value="#{msg.search}" 
+                                     action="#{searchMB.goToSearchDrink(internationalizationManaged.currentLanguage)}"/>
+                </h:form>
+                <h:form id="formDrinksScroller">
+                    
+                    <p:dataScroller value="#{searchMB.listSearchDrink}" var="drink" 
+                                    chunkSize="10" mode="inline" scrollHeight="500">
+                        <h:panelGrid columns="2" columnClasses="logo,detail">
+                            <img id="imgDrinksScroller" src="./resources/images/#{drink.id}.jpg"/>
+                            <h:link outcome="drink.xhtml">
+                                <f:param name="singleDrink" value="#{drink.id}"/>
+                                <f:param name="idCat" value="0"/>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="#{msg.labelDrink}" />
+                                    <h:outputText value="#{drink.getText(internationalizationManaged.currentLanguage).label}" />
+
+                                    <h:outputText value="#{msg.priceDataScroll}" />
+                                    <h:outputText value="#{drink.currentPrice} &euro;" />
+
+                                    <h:outputText value="#{msg.percAlcDataScroll}" />
+                                    <h:outputText value="#{drink.percentageAlcohol}%" />
+                                </h:panelGrid>
+                            </h:link>
+                        </h:panelGrid>
+                    </p:dataScroller>
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

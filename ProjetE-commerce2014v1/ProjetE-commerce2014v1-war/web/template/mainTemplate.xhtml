@@ -38,8 +38,9 @@
                                            .currentLanguage.slogan}"/>
                 </h2>
                 <h:form id="search">
-                    <h:inputText/>
-                    <h:commandButton value="#{msg.search}" />
+                    <h:inputText id="inputSearch" value="#{searchMB.stringResearched}"/>
+                    <h:commandButton value="#{msg.search}" 
+                                     action="#{searchMB.goToSearchDrink(internationalizationManaged.currentLanguage)}"/>
                 </h:form>
                 <div id="connexion">
                     <c:choose>
@@ -122,8 +123,8 @@
                                       value="#{caddyMB.listCaddy}" editable="true" 
                                       editMode="cell" tableStyleClass="orderTable">
                             <p:column headerText="#{msg.orderItem}">
-                                <h:outputText value="#{drink.key.getLabel(
-                                                   internationalizationManaged.currentLanguage)} "/>
+                                <h:outputText value="#{drink.key.getText(
+                                                   internationalizationManaged.currentLanguage).getLabel()} "/>
                                 <h:commandLink value="[X]" action="#{caddyMB.deleteDrink(drink.key)}"/> 
                             </p:column>
                             <p:column headerText="#{msg.orderQuantity}">
