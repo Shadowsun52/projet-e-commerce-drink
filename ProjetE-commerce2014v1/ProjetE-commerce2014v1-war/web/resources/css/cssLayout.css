@@ -205,19 +205,31 @@ nav ul li a:link:hover, nav ul li a:visited:hover  {
 
 .discount_class{
     width: 230px;
-    height: 350px;
+    height: 400px;
     background-color: yellowgreen;
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px 0 0 10px;
+    padding: 5px;
 }
 
 .discount_class h1{
-    color:red;
+    color:black;
     font-size: 1.7em;
     text-align: center;
     margin: 10px 0 15px 0;
+    display: block;
+    height: 50px;
 }
 
 .discount_class h2 {
-    margin: 0 0 0 10px;
+    margin: -30px 0 0 15px;
+    font-size: 3.2em;
+    color: rgb(230,0,0);
+    -webkit-transform: rotate(25deg);
+    transform: rotate(25deg);
+    font-weight: bold;
+    font-style: italic;
 }
 
 a:hover .discount_class{

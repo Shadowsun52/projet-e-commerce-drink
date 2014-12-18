@@ -41,6 +41,9 @@
                                 <c:when test="#{drinksMB.idCat eq 0}"> 
                                     <h:link class="bntDrinks" value="#{msg.goBack}" outcome="searchPage.xhtml"/>
                                 </c:when>
+                                <c:when test="#{drinksMB.idCat == 1}">
+                                    <h:link class="bntDrinks" value="#{msg.goBack}" outcome="index.xhtml"/>
+                                </c:when>
                                 <c:otherwise>
                                     <h:link id="linkSingleDrink" class="bntDrinks" value="#{msg.goBack}" outcome="category.xhtml">
                                         <f:param name="idCat" value="#{drinksMB.idCat}"/>

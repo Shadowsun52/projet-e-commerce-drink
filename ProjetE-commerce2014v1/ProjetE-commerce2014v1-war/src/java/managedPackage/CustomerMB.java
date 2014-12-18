@@ -104,14 +104,10 @@ public class CustomerMB implements Serializable {
         }
     }
     
-    public void deconnection(){
+    public String deconnection(){
         infoConnexion.setIsconnected(false);
         infoConnexion.setErrorConnection(false);
         customer = new Customer();
-    }
-        
-    public String deconnectionToIndex(){
-        deconnection();
         return "index";
     }
     

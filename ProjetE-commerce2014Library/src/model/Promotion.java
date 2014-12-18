@@ -17,9 +17,9 @@ import java.util.HashMap;
 public class Promotion implements Serializable{
     private static final Character TYPE_AMOUNT = 'A';
     private static final Character TYPE_PERCENTAGE = 'P';
-    private static final int TYPE_PROMO_DRINK = 0;
-    private static final int TYPE_PROMO_CATEGORY = 1;
-    private static final int TYPE_PROMO_GENERAL = 2;
+    public static final int TYPE_PROMO_DRINK = 0;
+    public static final int TYPE_PROMO_CATEGORY = 1;
+    public static final int TYPE_PROMO_GENERAL = 2;
     
     private Integer id;
     private Date dateStart;
@@ -70,6 +70,7 @@ public class Promotion implements Serializable{
     }
 //</editor-fold>    
     
+//<editor-fold defaultstate="collapsed" desc="Type promotion">
     public int typePromotion(){
         if(drink != null)
             return TYPE_PROMO_DRINK;
@@ -80,13 +81,22 @@ public class Promotion implements Serializable{
         return TYPE_PROMO_GENERAL;
     }
     
+    public boolean isDrinkPromotion(){
+        return typePromotion() == Promotion.TYPE_PROMO_DRINK;
+    }
+    
+    public boolean isCategoryPromotion(){
+        return typePromotion() == Promotion.TYPE_PROMO_CATEGORY;
+    }
+//</editor-fold>
+    
 //<editor-fold defaultstate="collapsed" desc="getter & setter">   
     public void addMessage(Language language, String message){
-        hashMessage.put(language, message);
+        getHashMessage().put(language, message);
     }
     
     public String getMessage(Language language){
-        return hashMessage.get(language);
+        return getHashMessage().get(language);
     }
     
     /**
@@ -241,6 +251,20 @@ public class Promotion implements Serializable{
      */
     public void setDrink(Drink drink) {
         this.drink = drink;
+    }
+    
+    /**
+     * @return the hashMessage
+     */
+    public HashMap<Language,String> getHashMessage() {
+        return hashMessage;
+    }
+
+    /**
+     * @param hashMessage the hashMessage to set
+     */
+    public void setHashMessage(HashMap<Language,String> hashMessage) {
+        this.hashMessage = hashMessage;
     }
 //</editor-fold>
     
