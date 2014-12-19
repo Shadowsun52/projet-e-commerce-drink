@@ -154,8 +154,9 @@
                                 <h:outputText id="total" value="#{caddyMB.sumCaddy()}">
                                     <f:convertNumber minFractionDigits="2"
                                                      maxFractionDigits="2"/>
-                                </h:outputText> 
-                                <h:outputText value=" &euro;"/>
+                                </h:outputText>
+                                <h:outputText value=" &euro;"/><br/>
+                                <h:outputText value="#{msg.discountIncluded}"/>
                             </f:facet>
                         </p:dataTable>
                     </h:form>

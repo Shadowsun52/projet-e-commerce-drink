@@ -73,16 +73,16 @@
                         </p:column>
                     </p:dataTable>
                         
-                    <p:dataTable var="promotion" value="#{caddyMB.getListPromotion()}" tableStyleClass="orderTable">
+                    <p:dataTable var="promotion" value="#{caddyMB.promotions}" tableStyleClass="orderTable">
                         <p:column style="width: 41%">
-                            <h:outputText value="#{msg.promotion} #{promotion.key.getText(
+                            <h:outputText value="#{msg.promotion} #{promotion.getDrink().getText(
                                                 internationalizationManaged.currentLanguage).getLabel()}"/>
                         </p:column>
                         <p:column style="width: 41%">
-                                <h:outputText value="#{promotion.value.getPercentageDiscount()}%"/>
+                                <h:outputText value="#{promotion.getPercentageDiscount()}%"/>
                         </p:column>
                         <p:column style="width: 18%">
-                            <h:outputText value="#{CaddyMB.DiscountPromotion(promotion.value)}">
+                            <h:outputText value="#{caddyMB.DiscountPromotion(promotion)}">
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <h:outputText value=" &euro;"/>
@@ -134,6 +134,7 @@
                         <p>
                             <h:commandButton value="#{msg.validCaddy}"
                                              styleClass="bntCaddy" 
+                                             immediate="true"
                                              action="faces/order.xhtml"/>
                         </p>
                         <span class="errorMessage">

@@ -62,7 +62,7 @@ public class MathBusiness {
         return sum;
     }
     
-    public double sumCaddy(HashMap<Drink, Promotion> promotions,
+    public double sumCaddy(ArrayList<Promotion> promotions,
             HashMap<Drink, BigDecimal> caddy){
         return sumCaddy(caddy) + discountPromotions(promotions, caddy);
     }
@@ -89,7 +89,7 @@ public class MathBusiness {
                 *order.getCustomer().getAddress().getCountry().getTva()/100;
     }
     
-    public double sumWithTva(HashMap<Drink, Promotion> promotions,
+    public double sumWithTva(ArrayList<Promotion> promotions,
             HashMap<Drink, BigDecimal> caddy, Customer customer){
         return sumCaddy(promotions, caddy) + tva(caddy, customer);
     }
@@ -98,7 +98,7 @@ public class MathBusiness {
         return sumCaddy(order) + tva(order);
     }
     
-    public double sumTotalOrder(HashMap<Drink, Promotion> promotions,
+    public double sumTotalOrder(ArrayList<Promotion> promotions,
             HashMap<Drink, BigDecimal> caddy, Customer customer, 
             DeliveryMode delmode){
         return sumWithTva(promotions,caddy, customer) 
@@ -117,11 +117,12 @@ public class MathBusiness {
             return -promotion.getAmountDiscount().doubleValue();
     }
     
-    public double discountPromotions(HashMap<Drink, Promotion> promotions, 
+    public double discountPromotions(ArrayList<Promotion> promotions, 
             HashMap<Drink, BigDecimal> caddy){
         double sum = 0.;
-        for (Map.Entry<Drink, Promotion> promotion : promotions.entrySet()) {
-            sum += discountPromotion(promotion.getValue(), caddy.get(promotion.getKey()).intValue());
+        for (Promotion promotion : promotions) {
+            sum += discountPromotion(promotion, 
+                    caddy.get(promotion.getDrink()).intValue());
         }
         return sum;
     }

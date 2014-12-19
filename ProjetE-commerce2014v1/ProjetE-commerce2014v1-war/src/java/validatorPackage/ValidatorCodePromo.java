@@ -5,6 +5,7 @@
  */
 package validatorPackage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -82,11 +83,18 @@ public class ValidatorCodePromo implements Validator{
     
     private boolean PromotionUsed(Promotion promotion){
         CaddyMB c = getCaddyMB();
-        HashMap<Drink,Promotion> promotions  = c.getPromotions();
+        ArrayList<Promotion> promotions  = c.getPromotions();
         if(promotions == null)
             return false;
-        if(promotions.containsValue(promotion))
-            return true;
+        return containsPromotion(promotions, promotion);
+    }
+    
+    private boolean containsPromotion(ArrayList<Promotion> promotions, 
+            Promotion promotion){
+        for(int i=0; i < promotions.size(); i++){
+            if(promotions.get(i).equals(promotion))
+                return true;
+        }
         return false;
     }
     

@@ -46,14 +46,14 @@ public class CaddyMB implements Serializable {
     private final MathBusiness math = new MathBusiness();
     private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
-    private HashMap<Drink,Promotion> promotions;
+    private ArrayList<Promotion> promotions;
     private String codePromotion;
     /**
      * Creates a new instance of CaddyMB
      */
     public CaddyMB() {
         caddy = new HashMap(); 
-        promotions = new HashMap<>();
+        promotions = new ArrayList<>();
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">
@@ -68,7 +68,9 @@ public class CaddyMB implements Serializable {
     
     public void deleteDrink(Drink drink){
         caddy.remove(drink);
-        promotions.remove(drink);
+        Integer pos = findPromotionInList(drink);
+        if(pos != null)
+            promotions.remove((int)pos);
     }
     
     public boolean caddyIsEmpty(){
@@ -107,8 +109,11 @@ public class CaddyMB implements Serializable {
     private void AddPromoIfExist(Drink drink, Integer quantity){
         readAllPromotions().stream().forEach((promotion)->{
             if(promotion.getDrink() != null && promotion.getDrink().equals(drink))
-                if(PrerequisAddPromotion(promotion, quantity))
-                    promotions.put(drink,promotion);                    
+                if(PrerequisAddPromotion(promotion, quantity)){
+                    Integer pos = findPromotionInList(drink);
+                    if(pos == null)
+                        promotions.add(promotion);
+                }                             
         });
     }
     
@@ -139,10 +144,11 @@ public class CaddyMB implements Serializable {
     }
     
     public void promotionMinQuantityOk(Drink drink){
-        if(promotions.containsKey(drink))
-            if(!(promotions.get(drink).getMinQuantity() == null 
-                || caddy.get(drink).intValue() >= promotions.get(drink).getMinQuantity()))
-            promotions.remove(drink);
+        Integer pos = findPromotionInList(drink);
+        if(pos != null)
+            if(!(promotions.get(pos).getMinQuantity() == null 
+                || caddy.get(drink).intValue() >= promotions.get(pos).getMinQuantity()))
+            promotions.remove((int)pos);
     }
     
     public void UpdatePromotion(Drink drink){
@@ -157,6 +163,15 @@ public class CaddyMB implements Serializable {
     
     public Integer allQuantity(){
         return math.allDrinkQuantity(caddy);
+    }
+    
+    @SuppressWarnings("empty-statement")
+    public Integer findPromotionInList(Drink drink){
+        int pos = 0;
+        for(;pos <promotions.size() && !promotions.get(pos).getDrink().equals(drink);pos++);
+        if(pos == promotions.size())
+            return null;
+        return pos;
     }
     
     public void addPromoCode(){
@@ -194,7 +209,7 @@ public class CaddyMB implements Serializable {
                 delModChosen.getCurrentpostalcharges(), delModChosen, 
                 customer.getAddress(), customer);
         order.setLines(converterToLineOrder());
-        order.setPromotions(savePromotionUsing());
+        order.setPromotions(promotions);
         return order;
     }
     
@@ -205,14 +220,6 @@ public class CaddyMB implements Serializable {
                     drink.getCurrentPrice()));
         });
         return lines;
-    }
-    
-    private ArrayList<Promotion> savePromotionUsing(){
-        ArrayList<Promotion> promotionsList = new ArrayList<>();
-        promotions.forEach((drink, promotion) -> {
-            promotionsList.add(promotion);
-        });
-        return promotionsList;
     }
 //</editor-fold>
     
@@ -252,19 +259,15 @@ public class CaddyMB implements Serializable {
     /**
      * @return the promotions
      */
-    public HashMap<Drink,Promotion> getPromotions() {
+    public ArrayList<Promotion> getPromotions() {
         return promotions;
     }
 
     /**
      * @param promotions the promotions to set
      */
-    public void setPromotions(HashMap<Drink,Promotion> promotions) {
+    public void setPromotions(ArrayList<Promotion> promotions) {
         this.promotions = promotions;
-    }
-    
-    public List<Entry<Drink,Promotion>> getListPromotion(){
-        return new ArrayList(promotions.entrySet());
     }
     
     /**
