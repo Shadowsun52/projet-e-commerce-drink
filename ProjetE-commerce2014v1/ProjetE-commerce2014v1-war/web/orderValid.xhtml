@@ -52,21 +52,7 @@
                             <h:outputText value=" &euro;"/>
                         </p:column>
                     </p:dataTable>
-                    <p:dataTable var="promotion" value="#{caddyMB.getListPromotion()}" tableStyleClass="orderTable">
-                        <p:column style="width: 41%">
-                            <h:outputText value="#{msg.promotion} #{promotion.key.getText(
-                                                internationalizationManaged.currentLanguage).getLabel()}"/>
-                        </p:column>
-                        <p:column style="width: 41%">
-                                <h:outputText value="#{promotion.value.getPercentageDiscount()}%"/>
-                        </p:column>
-                        <p:column style="width: 18%">
-                            <h:outputText value="#{caddyMB.DiscountPromotion(promotion.value)}">
-                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                            </h:outputText>
-                            <h:outputText value=" &euro;"/>
-                        </p:column>
-                    </p:dataTable>
+                    
                     <article class="orderArticle">
                         <h2><h:outputText value="#{msg.deliveryAddress}"/></h2>
                         <p>
