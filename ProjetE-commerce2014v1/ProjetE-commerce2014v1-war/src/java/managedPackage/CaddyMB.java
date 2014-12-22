@@ -20,11 +20,12 @@ import javax.faces.context.FacesContext;
 import model.Customer;
 import model.DeliveryMode;
 import model.Drink;
-import model.Language;
 import model.LineOrder;
 import model.Order;
 import business.MathBusiness;
+import model.Promotion;
 import sessionBeansFacade.OrderTableFacadeLocal;
+import sessionBeansFacade.PromotionFacadeLocal;
 
 /**
  *
@@ -39,27 +40,37 @@ public class CaddyMB implements Serializable {
     
     @EJB
     private OrderTableFacadeLocal orderTableFacade;
-
+    @EJB
+    private PromotionFacadeLocal promotionFacade;
+    
     private final MathBusiness math = new MathBusiness();
     private HashMap<Drink,BigDecimal> caddy;
     private DeliveryMode delModChosen;
+    private ArrayList<Promotion> promotions;
+    private String codePromotion;
     /**
      * Creates a new instance of CaddyMB
      */
     public CaddyMB() {
-        caddy = new HashMap();       
+        caddy = new HashMap(); 
+        promotions = new ArrayList<>();
     }
 
 //<editor-fold defaultstate="collapsed" desc="Management Caddy">
-    public void addDrink(Drink drink, int quantity){
+    public void addDrink(Drink drink, int quantity, Promotion promoDrink){
         if(caddy.containsKey(drink))
             caddy.put(drink, new BigDecimal(caddy.get(drink).intValue() + quantity));
-        else
+        else{
             caddy.put(drink, new BigDecimal(quantity));
+        }
+        AddPromoIfExist(drink, caddy.get(drink).intValue());
     }
     
     public void deleteDrink(Drink drink){
         caddy.remove(drink);
+        Integer pos = findPromotionInList(drink);
+        if(pos != null)
+            promotions.remove((int)pos);
     }
     
     public boolean caddyIsEmpty(){
@@ -67,6 +78,7 @@ public class CaddyMB implements Serializable {
     }
     
     public void clearCaddy(){
+        getPromotions().clear();
         caddy.clear();
     }
     
@@ -75,7 +87,7 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumCaddy(){
-        return math.sumCaddy(caddy);
+        return math.sumCaddy(promotions,caddy);
     }
     
     public double tvaCaddy(Customer customer){
@@ -83,14 +95,101 @@ public class CaddyMB implements Serializable {
     }
     
     public double sumCaddyWithTva(Customer customer){
-        return math.sumWithTva(caddy, customer);
+        return math.sumWithTva(promotions, caddy, customer);
     }
     
     public double sumOrder(Customer customer){
-        return math.sumTotalOrder(caddy, customer, delModChosen);
+        return math.sumTotalOrder(promotions, caddy, customer, delModChosen);
     }
     
 //</editor-fold>   
+    
+//<editor-fold defaultstate="collapsed" desc="Promotion">
+    
+    
+    private void AddPromoIfExist(Drink drink, Integer quantity){
+        readAllPromotions().stream().forEach((promotion)->{
+            if(promotion.getDrink() != null && promotion.getDrink().equals(drink))
+                if(PrerequisAddPromotion(promotion, quantity)){
+                    Integer pos = findPromotionInList(drink);
+                    if(pos == null)
+                        promotions.add(promotion);
+                }                             
+        });
+    }
+    
+    private ArrayList<Promotion> readAllPromotions (){
+        FacesContext context = FacesContext.getCurrentInstance();
+        PromotionMB promotionMB = (PromotionMB) 
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(), 
+                                "#{promotionMB}", 
+                                PromotionMB.class)
+                        .getValue(context.getELContext());
+        return promotionMB.getPromotions();
+    }
+    
+    private boolean PrerequisAddPromotion(Promotion promoDrink, int quantity) {
+        if(promoDrink.getCodePromo() != null)
+            return false;
+        
+        if(promotionActif(promoDrink))
+            return promoDrink.getMinQuantity() == null || quantity >= promoDrink.getMinQuantity();
+        else
+            return false;
+    }
+    
+    private boolean promotionActif(Promotion promoDrink){
+        Date now = new Date();
+        return now.compareTo(promoDrink.getDateStart()) >= 0 && now.compareTo(promoDrink.getDateEnd()) <= 0;
+    }
+    
+    public void promotionMinQuantityOk(Drink drink){
+        Integer pos = findPromotionInList(drink);
+        if(pos != null)
+            if(!(promotions.get(pos).getMinQuantity() == null 
+                || caddy.get(drink).intValue() >= promotions.get(pos).getMinQuantity()))
+            promotions.remove((int)pos);
+    }
+    
+    public void UpdatePromotion(Drink drink){
+        AddPromoIfExist(drink, caddy.get(drink).intValue());
+        promotionMinQuantityOk(drink);
+    }
+    
+    public double DiscountPromotion(Promotion promotion){
+        if(promotion.getDrink() == null)
+            return DiscountGeneral(promotion);
+        return math.discountPromotion(promotion, 
+                caddy.get(promotion.getDrink()).intValue());
+    }
+    
+    public double DiscountGeneral(Promotion promotion){
+        return math.discountPromotionAll(promotion, caddy);
+    }
+    
+    public Integer allQuantity(){
+        return math.allDrinkQuantity(caddy);
+    }
+    
+    @SuppressWarnings("empty-statement")
+    public Integer findPromotionInList(Drink drink){
+        int pos = 0;
+        for(;pos <promotions.size();pos++){
+            if(promotions.get(pos).getDrink() != null 
+                    && promotions.get(pos).getDrink().equals(drink))
+                break;
+        }
+        if(pos == promotions.size())
+            return null;
+        return pos;
+    }
+    
+    public void addPromoCode(){
+        Promotion promotion = promotionFacade.findByCodePromo(codePromotion);
+        promotions.add(promotion);
+    }
+//</editor-fold>
     
 //<editor-fold defaultstate="collapsed" desc="Order">
     public String saveOrder() {
@@ -121,6 +220,7 @@ public class CaddyMB implements Serializable {
                 delModChosen.getCurrentpostalcharges(), delModChosen, 
                 customer.getAddress(), customer);
         order.setLines(converterToLineOrder());
+        order.setPromotions(promotions);
         return order;
     }
     
@@ -165,6 +265,34 @@ public class CaddyMB implements Serializable {
      */
     public void setDelModChosen(DeliveryMode delModChosen) {
         this.delModChosen = delModChosen;
+    }
+    
+    /**
+     * @return the promotions
+     */
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    /**
+     * @param promotions the promotions to set
+     */
+    public void setPromotions(ArrayList<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+    
+    /**
+     * @return the codePromotion
+     */
+    public String getCodePromotion() {
+        return codePromotion;
+    }
+
+    /**
+     * @param codePromotion the codePromotion to set
+     */
+    public void setCodePromotion(String codePromotion) {
+        this.codePromotion = codePromotion;
     }
 //</editor-fold>   
 

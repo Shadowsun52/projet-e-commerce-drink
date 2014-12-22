@@ -72,13 +72,32 @@
                             <h:outputText value=" &euro;"/>
                         </p:column>
                     </p:dataTable>
+                        
+                    <p:dataTable var="promotion" value="#{caddyMB.promotions}" tableStyleClass="orderTable">
+                        <p:column style="width: 41%">
+                            <h:outputText value="#{msg.promotion} #{promotion.getDrink().getText(
+                                                internationalizationManaged.currentLanguage).getLabel()}"/>
+                        </p:column>
+                        <p:column style="width: 41%">
+                                <h:outputText value="#{promotion.getPercentageDiscount()}%"/>
+                        </p:column>
+                        <p:column style="width: 18%">
+                            <h:outputText value="#{caddyMB.DiscountPromotion(promotion)}">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value=" &euro;"/>
+                        </p:column>
+                    </p:dataTable>
                     <div class="commandRight">
                         <p>
                             <p:inputText id="codePromo" styleClass="codePromo"
-                                          
-                                         placeholder="#{msg.labelCodePromo}"/>
+                                         value="#{caddyMB.codePromotion}"
+                                         placeholder="#{msg.labelCodePromo}">
+                                <f:validator validatorId="validatorCodePromo"/>
+                            </p:inputText>
                             <h:commandButton styleClass="bntCaddy" 
-                                             value="#{msg.addCodePromo}"/>
+                                             value="#{msg.addCodePromo}"
+                                             action="#{caddyMB.addPromoCode()}"/>
                         </p>
                         <p>
                             <h:outputText value="#{msg.orderTotalPrice}: "/>
@@ -116,11 +135,17 @@
                         <p>
                             <h:commandButton value="#{msg.validCaddy}"
                                              styleClass="bntCaddy" 
+                                             immediate="true"
                                              action="faces/order.xhtml"/>
                         </p>
+                        <span class="errorMessage">
+                                <h:message id="errorCodePromo"
+                                           for="codePromo" />
+                        </span>
                     </div>
                     <h:commandButton class="leftBnt" value="#{msg.clearCaddy}"
-                                     styleClass="bntCaddy cornerLeft" 
+                                     styleClass="bntCaddy cornerLeft"
+                                     immediate="true"
                                      action="#{caddyMB.clearCaddy()}"/>
                 </h:form>
                 </c:if>    

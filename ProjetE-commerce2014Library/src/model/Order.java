@@ -21,6 +21,7 @@ public class Order {
     private Address delAddress;
     private Customer customer;
     private ArrayList<LineOrder> lines;
+    private ArrayList<Promotion> promotions;
 
     public Order() {
     }
@@ -36,6 +37,7 @@ public class Order {
         this.delAddress = delAddress;
         this.customer = customer;
         this.lines = new ArrayList<>();
+        this.promotions = new ArrayList<>();
     }
     
     /**
@@ -148,6 +150,20 @@ public class Order {
      */
     public void setLines(ArrayList<LineOrder> lines) {
         this.lines = lines;
+    }
+
+    /**
+     * @return the promotions
+     */
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    /**
+     * @param promotions the promotions to set
+     */
+    public void setPromotions(ArrayList<Promotion> promotions) {
+        this.promotions = promotions;
     }
     
     

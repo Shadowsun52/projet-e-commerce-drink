@@ -25,6 +25,7 @@ public class Customer implements Serializable{
     private Language chosenLanguage;
 
     public Customer() {
+        address = new Address();
     }
 
     public Customer(Integer id, String name, String lastname, 

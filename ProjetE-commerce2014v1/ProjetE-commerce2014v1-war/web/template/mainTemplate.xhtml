@@ -137,7 +137,7 @@
                                     <h:inputText value="#{caddyMB.caddy[drink.key]}" >
                                         <f:validator validatorId="validatorNumber"/>
                                         <f:convertNumber/>
-                                        <f:ajax event="blur" render="@form"/>
+                                        <f:ajax event="blur" render="@form" execute="#{caddyMB.UpdatePromotion(drink.key)}"/>
                                     </h:inputText>
                                 </f:facet>
                             </p:cellEditor>
@@ -154,8 +154,9 @@
                                 <h:outputText id="total" value="#{caddyMB.sumCaddy()}">
                                     <f:convertNumber minFractionDigits="2"
                                                      maxFractionDigits="2"/>
-                                </h:outputText> 
-                                <h:outputText value=" &euro;"/>
+                                </h:outputText>
+                                <h:outputText value=" &euro;"/><br/>
+                                <h:outputText value="#{msg.discountIncluded}"/>
                             </f:facet>
                         </p:dataTable>
                     </h:form>

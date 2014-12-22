@@ -13,6 +13,7 @@
         <ui:composition template="./template/mainTemplate.xhtml">
 
             <ui:define name="content">
+                <h1><h:outputText value="#{categoryMB.getCategory(drinksMB.idCat).getLabel(internationalizationManaged.currentLanguage)}"/></h1>
                 <h:form id="criteriaForm">
                    
                     <h3>#{msg.typeBox}</h3>
@@ -33,7 +34,7 @@
                      <h:panelGrid columns="1" id="panPriceSlider">
                          <h:outputText id="displayRangePrice" 
                                        value="#{msg.sliderTextA}#{drinksMB.lowPrice}#{msg.sliderTextB}#{drinksMB.highPrice}" />
-                         <p:slider id="priceSlider" for="lowPrice, highPrice" maxValue="300" display="displayRangePrice" 
+                         <p:slider id="priceSlider" for="lowPrice, highPrice" maxValue="120" display="displayRangePrice" 
                                    range="true" displayTemplate="#{msg.sliderTextA}{min}#{msg.sliderTextB}{max}">
                          </p:slider>
                      </h:panelGrid>
@@ -51,9 +52,9 @@
                     <h:inputHidden id="lowPercentage" value="#{drinksMB.lowPercentage}" />
                     <h:inputHidden id="highPercentage" value="#{drinksMB.highPercentage}" />
 
-                    <h:commandButton class="bntDrinks" value="#{msg.submit}">
+                    <p:commandButton class="bntDrinks" value="#{msg.submit}">
                         <f:ajax execute="type priceSlider alcoholSlider formDrinksScroller" render="formDrinksScroller" event="click"/>
-                    </h:commandButton>
+                    </p:commandButton>
                     
                 </h:form>
                 
@@ -63,6 +64,7 @@
                                     chunkSize="10" mode="inline" scrollHeight="500">
                         <h:panelGrid columns="2" columnClasses="logo,detail">
                             <img id="imgDrinksScroller" src="./resources/images/#{drink.id}.jpg"/>
+                            
                             <h:link outcome="drink.xhtml">
                                 <f:param name="singleDrink" value="#{drink.id}"/>
                                 <f:param name="idCat" value="#{drinksMB.idCat}"/>
@@ -76,10 +78,10 @@
                                     <h:outputText value="#{msg.percAlcDataScroll}" />
                                     <h:outputText value="#{drink.percentageAlcohol}%" />
                                 </h:panelGrid>
+                                
                             </h:link>
                         </h:panelGrid>
                     </p:dataScroller>
-                    
                 </h:form>
             </ui:define>
 

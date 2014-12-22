@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -9,40 +12,66 @@
 
             <ui:define name="content">
                 <section id="discount">
-                    <!--générer par code-->
-                    <a href="#">
-                        <article class="discount_class">
-                            <h1>Titre promotion 1</h1>
-                            <h2> info promotion</h2>
-                            <img src="" alt="image du produit"/>
-                            <h3>Valeur promotion</h3>
-                        </article>
-                    </a>
-                    <a href="#">
-                        <article class="discount_class">
-                            <h1>Titre promotion 2</h1>
-                            <h2> info promotion</h2>
-                            <img src="" alt="image du produit"/>
-                            <h3>Valeur promotion</h3>
-                        </article>
-                    </a>
-                    <a href="#">
-                        <article class="discount_class">
-                            <h1>Titre promotion 3</h1>
-                            <h2> info promotion</h2>
-                            <img src="" alt="image du produit"/>
-                            <h3>Valeur promotion</h3>
-                        </article>
-                    </a>
-                    <a href="#">
-                        <article class="discount_class">
-                            <h1>Titre promotion 4</h1>
-                            <h2> info promotion</h2>
-                            <img src="" alt="image du produit"/>
-                            <h3>Valeur promotion</h3>
-                        </article>
-                    </a>
-                    <!--fin generer par code-->
+                    <c:forEach items="#{promotionMB.promotions}" var="promotion">
+                        <c:choose>
+                            <c:when test="#{promotion.isDrinkPromotion()}">
+                                <h:link outcome="drink.xhtml" 
+                                        class="discount_class">
+                                    <f:param name="singleDrink" 
+                                             value="#{promotion.drink.id}"/>
+                                    <f:param name="idCat" value="1"/>
+                                    <h1>
+                                        <h:outputText value="#{promotion.getMessage(internationalizationManaged.currentLanguage)}"/>
+                                    </h1>
+                                    <img src="./resources/images/#{promotion.drink.id}.jpg" 
+                                         alt="img - #{promotion.drink.getText(internalizationManaged.currentLanguage).getLabel()}"/>
+                                    <h2>-
+                                        <c:if test="#{promotion.typeDiscount == 'A'}">
+                                            <h:outputText value="#{promotion.amountDiscount}">
+                                                <f:convertNumber minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                            </h:outputText>
+                                            <h:outputText value=" &euro;"/>
+                                        </c:if>
+                                        <c:if test="#{promotion.typeDiscount == 'P'}">
+                                            <h:outputText value="#{promotion.percentageDiscount} %"/>
+                                        </c:if>
+                                    </h2>
+                                    <c:if test="#{promotion.codePromo != null}">
+                                        <p>
+                                            <h:outputText value="#{msg.codePromoIndex} #{promotion.codePromo}"/>
+                                        </p>
+                                    </c:if>
+                                </h:link>
+                            </c:when>
+                            <c:when test="#{promotion.isCategoryPromotion()}">
+                            </c:when>
+                            <c:otherwise>
+                                <div class="discount_class">
+                                    <h1><h:outputText value="#{promotion.getMessage(internationalizationManaged.currentLanguage)}"/></h1>
+                                    <img src="./resources/images/promo#{promotion.id}.jpg" 
+                                         alt="promo - #{promotion.id}"/>
+                                    <h2>-
+                                        <c:if test="#{promotion.typeDiscount == 'A'}">
+                                            <h:outputText value="#{promotion.amountDiscount}">
+                                                <f:convertNumber minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                            </h:outputText>
+                                            <h:outputText value=" &euro;"/>
+                                        </c:if>
+                                        <c:if test="#{promotion.typeDiscount == 'P'}">
+                                            <h:outputText value="#{promotion.percentageDiscount} %"/>
+                                        </c:if>
+                                    </h2>
+                                    <c:if test="#{promotion.codePromo != null}">
+                                        <p>
+                                            <h:outputText value="#{msg.codePromoIndex} #{promotion.codePromo}"/>
+                                        </p>
+                                    </c:if>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </section>
             </ui:define>
 

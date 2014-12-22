@@ -7,8 +7,10 @@ package entityBeans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,13 +41,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Promotion.findByIdpromotion", query = "SELECT p FROM Promotion p WHERE p.idpromotion = :idpromotion"),
     @NamedQuery(name = "Promotion.findByDatestart", query = "SELECT p FROM Promotion p WHERE p.datestart = :datestart"),
     @NamedQuery(name = "Promotion.findByDateend", query = "SELECT p FROM Promotion p WHERE p.dateend = :dateend"),
-    @NamedQuery(name = "Promotion.findByCodepromo", query = "SELECT p FROM Promotion p WHERE p.codepromo = :codepromo"),
+    @NamedQuery(name = "Promotion.findByCodepromo", query = "SELECT p FROM Promotion p WHERE p.codepromo = :codepromo and p.datestart < :now AND p.dateend > :now"),
     @NamedQuery(name = "Promotion.findByPromoUnique", query = "SELECT p FROM Promotion p WHERE p.promoUnique = :promoUnique"),
     @NamedQuery(name = "Promotion.findByTypediscount", query = "SELECT p FROM Promotion p WHERE p.typediscount = :typediscount"),
     @NamedQuery(name = "Promotion.findByPercentagediscount", query = "SELECT p FROM Promotion p WHERE p.percentagediscount = :percentagediscount"),
     @NamedQuery(name = "Promotion.findByAmountdiscount", query = "SELECT p FROM Promotion p WHERE p.amountdiscount = :amountdiscount"),
-    @NamedQuery(name = "Promotion.findByMinquantity", query = "SELECT p FROM Promotion p WHERE p.minquantity = :minquantity")})
+    @NamedQuery(name = "Promotion.findByMinquantity", query = "SELECT p FROM Promotion p WHERE p.minquantity = :minquantity"),
+    @NamedQuery(name = "Promotion.findAllActif", query = "SELECT p FROM Promotion p WHERE p.datestart < :now AND p.dateend > :now")})
 public class Promotion implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
+    private Collection<LangPromotion> langPromotionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -211,6 +218,15 @@ public class Promotion implements Serializable {
     @Override
     public String toString() {
         return "entityBeans.Promotion[ idpromotion=" + idpromotion + " ]";
+    }
+
+    @XmlTransient
+    public Collection<LangPromotion> getLangPromotionCollection() {
+        return langPromotionCollection;
+    }
+
+    public void setLangPromotionCollection(Collection<LangPromotion> langPromotionCollection) {
+        this.langPromotionCollection = langPromotionCollection;
     }
     
 }

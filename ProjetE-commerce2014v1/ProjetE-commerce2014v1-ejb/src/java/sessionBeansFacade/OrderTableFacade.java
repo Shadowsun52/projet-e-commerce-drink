@@ -9,6 +9,7 @@ import entityBeans.Address;
 import entityBeans.LineOrder;
 import entityBeans.LineOrderPK;
 import entityBeans.OrderTable;
+import entityBeans.Promotion;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import model.Order;
  * @author Alexandre
  */
 @Stateless
-public class OrderTableFacade extends AbstractFacade<OrderTable> implements OrderTableFacadeLocal {
+public class OrderTableFacade extends AbstractFacade<OrderTable> implements OrderTableFacadeLocal {  
     private static final String PATCH_SITE = "http://localhost:8080/" 
             +"ProjetE-commerce2014v1-war/faces/yourAccountxhtml";
     private static final String INTRO_SUBJECT = "EmailIntroSubject";
@@ -38,6 +39,8 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
     private static final String ORDER_BODY2="orderBodyMail2";
     private static final String ORDER_BODY3="orderBodyMail3";
     
+    @EJB
+    private PromotionFacadeLocal promotionFacade;
     @EJB
     private DeliverymodeFacadeLocal deliverymodeFacade;
     @EJB
@@ -108,13 +111,12 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
         OrderTable entity = converterToEntity(order);
         create(entity);
         em.flush();
-        em.refresh(entity);
         entity.setLineOrderCollection(attachLineOrder(order, entity));
         createLineOrder(entity);
         EmailSender.sendEmail(order.getCustomer().getEmail(), 
-                createSubjectForEmailSaveOrder(bundle, order.getNumOrder()), 
+                createSubjectForEmailSaveOrder(bundle, entity.getNumorder()), 
                 createBodyForEmailSaveOrder(bundle, order.getCustomer(),
-                        order.getNumOrder()));
+                        entity.getNumorder()));
         
     }
     
@@ -157,6 +159,9 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
         for (LineOrder lineOrder : entity.getLineOrderCollection()) {
             order.getLines().add(lineOrderFacade.converterToModel(lineOrder)); 
         }
+        for (Promotion promotion : entity.getPromotionCollection()) {
+            order.getPromotions().add(promotionFacade.converterToModel(promotion));
+        }
         return order;
     }
     
@@ -169,6 +174,7 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
         entity.setIddeliverymode(deliverymodeFacade.converterToEntity(
                 order.getDeliveryMode()));
         entity.setPaymentdate(order.getPaymentdate());
+        entity.setPromotionCollection(attachPromotion(order, entity));
         return entity;
     }
 
@@ -178,6 +184,14 @@ public class OrderTableFacade extends AbstractFacade<OrderTable> implements Orde
             linesOrder.add(lineOrderFacade.converterToEntity(line, entity));
         });
         return linesOrder;
+    }
+    
+    private ArrayList<Promotion> attachPromotion(Order order, OrderTable entity){
+        ArrayList<Promotion> promotions = new ArrayList<>();
+        order.getPromotions().stream().forEach((promotion) ->{
+            promotions.add(promotionFacade.converterToEntity(promotion));
+        });
+        return promotions;
     }
 //</editor-fold>
 }

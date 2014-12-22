@@ -7,10 +7,13 @@ package sessionBeansFacade;
 
 import entityBeans.Category;
 import entityBeans.LangCat;
+import entityBeans.LangCatPK;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.Language;
 
 /**
  *
@@ -57,5 +60,22 @@ public class CategoryFacade extends AbstractFacade<Category> implements Category
                     langCat.getLabel());
         }
         return category;
+    }
+
+    @Override
+    public Category converterToEntity(model.Category category) {
+        Category entity = new Category(category.getId(), 
+                category.isDateRequired());
+        entity.setLangCatCollection(getLangsCat(
+                category.getHashLabel(), category.getId()));
+        return entity;
+    }
+    
+    private ArrayList<LangCat> getLangsCat(HashMap<Language,String> labels, Integer id){
+        ArrayList<LangCat> langsCat = new ArrayList<>();
+        labels.forEach((language,label)->{
+            langsCat.add(new LangCat(new LangCatPK(id, language.getId()), label));
+        });
+        return langsCat;
     }
 }

@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import model.LineOrder;
 import model.Order;
 import business.MathBusiness;
+import model.Promotion;
 import sessionBeansFacade.OrderTableFacadeLocal;
 
 /**
@@ -50,6 +51,21 @@ public class OrderMB implements Serializable {
         }
         
     }
+    
+    @SuppressWarnings("empty-statement")
+    public double DiscountPromotion(Promotion promotion){
+        if(promotion.getDrink() == null)
+            return DiscountGeneral(promotion);
+        int i=0;
+        for(; !orderSelected.getLines().get(i).getDrink().equals(promotion.getDrink()); i++);
+        return math.discountPromotion(promotion, 
+                (int)orderSelected.getLines().get(i).getQuantity());
+    }
+    
+    public double DiscountGeneral(Promotion promotion){
+        return math.discountPromotionAll(promotion, orderSelected.getLines());
+    }
+    
 //<editor-fold defaultstate="collapsed" desc="view">
     public void loadOrderForCustomer(Integer customerId) throws Exception{
         orders = orderTableFacade.findByCustomer(customerId);
@@ -79,20 +95,23 @@ public class OrderMB implements Serializable {
     }
     
     public double sumOrder(){
-        return math.sumCaddy(orderSelected.getLines());
+        return math.sumCaddy(orderSelected);
     }
     
     public double tva(){
-        return math.tva(orderSelected.getLines(), orderSelected.getCustomer());
+        return math.tva(orderSelected);
     }
     
     public double sumWithTva(){
-        return math.sumWithTva(orderSelected.getLines(), 
-                orderSelected.getCustomer());
+        return math.sumWithTva(orderSelected);
     }
     
     public double sumTotal(){
         return math.sumTotalOrder(orderSelected);
+    }
+    
+    public Integer allQuantity(){
+        return math.allDrinkQuantity(orderSelected.getLines());
     }
 //</editor-fold>
     
